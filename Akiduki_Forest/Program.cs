@@ -12,7 +12,7 @@ string? command;
 int section = 0;
 
 //ステータス
-//int hp = 200;//体力
+int hp = 200;//体力
 int lack = 0;//運
 
 //アイテム
@@ -245,7 +245,7 @@ while (playing == true)
             Console.ReadLine();//次のコメントを表示
             Console.WriteLine("また、こんな森の奥まで来る人はほとんどいないだろう。");
             Console.ReadLine();//次のコメントを表示
-            Console.WriteLine("「怪しいわね…」");
+            Console.WriteLine("「こんなところに…何の建物かしら？」");
             Console.ReadLine();//次のコメントを表示
 
             where = false;
@@ -253,9 +253,9 @@ while (playing == true)
             {
                 Console.WriteLine("");
                 Console.WriteLine("どうしますか");
-                Console.WriteLine("1:");
-                Console.WriteLine("2:");
-                Console.WriteLine("3:");
+                Console.WriteLine("1:すぐに建造物に近づく");
+                Console.WriteLine("2:建造物の周りを調べる");
+                Console.WriteLine("3:一旦離れる");
                 Console.WriteLine("----------");
                 Console.WriteLine("4:セーブ");
 
@@ -264,21 +264,32 @@ while (playing == true)
                 {
                     case "1":
                         where = true;
-                        Console.WriteLine("未実装です。");
-                        Console.ReadLine();//次のコメントを表示
                         break;
 
                     case "2":
                         where = true;
-                        Console.WriteLine("未実装です。");
+                        Console.WriteLine("建造物の周辺を見渡すと、近くには紅の花と、鮮やかな秘色(ひそく)の花が咲き乱れていた。");
+                        /*特に意味はないが、花の紹介(後付け設定)
+
+                        紅の花:ゼラニウム(天竺葵-てんじくあおい)
+                        4月~6月開花の四季咲き植物。北大陸は冬の寒さが厳しいので冬は散ってしまう。
+                        花言葉:信頼 真の友情 尊敬 決心 | (外国)愚かさ 良い育ち 上流階級 | (赤色)君ありて幸福 あなたがいて幸せ
+                        ハンガリーの国花。
+
+                        秘色の花:ワスレナグサ(勿忘草)
+                        3月下旬~4月に見られる。(北大陸は夏でもそれほど気温が上がらないため(もちろん地域による差はあるが)、夏設定の本作品でもつじつまは合う。)
+                        花言葉:私を忘れないで 真実の愛*/
                         Console.ReadLine();//次のコメントを表示
+                        Console.WriteLine("微かに香る花の香りで癒された。");
+                        Console.ReadLine();//次のコメントを表示
+                        lack += 3;
+                        hp += 20;//微妙に回復(本作ではHPの最大値はない(しいて言うならint(32bit整数(負の数を含める))が最大値。))
                         break;
 
                     case "3":
-                        where = true;
-                        Console.WriteLine("未実装です。");
+                        Console.WriteLine("一旦離れて、元の場所に戻ることにした。");
                         Console.ReadLine();//次のコメントを表示
-                        break;
+                        goto label1;//これ、この選択肢3と、1セクションの選択肢1を行き来したら幸運を無限にあげられるね…
 
                     case "4":
                         //セーブ処理
@@ -290,6 +301,13 @@ while (playing == true)
                         break;
                 }
             }
+
+            Console.WriteLine("見たことがない建物を見た秋月は、すぐにそこへ近づいた。");
+            Console.ReadLine();//次のコメントを表示
+            Console.WriteLine("石で建造されたトンネルのようなその建造物は、山の内部へ続いている。");
+            Console.ReadLine();//次のコメントを表示
+            Console.WriteLine("トンネルへ入り奥を見てみると、崩れた石で閉ざされているように見えた。");
+            Console.ReadLine();//次のコメントを表示
 
             break;
 
