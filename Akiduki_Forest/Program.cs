@@ -9,7 +9,7 @@ bool playing = true;
 string? command;
 
 //セーブ用の区切り(節)
-int section;
+int section = 0;
 
 //ステータス
 //int hp = 200;//体力
@@ -35,7 +35,7 @@ while (playing == true)
         case "1":
             playing = false;
             Console.WriteLine("「うーん…暇だなぁ」");
-            Console.ReadLine();//次のコメントを表示
+            Console.ReadLine();//次のコメントを表示(ReadKeyでもいいけど、ReadLineのほうが改行されて読みやすい気がするのでこちらに。)
             Console.WriteLine("彼女、秋月は暇をしていた。");
             Console.ReadLine();//次のコメントを表示
             Console.WriteLine("数年前の大規模な戦争も今は終わり、平和な世の中となった今では傭兵としての仕事はなくなっていた。");
@@ -293,8 +293,70 @@ while (playing == true)
 
             break;
 
+        //ロード
         case "2":
             playing = false;
+
+            //新システム
+
+            //ファイル読み込み
+            XDocument file_read = XDocument.Load(@"./Data.xml");
+
+            IEnumerable<XElement> datas = file_read.Elements("Data");
+            foreach (XElement data_read in datas)
+            {
+
+                section = int.Parse(data_read.Element("Section").Value);
+                lack = int.Parse(data_read.Element("Luck").Value);
+                item = int.Parse(data_read.Element("item").Value);
+                item_bom = int.Parse(data_read.Element("item_bom").Value);
+                item_bullet = int.Parse(data_read.Element("item_bullet").Value);
+                item_cure = int.Parse(data_read.Element("item_cure").Value);
+
+                Console.WriteLine("ロードが成功しました。");
+                Console.ReadLine();//次のコメントを表示
+                switch (section)
+                {
+                    case 1:
+                        goto label1;
+
+                    case 2:
+                        goto label2;
+
+                    default:
+                        break;
+                }
+            }
+
+            /*
+            //ファイル読み込み
+            XElement file_read = XElement.Load(@"./Data.xml");
+
+            //データのタグ内の情報を取得する
+            IEnumerable<XElement> data_read = from read in file_read.Elements("Data") select read;
+
+            //データ情報分(セーブデータの数(←未来への拡張用))ループして、表示
+            foreach (XElement temp1 in data_read)//ここが動作していない
+            {
+                section = int.Parse(temp1.Element("Section").Value);
+                lack = int.Parse(temp1.Element("Luck").Value);
+                item = int.Parse(temp1.Element("item").Value);
+                item_bom = int.Parse(temp1.Element("item_bom").Value);
+                item_bullet = int.Parse(temp1.Element("item_bullet").Value);
+                item_cure = int.Parse(temp1.Element("item_cure").Value);
+
+                //臨時
+                Console.WriteLine(temp1.Element("Section"));
+                Console.WriteLine(section);
+                //ここまで
+            }
+            */
+
+            //ファイルを開きっぱなしだと上書き保存ができない(「さいしょから」→「保存」はできるが、「ロード」→「保存」ができない)ので、ファイルを閉じる
+            //file_read.RemoveAll();//これでOKなのかな?
+
+
+            /*旧バージョン
             //読み込むファイル(最重要なスタート位置のみロード。他は後で実装予定(っていうか、他もちゃんと実装しないと動かない…))
             StreamReader? file_read = new(@"./Data_main.aki1");
                 string? line = file_read.ReadLine();
@@ -313,6 +375,7 @@ while (playing == true)
                 default:
                     break;
             }
+            */
             break;
 
         case "3":
@@ -328,24 +391,16 @@ while (playing == true)
 //セーブ処理
 void Save()
 {
-    //メインデータ保存(xml)
+    //データ保存(xml)
     XElement element = new
         (
-            "Data", 
-            new XElement
-            (
-                "MainData",
-                new XElement("Section", section),
-                new XElement("Luck", lack)
-            ),
-            new XElement
-            (
-                "ItemData",
-                new XElement("item",item),
-                new XElement("item_bom",item_bom),
-                new XElement("item_bullet",item_bullet),
-                new XElement("item_cure",item_cure)
-            )
+            "Data",
+            new XElement("Section", section),
+            new XElement("Luck", lack),
+            new XElement("item", item),
+            new XElement("item_bom", item_bom),
+            new XElement("item_bullet", item_bullet),
+            new XElement("item_cure", item_cure)
         );
     element.Save("Data.xml");
     Console.WriteLine("セーブが完了しました。");
