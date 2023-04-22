@@ -328,54 +328,6 @@ while (playing == true)
                 }
             }
 
-            /*
-            //ファイル読み込み
-            XElement file_read = XElement.Load(@"./Data.xml");
-
-            //データのタグ内の情報を取得する
-            IEnumerable<XElement> data_read = from read in file_read.Elements("Data") select read;
-
-            //データ情報分(セーブデータの数(←未来への拡張用))ループして、表示
-            foreach (XElement temp1 in data_read)//ここが動作していない
-            {
-                section = int.Parse(temp1.Element("Section").Value);
-                lack = int.Parse(temp1.Element("Luck").Value);
-                item = int.Parse(temp1.Element("item").Value);
-                item_bom = int.Parse(temp1.Element("item_bom").Value);
-                item_bullet = int.Parse(temp1.Element("item_bullet").Value);
-                item_cure = int.Parse(temp1.Element("item_cure").Value);
-
-                //臨時
-                Console.WriteLine(temp1.Element("Section"));
-                Console.WriteLine(section);
-                //ここまで
-            }
-            */
-
-            //ファイルを開きっぱなしだと上書き保存ができない(「さいしょから」→「保存」はできるが、「ロード」→「保存」ができない)ので、ファイルを閉じる
-            //file_read.RemoveAll();//これでOKなのかな?
-
-
-            /*旧バージョン
-            //読み込むファイル(最重要なスタート位置のみロード。他は後で実装予定(っていうか、他もちゃんと実装しないと動かない…))
-            StreamReader? file_read = new(@"./Data_main.aki1");
-                string? line = file_read.ReadLine();
-            //ファイルを開きっぱなしだと上書き保存ができない(「さいしょから」→「保存」はできるが、「ロード」→「保存」ができない)ので、ファイルを閉じる
-            file_read.Close();
-            Console.WriteLine("ロードが成功しました。");
-            Console.ReadLine();//次のコメントを表示
-            switch (line)
-            {
-                case "1":
-                    goto label1;
-
-                case "2":
-                    goto label2;
-
-                default:
-                    break;
-            }
-            */
             break;
 
         case "3":
@@ -405,45 +357,3 @@ void Save()
     element.Save("Data.xml");
     Console.WriteLine("セーブが完了しました。");
 }
-
-/*旧セーブ処理
-void Save()
-{
-    //メインデータ保存
-    int[] main_Data = new int[] { section, lack };
-    try
-    {
-        //独自拡張子aki1("Aki"duki version."1")
-        StreamWriter file = new(@"./Data_main.aki1", false, Encoding.UTF8);
-        for (int i = 0; i < main_Data.Length; i += 1)
-        {
-            file.WriteLine(string.Format("{0}", main_Data[i]));
-        }
-        file.Close();
-        Console.WriteLine("セーブが完了しました。");
-    }
-    catch (Exception e)
-    {
-        Console.WriteLine(e.Message); // 例外検出時にエラーメッセージを表示
-    }
-
-    //アイテム保存
-    以下は今のところ使わないので封印
-    int[] item_Data = new int[]{item, item_bom, item_bullet, item_cure};
-    try
-    {
-        StreamWriter file = new(@"./Data_item.aki1", false, Encoding.UTF8);
-        for (int i = 0; i < item_Data.Length; i += 1)
-        {
-            file.WriteLine(string.Format("{0}", item_Data[i]));
-        }
-        file.Close();
-        Console.WriteLine("セーブが完了しました。");
-        Console.WriteLine("");
-        }
-        catch (Exception e)
-        {
-            Console.WriteLine(e.Message); // 例外検出時にエラーメッセージを表示
-    }
-}
-*/
