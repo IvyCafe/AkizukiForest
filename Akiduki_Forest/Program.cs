@@ -81,7 +81,7 @@ while (playing == true)
                         if (item - item_bom * 2 >= 0) 
                         {
                             item -= item_bom * 2;
-                            Console.WriteLine("{0}個(重さ{1}|残り重量{2})", item_bom, item_bom * 2,item);
+                            Console.WriteLine("{0}個(重さ{1}|残り重量{2})", item_bom, item_bom * 2, item);
                             choose_item_bom = false;
                         }
                         else
@@ -104,7 +104,7 @@ while (playing == true)
                         if (item - item_bullet >= 0)
                         {
                             item -= item_bullet;
-                            Console.WriteLine("{0}個(重さ{1}|残り重量{2})", item_bullet, item_bullet,item);
+                            Console.WriteLine("{0}個(重さ{1}|残り重量{2})", item_bullet, item_bullet, item);
                             choose_item_bullet = false;
                         }
                         else
@@ -231,7 +231,7 @@ while (playing == true)
                 }
             }
 
-            //ロード地点(1)
+            //ロード地点(2)
             label2:
             section = 2;
 
@@ -302,12 +302,75 @@ while (playing == true)
                 }
             }
 
+            //ロード地点(3)
+            label3:
+            section = 3;
+
             Console.WriteLine("見たことがない建物を見た秋月は、すぐにそこへ近づいた。");
             Console.ReadLine();//次のコメントを表示
             Console.WriteLine("石で建造されたトンネルのようなその建造物は、山の内部へ続いている。");
             Console.ReadLine();//次のコメントを表示
-            Console.WriteLine("トンネルへ入り奥を見てみると、崩れた石で閉ざされているように見えた。");
+            Console.WriteLine("トンネルへ入り奥へ進んでいくと、道は二股に別れていた。");
             Console.ReadLine();//次のコメントを表示
+            Console.WriteLine("道は、両方とも壁掛けのたいまつで照らされていて、");
+            Console.WriteLine("右の道は細い道が、左の道は曲がりくねった道が続いていた。");
+            Console.ReadLine();//次のコメントを表示
+            Console.WriteLine("「うーん…どっちに行こうかなぁ」");
+            Console.ReadLine();//次のコメントを表示
+
+            where = false;
+            while (where == false)
+            {
+                Console.WriteLine("");
+                Console.WriteLine("どちらに行きますか");
+                Console.WriteLine("1:右の道");
+                Console.WriteLine("2:左の道");
+                Console.WriteLine("----------");
+                Console.WriteLine("3:セーブ");
+
+                command = Console.ReadLine();
+                switch (command)
+                {
+                    case "1":
+                        where = true;
+                        Console.WriteLine("右の道へ進んでいくと、その道はだんだんと細くなってきた。");
+                        Console.ReadLine();//次のコメントを表示
+                        Console.WriteLine("だんだんと地下へと進んでいった。");
+                        Console.ReadLine();//次のコメントを表示
+                        Console.WriteLine("「さ、寒いわね…」");
+                        Console.ReadLine();//次のコメントを表示
+                        Console.WriteLine("夏とはいえ、この地域は地上でも涼しいため、地下では寒いほどになってきた。");
+                        Console.ReadLine();//次のコメントを表示
+                        break;
+
+                    case "2":
+                        where = true;
+                        Console.WriteLine("道なりに進んでいくと、何かの影のようなものが見えた。");
+                        Console.ReadLine();//次のコメントを表示
+                        Console.WriteLine("「なにかしら？」");
+                        Console.ReadLine();//次のコメントを表示
+                        Console.WriteLine("隠れながらのぞいてみると、そこには異様な機影が見えた。");
+                        Console.ReadLine();//次のコメントを表示
+                        Console.WriteLine("こちらにはまだ気づいていないようだ。");
+                        Console.ReadLine();//次のコメントを表示
+                        //強制戦闘処理でも、戦闘or道を戻って分岐点の右側の道に行くか選択肢を与えてもよい。
+                        break;
+
+                    case "3":
+                        //セーブ処理
+                        Save();
+                        break;
+
+                    default:
+                        Console.WriteLine("半角数字を入力してください。");
+                        break;
+                }
+            }
+
+            Console.WriteLine("広い空間に出たので、一旦周りを見渡すことにした。");
+            Console.ReadLine();//次のコメントを表示
+            Console.WriteLine("右手前側には、水たまりのような場所がある。");
+            //風景描写の後、若干進んだところからワープして別のところに強制移送したほうが都合がいいかも。
 
             break;
 
@@ -354,6 +417,9 @@ while (playing == true)
 
                     case 2:
                         goto label2;
+
+                    case 3:
+                        goto label3;
 
                     default:
                         break;
