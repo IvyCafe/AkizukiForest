@@ -11,6 +11,7 @@ int section = 0;
 
 //ステータス
 int hp = 200;//体力
+int mp = 30;//魔力
 int lack = 0;//運
 
 //アイテム
@@ -62,7 +63,7 @@ while (playing == true)
                 Console.WriteLine("");
                 Console.WriteLine("持っていけるもの(最大12)");
                 Console.WriteLine("1:手榴弾(攻撃/爆破)[1つ当たりの重さ:2]");
-                Console.WriteLine("2:弾薬(攻撃)[1つ当たりの重さ:1]");
+                Console.WriteLine("2:弾薬(攻撃)[1セット(10発)当たりの重さ:1]");
                 Console.WriteLine("3:医療品(回復)[1つ当たりの重さ:1]");
                 Console.WriteLine("");
 
@@ -92,7 +93,7 @@ while (playing == true)
                 bool choose_item_bullet = true;
                 while (choose_item_bullet == true)
                 {
-                    Console.WriteLine("2:弾薬 を何個持っていきますか?");
+                    Console.WriteLine("2:弾薬 を何セット持っていきますか?");
                     if (!int.TryParse(Console.ReadLine(), out item_bullet))
                     {
                         Console.WriteLine("半角数値を入力してください");
@@ -145,6 +146,8 @@ while (playing == true)
                     {
                         choose_item_last = false;
                         choose_item = false;
+                        //現時点では、弾丸のセット数を記録しているため、弾数表記に変更
+                        item_bullet = item_bullet * 10;
                         Console.WriteLine("");
                     }
                     else if (command == "2")
@@ -214,8 +217,8 @@ while (playing == true)
                         lack -= 5;
                         Console.WriteLine(" -+-+- 戦闘開始 -+-+- ");
                         Console.ReadLine();//次のコメントを表示
-                        Console.WriteLine("未実装です。");
-                        //戦闘処理(未実装)
+                        //戦闘処理
+                        Buttle();
                         break;
 
                     case "4":
@@ -386,6 +389,10 @@ while (playing == true)
             {
                 if (int.TryParse(data_read.Element("Section")?.Value, out int temp2))
                     section = temp2;
+                if (int.TryParse(data_read.Element("HP")?.Value, out int temp4))
+                    hp = temp4;
+                if (int.TryParse(data_read.Element("MP")?.Value, out int temp5))
+                    mp = temp5;
                 if (int.TryParse(data_read.Element("Luck")?.Value, out int temp3))
                     lack = temp3;
                 if (int.TryParse(data_read.Element("item")?.Value, out int temp_item1))
@@ -435,6 +442,8 @@ void Save()
         (
             "Data",
             new XElement("Section", section),
+            new XElement("HP", hp),
+            new XElement("MP", mp),
             new XElement("Luck", lack),
             new XElement("item", item),
             new XElement("item_bom", item_bom),
@@ -443,4 +452,173 @@ void Save()
         );
     element.Save("Data.xml");
     Console.WriteLine("セーブが完了しました。");
+}
+
+//戦闘処理
+void Buttle() 
+{
+    //多少ランダムにしたい
+    int enemy_hp = 120;
+    //他のところから変更ができるように
+    string enemy_name = "異形の存在";
+
+    //難易度調節のために戦闘開始時自動回復
+    hp += 40;
+    mp += 5;
+
+    while (enemy_hp > 0)
+    {
+
+        //キャラクターステータス表示
+        Console.WriteLine("");
+        Console.WriteLine("味方ステータス");
+        Console.WriteLine("|秋月小鞠|HP:{0}|MP:{1}|", hp, mp);
+        Console.WriteLine("");
+        Console.WriteLine("敵ステータス");
+        Console.WriteLine("|{0}|HP:{1}|", enemy_name, enemy_hp);
+
+        //作成途中
+        bool where = false;
+        while (where == false)
+        {
+            Console.WriteLine("");
+            Console.WriteLine("どのような行動をしますか");
+            Console.WriteLine("1:ナイフ攻撃");
+            Console.WriteLine("2:手榴弾攻撃(残り{0}個)", item_bom);
+            Console.WriteLine("3:拳銃射撃(残り{0}発)", item_bullet);
+            Console.WriteLine("4:通常治療");//軽い治療ならアイテムなしで回復できる。
+            Console.WriteLine("5:回復薬治療(残り{0}個)", item_cure);
+            Console.WriteLine("6:戦略的撤退");//逃げる
+            Console.WriteLine("7:手榴弾退散(残り{0}個)", item_bom);//手榴弾の爆破と同時に逃げることで「戦略的撤退」よりも高確率で逃げ切れる
+            Console.WriteLine("8:敵味方のステータスを再確認");
+            //魔法どうしようかな…(アイテムが多いからぶっちゃけいらない説ある…)
+
+            command = Console.ReadLine();
+            switch (command)
+            {
+                case "1":
+                    where = true;
+                    //近接戦闘
+                    Console.WriteLine("敵に接近して、ナイフを振り上げて…");
+                    Console.WriteLine("その腕を素早く振り降ろした。");
+                    Console.ReadLine();//次のコメントを表示
+                    Console.WriteLine("敵はダメージを受けたようだ。");
+                    Console.ReadLine();//次のコメントを表示
+                    enemy_hp -= 50;
+                    break;
+
+                case "2":
+                    //爆破攻撃
+                    if (item_bom > 0)
+                    {
+                        where = true;
+                        item_bom -= 1;
+                        Console.WriteLine("秋月は後ろずさりで少しずつ後退しながら、手榴弾のピンを抜いて、");
+                        Console.WriteLine("敵のほうに向かって投げつけた。");
+                        Console.ReadLine();//次のコメントを表示
+                        Console.WriteLine("しばらくすると、大きな爆発音を上げ、トンネルの中は白い煙に包まれた。");
+                        Console.ReadLine();//次のコメントを表示
+                        enemy_hp -= 120;
+                    }
+                    else
+                    {
+                        Console.WriteLine("爆弾がないようだ。");
+                        Console.ReadLine();//次のコメントを表示
+                    }
+                    break;
+                    
+                case "3":
+                    //射撃攻撃処理
+                    //(ナイフ/爆弾との違いのために命中率は低く、ダメージが大きい、貫通するとさらにダメージ増加とかのほうがいいかも。
+                    //↑一応、弾薬数が多いため攻撃可能回数がほぼ無限というメリットもあるけど。)
+                    if (item_bullet > 0)
+                    {
+                        where = true;
+                        item_bullet -= 1;
+                        Console.WriteLine("拳銃に弾丸を込め、単発射撃を行った。");
+                        Console.ReadLine();//次のコメントを表示
+                        Console.WriteLine("拳銃は、爆音を上げて、強い反動を受けた。");
+                        Console.ReadLine();//次のコメントを表示
+                        Console.WriteLine("弾丸は敵を直撃して、敵の体を貫通した。");
+                        Console.ReadLine();//次のコメントを表示
+                        enemy_hp -= 180;
+                    }
+                    else
+                    {
+                        Console.WriteLine("弾薬が足りないようだ。");
+                        Console.ReadLine();//次のコメントを表示
+                    }
+                    break;
+
+                case "4":
+                    //治療処理
+                    where = true;
+                    Console.WriteLine("ナイフでスカートの先を切り、その布で傷ついた部分を保護した。");
+                    Console.ReadLine();//次のコメントを表示
+                    hp += 50;
+                    break;
+
+                case "5":
+                    //アイテム治療処理
+                    if (item_cure > 0)
+                    {
+                        where = true;
+                        item_cure -= 1;
+                        Console.WriteLine("医療品をあさり、治療に使えそうな薬品などを取り出した。");
+                        Console.ReadLine();//次のコメントを表示
+                        Console.WriteLine("傷ついた部分に治療薬を塗り、包帯で巻いて痛みを和らげることができた。");
+                        Console.ReadLine();//次のコメントを表示
+                        hp += 200;
+                    }
+                    else
+                    {
+                        Console.WriteLine("治療薬がないようだ。");
+                        Console.ReadLine();//次のコメントを表示
+                    }
+                    break;
+
+                case "6":
+                    //確立で逃げる処理(現時点では確実に逃げられる)
+                    enemy_hp = 0;
+                    break;
+
+                case "7":
+                    //逃げる処理
+                    enemy_hp = 0;
+                    break;
+
+                case "8":
+                    Console.WriteLine("");
+                    Console.WriteLine("味方ステータス");
+                    Console.WriteLine("|秋月小鞠|HP:{0}|MP:{1}|", hp, mp);
+                    Console.WriteLine("");
+                    Console.WriteLine("敵ステータス");
+                    Console.WriteLine("|{0}|HP:{1}|", enemy_name, enemy_hp);
+                    break;
+
+                default:
+                    Console.WriteLine("半角数字を入力してください。");
+                    break;
+            }
+
+            if (enemy_hp <= 0)
+            {
+                Console.WriteLine("敵はその場に倒れ、もう二度と動かなくなった。");
+                Console.ReadLine();//次のコメントを表示
+                Console.WriteLine(" -+-+- 戦闘終了 -+-+- ");
+                Console.ReadLine();//次のコメントを表示
+                Console.WriteLine("「ふう。何とかなったわね。」");
+                Console.ReadLine();//次のコメントを表示
+                Console.WriteLine("「先へ進むわ。」");
+                Console.ReadLine();//次のコメントを表示
+            }
+            else
+            {
+                //続行(敵ターン)
+            }
+            //作成途中
+        }
+        //作成途中
+    }
+    //作成途中
 }
