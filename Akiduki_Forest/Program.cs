@@ -1,6 +1,4 @@
-﻿// See https://aka.ms/new-console-template for more information
-
-using System.ComponentModel;
+﻿using System.ComponentModel;
 using System.Text;
 using System.Xml.Linq;
 
@@ -386,15 +384,6 @@ while (playing == true)
             IEnumerable<XElement> datas = file_read.Elements("Data");
             foreach (XElement data_read in datas)
             {
-                /*
-                section = int.Parse(data_read.Element("Section").Value);
-                lack = int.Parse(data_read.Element("Luck").Value);
-                item = int.Parse(data_read.Element("item").Value);
-                item_bom = int.Parse(data_read.Element("item_bom").Value);
-                item_bullet = int.Parse(data_read.Element("item_bullet").Value);
-                item_cure = int.Parse(data_read.Element("item_cure").Value);
-                */
-                //上記のようにするとnull警告が出るため、下の方法を採用
                 if (int.TryParse(data_read.Element("Section")?.Value, out int temp2))
                     section = temp2;
                 if (int.TryParse(data_read.Element("Luck")?.Value, out int temp3))
