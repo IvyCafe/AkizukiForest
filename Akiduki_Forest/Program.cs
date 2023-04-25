@@ -216,8 +216,6 @@ while (playing == true)
                         Console.WriteLine("こちらに対して敵対的な視線を向けて、今すぐにでも攻撃してきそうだ。");
                         Console.ReadLine();//次のコメントを表示
                         lack -= 5;
-                        Console.WriteLine(" -+-+- 戦闘開始 -+-+- ");
-                        Console.ReadLine();//次のコメントを表示
                         //戦闘処理
                         Buttle();
                         //もし死んでいるなら終了する
@@ -260,7 +258,7 @@ while (playing == true)
                 Console.WriteLine("どうしますか");
                 Console.WriteLine("1:すぐに建造物に近づく");
                 Console.WriteLine("2:建造物の周りを調べる");
-                Console.WriteLine("3:一旦離れる");
+                Console.WriteLine("3:一旦木陰で休憩する");
                 Console.WriteLine("----------");
                 Console.WriteLine("4:セーブ");
 
@@ -292,9 +290,15 @@ while (playing == true)
                         break;
 
                     case "3":
-                        Console.WriteLine("一旦離れて、元の場所に戻ることにした。");
+                        Console.WriteLine("一旦木陰で休憩することにした。");
                         Console.ReadLine();//次のコメントを表示
-                        goto label1;//これ、この選択肢3と、1セクションの選択肢1を行き来したら幸運を無限にあげられるね…
+                        Console.WriteLine("森林ならではの爽やかな風が頬に当たり心地が良い。");
+                        Console.ReadLine();//次のコメントを表示
+                        Console.WriteLine("視界、音、匂い。とても安らげた。");
+                        Console.ReadLine();//次のコメントを表示
+                        hp += 50;
+                        mp += 10;
+                        break;
 
                     case "4":
                         //セーブ処理
@@ -358,7 +362,40 @@ while (playing == true)
                         Console.ReadLine();//次のコメントを表示
                         Console.WriteLine("こちらにはまだ気づいていないようだ。");
                         Console.ReadLine();//次のコメントを表示
-                        //強制戦闘処理でも、戦闘or道を戻って分岐点の右側の道に行くか選択肢を与えてもよい。
+                        
+                        //戦闘or道を戻って分岐点の右側の道に行くかの選択肢
+                        bool which = false;
+                        while (which == false)
+                        {
+                            Console.WriteLine("");
+                            Console.WriteLine("どうしますか");
+                            Console.WriteLine("1:敵と戦闘する");
+                            Console.WriteLine("2:先ほどの分岐点まで戻る");
+
+                            command = Console.ReadLine();
+                            switch (command)
+                            {
+                                case "1":
+                                    which = true;
+                                    //戦闘処理
+                                    Buttle();
+                                    //もし死んでいるなら終了する
+                                    if (section == 99)
+                                        goto label99;
+                                    break;
+
+                                case "2":
+                                    which = true;
+                                    where = false;
+                                    Console.WriteLine("先ほどの分岐点まで戻った。");
+                                    Console.ReadLine();//次のコメントを表示
+                                    break;
+
+                                default:
+                                    Console.WriteLine("半角数字を入力してください。");
+                                    break;
+                            }
+                        }
                         break;
 
                     case "3":
@@ -375,7 +412,33 @@ while (playing == true)
             Console.WriteLine("広い空間に出たので、一旦周りを見渡すことにした。");
             Console.ReadLine();//次のコメントを表示
             Console.WriteLine("右手前側には、水たまりのような場所がある。");
-            //風景描写の後、若干進んだところからワープして別のところに強制移送したほうが都合がいいかも。
+            Console.ReadLine();//次のコメントを表示
+            Console.WriteLine("正面側には何もなく、左側に道が続いているようだった。");
+            Console.ReadLine();//次のコメントを表示
+            Console.WriteLine("左側の道は一本道となっていて、特に迷うこともなく進んでいく。");
+            Console.ReadLine();//次のコメントを表示
+            Console.WriteLine("しばらく進んでいると、見慣れないものがあった。");
+            Console.ReadLine();//次のコメントを表示
+            Console.WriteLine("「なに？これ…魔法陣かしら？」");
+            Console.ReadLine();//次のコメントを表示
+            Console.WriteLine("床には星形の模様がつき、天井に向けて水色の半透明なオーラが浮かび上がっていた。");
+            Console.ReadLine();//次のコメントを表示
+            Console.WriteLine("そのオーラを左手で触れようとする。");
+            Console.ReadLine();//次のコメントを表示
+            Console.WriteLine("一瞬の間をおいて、視界は真っ白になった。");
+            Console.ReadLine();//次のコメントを表示
+            Console.WriteLine("白い光はただ眩しいではなく、温かさが感じられた。");
+            Console.ReadLine();//次のコメントを表示
+            Console.WriteLine("数秒経った後、だんだんとその光は消えていった。");
+            Console.ReadLine();//次のコメントを表示
+            Console.WriteLine("しかし、その視界に映っていたのは、先ほど居た地下ではなく、レンガ造りの建物の中だった。");
+            Console.ReadLine();//次のコメントを表示
+            Console.WriteLine("建物にはアーチ状の窓が適度につけられており、先ほどの地下とは打って変わって明るい様子だった。");
+            Console.ReadLine();//次のコメントを表示
+            Console.WriteLine("窓を覗いてみると、下の様子は霧で見えず、今いる場所はかなり高い階なのかもしれないと思った。");
+            Console.ReadLine();//次のコメントを表示
+            //天空世界
+            //下の階に行くか、上の階に行くかで大きく√分岐
 
             break;
 
@@ -462,6 +525,9 @@ void Save()
 //戦闘処理
 void Buttle() 
 {
+    Console.WriteLine(" -+-+- 戦闘開始 -+-+- ");
+    Console.ReadLine();//次のコメントを表示
+    
     //ランダムな数値用
     Random rand = new();
 
@@ -663,7 +729,7 @@ void Buttle()
                 {
                     Console.WriteLine("敵からの攻撃");
                     Console.ReadLine();//次のコメントを表示
-                    hp -= rand.Next(6, 14) * 10;//60~130(10刻み)
+                    hp -= rand.Next(5, 14) * 10;//50~130(10刻み)(最大値が出るとまあまあ強いのでHPに注意。)
                 }
                 else if (rand.Next(0, 101) <= 50)//全体で15%の確率(残り30%のうち、更に半分の確率)
                 {
@@ -699,4 +765,3 @@ void Buttle()
         }
     }
 }
-
