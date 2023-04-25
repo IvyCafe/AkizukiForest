@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel;
+using System.Reflection.Emit;
 using System.Text;
 using System.Xml.Linq;
 
@@ -147,7 +148,7 @@ while (playing == true)
                         choose_item_last = false;
                         choose_item = false;
                         //現時点では、弾丸のセット数を記録しているため、弾数表記に変更
-                        item_bullet = item_bullet * 10;
+                        item_bullet *= 10;
                         Console.WriteLine("");
                     }
                     else if (command == "2")
@@ -219,6 +220,9 @@ while (playing == true)
                         Console.ReadLine();//次のコメントを表示
                         //戦闘処理
                         Buttle();
+                        //もし死んでいるなら終了する
+                        if (section == 99)
+                            goto label99;
                         break;
 
                     case "4":
@@ -425,6 +429,7 @@ while (playing == true)
             break;
 
         case "3":
+            label99:
             playing = false;
             break;
 
@@ -457,17 +462,22 @@ void Save()
 //戦闘処理
 void Buttle() 
 {
-    //多少ランダムにしたい
-    int enemy_hp = 120;
+    //ランダムな数値用
+    Random rand = new();
+
+    //敵の体力(初期値):100~240(10刻み)
+    int enemy_hp = 100 + rand.Next(0,15) * 10;
     //他のところから変更ができるように
     string enemy_name = "異形の存在";
 
     //難易度調節のために戦闘開始時自動回復
-    hp += 40;
-    mp += 5;
+    hp += 20 + rand.Next(0,3) * 10;//20~40(10刻み)
+    mp += rand.Next(2,6);//2~5
 
     while (enemy_hp > 0)
     {
+        Console.WriteLine(" - あなたのターン - ");
+        Console.ReadLine();//次のコメントを表示
 
         //キャラクターステータス表示
         Console.WriteLine("");
@@ -481,17 +491,17 @@ void Buttle()
         bool where = false;
         while (where == false)
         {
+
             Console.WriteLine("");
             Console.WriteLine("どのような行動をしますか");
             Console.WriteLine("1:ナイフ攻撃");
             Console.WriteLine("2:手榴弾攻撃(残り{0}個)", item_bom);
             Console.WriteLine("3:拳銃射撃(残り{0}発)", item_bullet);
-            Console.WriteLine("4:通常治療");//軽い治療ならアイテムなしで回復できる。
+            Console.WriteLine("4:治療魔法");//MPを使って回復
             Console.WriteLine("5:回復薬治療(残り{0}個)", item_cure);
             Console.WriteLine("6:戦略的撤退");//逃げる
             Console.WriteLine("7:手榴弾退散(残り{0}個)", item_bom);//手榴弾の爆破と同時に逃げることで「戦略的撤退」よりも高確率で逃げ切れる
             Console.WriteLine("8:敵味方のステータスを再確認");
-            //魔法どうしようかな…(アイテムが多いからぶっちゃけいらない説ある…)
 
             command = Console.ReadLine();
             switch (command)
@@ -504,7 +514,7 @@ void Buttle()
                     Console.ReadLine();//次のコメントを表示
                     Console.WriteLine("敵はダメージを受けたようだ。");
                     Console.ReadLine();//次のコメントを表示
-                    enemy_hp -= 50;
+                    enemy_hp -= 50;//固定ダメージ
                     break;
 
                 case "2":
@@ -518,7 +528,7 @@ void Buttle()
                         Console.ReadLine();//次のコメントを表示
                         Console.WriteLine("しばらくすると、大きな爆発音を上げ、トンネルの中は白い煙に包まれた。");
                         Console.ReadLine();//次のコメントを表示
-                        enemy_hp -= 120;
+                        enemy_hp -= 150 + rand.Next(0, 4) * 10;//150~180(10刻み)
                     }
                     else
                     {
@@ -541,7 +551,7 @@ void Buttle()
                         Console.ReadLine();//次のコメントを表示
                         Console.WriteLine("弾丸は敵を直撃して、敵の体を貫通した。");
                         Console.ReadLine();//次のコメントを表示
-                        enemy_hp -= 180;
+                        enemy_hp -= 40 + rand.Next(0, 27) * 10;// 40~300(10刻み)
                     }
                     else
                     {
@@ -552,10 +562,29 @@ void Buttle()
 
                 case "4":
                     //治療処理
-                    where = true;
-                    Console.WriteLine("ナイフでスカートの先を切り、その布で傷ついた部分を保護した。");
-                    Console.ReadLine();//次のコメントを表示
-                    hp += 50;
+                    if (mp >= 3)
+                    {
+                        where = true;
+                        mp -= 3;
+                        Console.WriteLine("「リヴァレド・ハート」");
+                        Console.WriteLine("両手を空にかざし、回復魔法を唱えた。");
+                        Console.ReadLine();//次のコメントを表示
+                        Console.WriteLine("優しいオーラが秋月の体を包み込む。");
+                        Console.ReadLine();//次のコメントを表示
+                        Console.WriteLine("傷は見る見るうちに回復していった。");
+                        Console.ReadLine();//次のコメントを表示
+                        hp += 160;//固定
+                    }
+                    else
+                    {
+                        where = true;
+                        Console.WriteLine("魔力が足りないため、簡易的な治療のみ行うことにした。");
+                        Console.ReadLine();//次のコメントを表示
+                        Console.WriteLine("ナイフでスカートの先を切り、その布で傷ついた部分を保護した。");
+                        Console.ReadLine();//次のコメントを表示
+                        hp += 50;//固定
+                    }
+
                     break;
 
                 case "5":
@@ -568,7 +597,7 @@ void Buttle()
                         Console.ReadLine();//次のコメントを表示
                         Console.WriteLine("傷ついた部分に治療薬を塗り、包帯で巻いて痛みを和らげることができた。");
                         Console.ReadLine();//次のコメントを表示
-                        hp += 200;
+                        hp += 200;//固定
                     }
                     else
                     {
@@ -578,12 +607,23 @@ void Buttle()
                     break;
 
                 case "6":
-                    //確立で逃げる処理(現時点では確実に逃げられる)
-                    enemy_hp = 0;
+                    //確立で逃げる処理(50%の確率で逃げられる)
+                    if (rand.Next(0, 101) >= 50)
+                    {
+                        Console.WriteLine("敵からなんとか逃げ切ることができた。");
+                        Console.ReadLine();//次のコメントを表示
+                        enemy_hp = 0;
+                    }
+                    else
+                    {
+                        Console.WriteLine("敵に回り込まれた。");
+                        Console.ReadLine();//次のコメントを表示
+                    }
+
                     break;
 
                 case "7":
-                    //逃げる処理
+                    //逃げる処理(必ず)
                     enemy_hp = 0;
                     break;
 
@@ -601,6 +641,7 @@ void Buttle()
                     break;
             }
 
+            //敵死亡判定
             if (enemy_hp <= 0)
             {
                 Console.WriteLine("敵はその場に倒れ、もう二度と動かなくなった。");
@@ -615,10 +656,47 @@ void Buttle()
             else
             {
                 //続行(敵ターン)
+                Console.WriteLine(" - 敵のターン - ");
+                Console.ReadLine();//次のコメントを表示
+
+                if (rand.Next(0, 101) <= 70)//70%の確率
+                {
+                    Console.WriteLine("敵からの攻撃");
+                    Console.ReadLine();//次のコメントを表示
+                    hp -= rand.Next(6, 14) * 10;//60~130(10刻み)
+                }
+                else if (rand.Next(0, 101) <= 50)//全体で15%の確率(残り30%のうち、更に半分の確率)
+                {
+                    Console.WriteLine("敵は様子を見ている。");
+                    Console.ReadLine();//次のコメントを表示
+                }
+                else//全体で15%
+                {
+                    Console.WriteLine("敵は回復魔法を唱えた。");
+                    Console.ReadLine();//次のコメントを表示
+                    enemy_hp += 120;//固定
+                }
+
+                //秋月死亡判定
+                if (hp <= 0)
+                {
+                    Console.WriteLine("");
+                    Console.WriteLine("「う、うそ…」");
+                    Console.ReadLine();//次のコメントを表示
+                    Console.WriteLine("体に大きな傷を負った秋月はもう、そこから動くことができなくなってしまった。");
+                    Console.ReadLine();//次のコメントを表示
+                    Console.WriteLine("視界に広がる真紅の液体。それが自分の運命を示唆しているようだった。");
+                    Console.ReadLine();//次のコメントを表示
+                    Console.WriteLine("「こ…こんなところで死ぬはずは…」");
+                    Console.ReadLine();//次のコメントを表示
+                    Console.WriteLine("言葉を言い終える前に、その人生の終わりを早々と迎えた。");
+                    Console.ReadLine();//次のコメントを表示
+                    //終了判定
+                    enemy_hp = 0;
+                    section = 99;
+                }
             }
-            //作成途中
         }
-        //作成途中
     }
-    //作成途中
 }
+
