@@ -267,6 +267,8 @@ while (playing == true)
                 {
                     case "1":
                         where = true;
+                        Console.WriteLine("見たことがない建物を見た秋月は、すぐにそこへ近づいた。");
+                        Console.ReadLine();//次のコメントを表示
                         break;
 
                     case "2":
@@ -287,17 +289,26 @@ while (playing == true)
                         Console.ReadLine();//次のコメントを表示
                         lack += 3;
                         hp += 20;//微妙に回復(本作ではHPの最大値はない(しいて言うならint(32bit整数(負の数を含める))が最大値。))
+                        Console.WriteLine("先ほどの建物ことをふと思い出した。");
+                        Console.ReadLine();//次のコメントを表示
+                        Console.WriteLine("こんな森の奥に誰が作ったのかが気になり、気が付くとその足はそちらへと動いていた。");
+                        Console.ReadLine();//次のコメントを表示
                         break;
 
                     case "3":
+                        where = true;
                         Console.WriteLine("一旦木陰で休憩することにした。");
                         Console.ReadLine();//次のコメントを表示
                         Console.WriteLine("森林ならではの爽やかな風が頬に当たり心地が良い。");
                         Console.ReadLine();//次のコメントを表示
-                        Console.WriteLine("視界、音、匂い。とても安らげた。");
+                        Console.WriteLine("視界、音、匂い。それらすべての要素が私の気分をとても穏やかにさせた。");
                         Console.ReadLine();//次のコメントを表示
                         hp += 50;
                         mp += 10;
+                        Console.WriteLine("先ほどの建物ことをふと思い出した。");
+                        Console.ReadLine();//次のコメントを表示
+                        Console.WriteLine("こんな森の奥に誰が作ったのかが気になり、気が付くとその足はそちらへと動いていた。");
+                        Console.ReadLine();//次のコメントを表示
                         break;
 
                     case "4":
@@ -315,8 +326,6 @@ while (playing == true)
             label3:
             section = 3;
 
-            Console.WriteLine("見たことがない建物を見た秋月は、すぐにそこへ近づいた。");
-            Console.ReadLine();//次のコメントを表示
             Console.WriteLine("石で建造されたトンネルのようなその建造物は、山の内部へ続いている。");
             Console.ReadLine();//次のコメントを表示
             Console.WriteLine("トンネルへ入り奥へ進んでいくと、道は二股に別れていた。");
