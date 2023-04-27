@@ -444,8 +444,31 @@ while (playing == true)
             Console.ReadLine();//次のコメントを表示
             Console.WriteLine("建物にはアーチ状の窓が適度につけられており、先ほどの地下とは打って変わって明るい様子だった。");
             Console.ReadLine();//次のコメントを表示
-            Console.WriteLine("窓を覗いてみると、下の様子は霧で見えず、今いる場所はかなり高い階なのかもしれないと思った。");
+            Console.WriteLine("窓を覗いてみると、下の様子は霧で見えず、今いる場所はかなり高い階なのだろうと思った。");
             Console.ReadLine();//次のコメントを表示
+            Console.WriteLine("窓の外に気を取られていると、ふと後ろのほうに気配を感じた。");
+            Console.ReadLine();//次のコメントを表示
+            Console.WriteLine("急いで振り返ると、そこには身長の高い怪物がいた。");
+            Console.ReadLine();//次のコメントを表示
+            Console.WriteLine("急いで、近くの柱へ隠れ、そこから銃撃を開始することにした。");
+            Console.ReadLine();//次のコメントを表示
+            //強制戦闘
+            //強制戦闘のため、自動回復
+            if (hp <= 260)
+                hp = 260;
+            if (mp <= 30)
+                mp = 30;
+            //戦闘開始
+            Buttle();
+            //もし死んでいるなら終了する
+            if (section == 99)
+                goto label99;
+
+            Console.WriteLine("「はぁ、はぁ。」");
+            Console.ReadLine();//次のコメントを表示
+            Console.WriteLine("「急に現れて、本当にびっくりしたわ。」");
+            Console.ReadLine();//次のコメントを表示
+
             //天空世界
             //下の階に行くか、上の階に行くかで大きく√分岐
 
