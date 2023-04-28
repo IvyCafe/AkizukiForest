@@ -441,6 +441,7 @@ while (playing == true)
             Console.WriteLine("数秒経った後、だんだんとその光は消えていった。");
             Console.ReadLine();//次のコメントを表示
             Console.WriteLine("しかし、その視界に映っていたのは、先ほど居た地下ではなく、レンガ造りの建物の中だった。");
+            //天空世界
             Console.ReadLine();//次のコメントを表示
             Console.WriteLine("建物にはアーチ状の窓が適度につけられており、先ほどの地下とは打って変わって明るい様子だった。");
             Console.ReadLine();//次のコメントを表示
@@ -464,6 +465,10 @@ while (playing == true)
             if (section == 99)
                 goto label99;
 
+            //ロード地点(4c)
+            label4c:
+            section = 6;
+
             Console.WriteLine("「はぁ、はぁ。」");
             Console.ReadLine();//次のコメントを表示
             Console.WriteLine("「急に現れて、本当にびっくりしたわ。」");
@@ -474,10 +479,182 @@ while (playing == true)
             Console.ReadLine();//次のコメントを表示
             Console.WriteLine("「ここ、本当に何の場所なのかしらね…」");
             Console.ReadLine();//次のコメントを表示
+            Console.WriteLine("「さて、上か下か。」");
+            Console.ReadLine();//次のコメントを表示
+                               //下の階に行くか、上の階に行くかで大きく√分岐
+                               //天空世界の頂上到達√…天空世界の結末(たまたま地下洞窟と天空世界でつながってしまったことなど)を明かす
+                               //天空世界の地上到達√…地下空洞の過去を明かす
+                               //秘密コマンドにて窓から飛び降りる→森の泉(隠し)√…次回作や尾花と桜(北大陸)の世界観についてのフラグ・ヒント/秋月の過去について
+            where = false;
+            while (where == false)
+            {
+                Console.WriteLine("");
+                Console.WriteLine("どうしますか");
+                Console.WriteLine("1:上の階へ行く");
+                Console.WriteLine("2:下の階へ行く");
+                //3:窓から飛び降りる(隠し√)
+                //3番を隠すことでフラグにしている。
+                //(隠し√だけど、3番が飛ばされているというのは違和感があるし、結構見つけやすい√だと思う。)
+                //(3番を飛ばしているのはただのミスだと思われるかもしれないけど)
+                Console.WriteLine("----------");
+                Console.WriteLine("4:セーブ");
 
-            //天空世界
-            //下の階に行くか、上の階に行くかで大きく√分岐
+                command = Console.ReadLine();
+                switch (command)
+                {
+                    case "1":
+                        where = true;
+                        Console.WriteLine("上の階へと進んでいくが、同じような風景が続いている。");
+                        Console.ReadLine();//次のコメントを表示
+                        Console.WriteLine("全ての階が同じ内装で、家具や物がなく、ループしているように思える。");
+                        Console.ReadLine();//次のコメントを表示
 
+                        //天空ルート(戦闘(ボス戦)後に神が現れて現世に戻らせてくれる)
+
+                        break;
+
+                    case "2":
+                        where = true;
+                        Console.WriteLine("下の階へ進んでいくと、窓からだんだんと地上の様子が見えてきた。");
+                        Console.ReadLine();//次のコメントを表示
+                        Console.WriteLine("地面から雑草が生える風景が広がっている。");
+                        Console.ReadLine();//次のコメントを表示
+                        Console.WriteLine("階段は地上までで、建物に地下は存在しないようだ。");
+                        Console.ReadLine();//次のコメントを表示
+                        Console.WriteLine("地上についたことで、この建物の外の様子がよくわかるようになったが、ほとんど他の建物はなかった。");
+                        Console.ReadLine();//次のコメントを表示
+                        Console.WriteLine("しかし、やや離れた場所に1つだけぽつんと建物があるように見えた。");
+                        Console.ReadLine();//次のコメントを表示
+
+                        //地上ルート(地下の場所に関する文献を読める。また、魔導書かワープ装置か何かで現世に戻る。)
+                        
+                        break;
+
+                    case "3":
+                        where = true;
+                        Console.WriteLine("彼女は、階段の逆の方向を向いた。");
+                        Console.ReadLine();//次のコメントを表示
+                        Console.WriteLine("すると、走って窓に向かって飛び蹴りを炸裂し、見事にその窓を割って地上へ落ちていった。");
+                        Console.ReadLine();//次のコメントを表示
+                        Console.WriteLine("「もう、疲れたよ…」");
+                        Console.ReadLine();//次のコメントを表示
+                        Console.WriteLine("今までの記憶をたどる。");
+                        Console.ReadLine();//次のコメントを表示
+                        Console.WriteLine("家族の事、国の事、かつて見た未来の夢。");
+                        Console.ReadLine();//次のコメントを表示
+                        Console.WriteLine("昔の戦争で再び会うことを誓った3人の同士、同じ部隊の黒服の少女…");
+                        //昔の戦争(対チャクム戦/北大陸南西部防衛)での3人の仲間(「世界の終焉の前に。」)、
+                        //同じ部隊(第6師団/旧黒軍師)の黒服の少女(椿と航空隊の2人)
+                        Console.ReadLine();//次のコメントを表示
+                        Console.WriteLine("様々なことを思い出した。");
+                        Console.ReadLine();//次のコメントを表示
+                        Console.WriteLine("死ぬ前に会いたかった人がいた。でも、もう戻れない。");
+                        Console.ReadLine();//次のコメントを表示
+                        Console.WriteLine("「ここからもとに戻れる気がしないんだ…」");
+                        Console.ReadLine();//次のコメントを表示
+                        Console.WriteLine("「でも、もう一度でいいから見たかった…」");
+                        //家族と、旧黒軍師メンバー、かつての仲間(「世界の終焉の前に。」メンバー)、第6師団の上司と。
+                        Console.ReadLine();//次のコメントを表示
+                        Console.WriteLine("その瞳に映るのは真っ青な空と、白い雲だけだった。");
+                        Console.ReadLine();//次のコメントを表示
+                        Console.WriteLine("「あなた…こっちの世界に迷い込んでしまったのかしら…」");//神
+                        Console.ReadLine();//次のコメントを表示
+                        Console.WriteLine("見知らぬ声が聞こえる。");
+                        Console.ReadLine();//次のコメントを表示
+                        Console.WriteLine("「ええと、」");//神
+                        Console.ReadLine();//次のコメントを表示
+                        Console.WriteLine("その声の後、体がふわっと浮いたような感じがした。");
+                        Console.ReadLine();//次のコメントを表示
+                        Console.WriteLine("視界は真っ白になり、ちょうど地下からこちらに来た時と同じように暖かさのある光だった。");
+                        Console.ReadLine();//次のコメントを表示
+                        Console.WriteLine("瞬きをした次の瞬間、私の視界は緑色に支配されていた。");
+                        Console.ReadLine();//次のコメントを表示
+                        Console.WriteLine("鬱蒼と茂る白樺並木、背丈の低い雑草と、まばらに生える秘色と紅の花。");
+                        Console.ReadLine();//次のコメントを表示
+                        Console.WriteLine("間違いなく始めの森に戻ったようだ。");
+                        Console.ReadLine();//次のコメントを表示
+                        Console.WriteLine("「あなたはこちらの人間のようね…」");//神
+                        Console.ReadLine();//次のコメントを表示
+                        Console.WriteLine("声の聞こえる後ろを振り返ると、そこには長髪で神々しさをまとう人の姿があった。");
+                        Console.ReadLine();//次のコメントを表示
+                        Console.WriteLine("「ええと、あなたは…」");//秋月
+                        Console.ReadLine();//次のコメントを表示
+                        Console.WriteLine("そう聞くと、その言葉を遮るように彼女は次の言葉を続けた。");
+                        Console.ReadLine();//次のコメントを表示
+                        Console.WriteLine("「こちらはあなたが来ていい世界ではないわ。」");//神
+                        Console.ReadLine();//次のコメントを表示
+                        Console.WriteLine("「こちらのミスで来てしまったみたいだけれど。申し訳ないわ…」");//神
+                        Console.ReadLine();//次のコメントを表示
+                        Console.WriteLine("意味が分からず、質問をしようとした瞬間、彼女の姿はなくなっていた。");
+                        Console.ReadLine();//次のコメントを表示
+                        Console.WriteLine("私の視界にはただ森の風景と彼女が先ほどいた場所にある透明な泉のみが残った。");
+                        Console.ReadLine();//次のコメントを表示
+                        Console.WriteLine("ただ、地上に戻れたという安堵の気持ちが湧き出て、近くにあった木に倒れこんだ。");
+                        Console.ReadLine();//次のコメントを表示
+                        Console.WriteLine("");
+                        Console.WriteLine("END:森の泉(隠しルート)");
+                        Console.WriteLine("[秋月の過去と見えない事実]");
+                        //見えない事実(現実)…泉にいる神の言っていることが意味不明&説明不足過ぎる
+                        Console.WriteLine("");
+                        Console.ReadLine();//次のコメントを表示
+                        break;
+
+                    case "4":
+                        //セーブ処理
+                        Save();
+                        break;
+
+                    default:
+                        Console.WriteLine("半角数字を入力してください。");
+                        break;
+                }
+            }
+
+            //運が若干高い場合は秋月と椿の会話について解放。
+            //この文章はぶっちゃけこのゲーム内でも、尾花と桜系を知っている人でもわからないと思う。
+            //(親友=椿とわかる人はすごい。親友→×親、上司、△世界の終焉の前に。(長い間合っていないので一緒に喋る機会がない)、〇旧黒軍師
+            //→旧黒軍師では3人いるが、航空隊2人の名前や詳細がまだ決まっていないため、椿という推測は一応可能だが。
+            //(未来になって航空隊2人の名前が決まっても、決まっていなかった時代のストーリーということで未来になっても上記と同じ考察が可能。))
+            if (lack >= 5)
+            {
+                Console.WriteLine("");
+                Console.WriteLine(" - - - - - ");
+                Console.WriteLine("「っていうことがあったのよね」");//秋月
+                Console.ReadLine();//次のコメントを表示
+                Console.WriteLine("後日、次の目的地までの移動中に親友と話をしていた。");
+                Console.ReadLine();//次のコメントを表示
+                Console.WriteLine("「へえ…珍しいこともあるんだね。」");//椿
+                Console.ReadLine();//次のコメントを表示
+                Console.WriteLine("「あ、言っておくけど、作り話じゃなくて本当だからね!」");//秋月
+                Console.ReadLine();//次のコメントを表示
+                Console.WriteLine("「わかってるよ。それより…」");//椿
+                Console.ReadLine();//次のコメントを表示
+                Console.WriteLine("「今日の計画でしょ。」");//秋月
+                Console.ReadLine();//次のコメントを表示
+                Console.WriteLine("「そうね。」");//椿
+                Console.ReadLine();//次のコメントを表示
+                Console.WriteLine("「今回は、未探索地域の調査だってね。」");//秋月
+                Console.ReadLine();//次のコメントを表示
+                Console.WriteLine("「ふうん…楽しみね。」");//椿
+                Console.ReadLine();//次のコメントを表示
+                Console.WriteLine("「そうだね。」");//秋月
+                //一応A-RPGの布石。A-RPGの中でも電車が居なくなって、暇だからトンネルに入るみたいな話のやつ。
+                //内容とか導入が被っているからあのシナリオは使わないかもしれないけど…
+                //あと、あれは3Dでやる予定だったから1人用(秋月のみの)シナリオだし…
+                //ここの会話内容は後で変えたほうがいいかも…(フラグを残せる重要な場所なので。)
+                Console.WriteLine(" - - - - - ");
+                Console.WriteLine("");
+            }
+
+            Console.WriteLine("開発");
+            Console.WriteLine("プログラム:Lemon73(LEC)");
+            Console.WriteLine("シナリオ:Lemon73(LEC)");
+            Console.WriteLine("");
+            Console.WriteLine("素材");
+            Console.WriteLine("ベース:.NET Framework4.8 (Console)[Microsoft社]");
+            Console.WriteLine("");
+            Console.WriteLine("終了です。お疲れさまでした。");
+            Console.ReadLine();//次のコメントを表示
             break;
 
         //ロード
@@ -521,6 +698,9 @@ while (playing == true)
 
                     case 3:
                         goto label3;
+
+                    case 6:
+                        goto label4c;
 
                     default:
                         break;
@@ -745,6 +925,7 @@ void Buttle()
                     break;
             }
 
+
             //敵死亡判定
             if (enemy_hp <= 0)
             {
@@ -759,45 +940,52 @@ void Buttle()
             }
             else
             {
-                //続行(敵ターン)
-                Console.WriteLine(" - 敵のターン - ");
-                Console.ReadLine();//次のコメントを表示
+                //もし攻撃or回復(逃げる+誤入力以外)なら
+                //このif文で↓のバグを回避できる。
+                //(8の「様子を見る」や誤コマンドの際に本来なら再度コマンドを選べるはずなのに、すぐに敵ターンに移行してしまうバグ。
+                //原因:whileの中に敵の処理を入れているから)
+                if (where == true)
+                {
+                    //続行(敵ターン)
+                    Console.WriteLine(" - 敵のターン - ");
+                    Console.ReadLine();//次のコメントを表示
 
-                if (rand.Next(0, 101) <= 70)//70%の確率
-                {
-                    Console.WriteLine("敵からの攻撃");
-                    Console.ReadLine();//次のコメントを表示
-                    hp -= rand.Next(5, 14) * 10;//50~130(10刻み)(最大値が出るとまあまあ強いのでHPに注意。)
-                }
-                else if (rand.Next(0, 101) <= 50)//全体で15%の確率(残り30%のうち、更に半分の確率)
-                {
-                    Console.WriteLine("敵は様子を見ている。");
-                    Console.ReadLine();//次のコメントを表示
-                }
-                else//全体で15%
-                {
-                    Console.WriteLine("敵は回復魔法を唱えた。");
-                    Console.ReadLine();//次のコメントを表示
-                    enemy_hp += 120;//固定
-                }
+                    if (rand.Next(0, 101) <= 70)//70%の確率
+                    {
+                        Console.WriteLine("敵からの攻撃");
+                        Console.ReadLine();//次のコメントを表示
+                        hp -= rand.Next(5, 14) * 10;//50~130(10刻み)(最大値が出るとまあまあ強いのでHPに注意。)
+                    }
+                    else if (rand.Next(0, 101) <= 50)//全体で15%の確率(残り30%のうち、更に半分の確率)
+                    {
+                        Console.WriteLine("敵は様子を見ている。");
+                        Console.ReadLine();//次のコメントを表示
+                    }
+                    else//全体で15%
+                    {
+                        Console.WriteLine("敵は回復魔法を唱えた。");
+                        Console.ReadLine();//次のコメントを表示
+                        enemy_hp += 120;//固定
+                    }
 
-                //秋月死亡判定
-                if (hp <= 0)
-                {
-                    Console.WriteLine("");
-                    Console.WriteLine("「う、うそ…」");
-                    Console.ReadLine();//次のコメントを表示
-                    Console.WriteLine("体に大きな傷を負った秋月はもう、そこから動くことができなくなってしまった。");
-                    Console.ReadLine();//次のコメントを表示
-                    Console.WriteLine("視界に広がる真紅の液体。それが自分の運命を示唆しているようだった。");
-                    Console.ReadLine();//次のコメントを表示
-                    Console.WriteLine("「こ…こんなところで死ぬはずは…」");
-                    Console.ReadLine();//次のコメントを表示
-                    Console.WriteLine("言葉を言い終える前に、その人生の終わりを早々と迎えた。");
-                    Console.ReadLine();//次のコメントを表示
-                    //終了判定
-                    enemy_hp = 0;
-                    section = 99;
+                    //秋月死亡判定
+                    if (hp <= 0)
+                    {
+                        Console.WriteLine("");
+                        Console.WriteLine("「う、うそ…」");
+                        Console.ReadLine();//次のコメントを表示
+                        Console.WriteLine("体に大きな傷を負った秋月はもう、そこから動くことができなくなってしまった。");
+                        Console.ReadLine();//次のコメントを表示
+                        Console.WriteLine("視界に広がる真紅の液体。それが自分の運命を示唆しているようだった。");
+                        Console.ReadLine();//次のコメントを表示
+                        Console.WriteLine("「こ…こんなところで死ぬはずは…」");
+                        Console.ReadLine();//次のコメントを表示
+                        Console.WriteLine("言葉を言い終える前に、その人生の終わりを早々と迎えた。");
+                        Console.ReadLine();//次のコメントを表示
+                                            //終了判定
+                        enemy_hp = 0;
+                        section = 99;
+                    }
                 }
             }
         }
