@@ -891,6 +891,7 @@ void Buttle()
                     break;
 
                 case "6":
+                    where = true;
                     //確立で逃げる処理(50%の確率で逃げられる)
                     if (rand.Next(0, 101) >= 50)
                     {
@@ -907,6 +908,7 @@ void Buttle()
                     break;
 
                 case "7":
+                    where = true;
                     //逃げる処理(必ず)
                     enemy_hp = 0;
                     break;
@@ -929,8 +931,18 @@ void Buttle()
             //敵死亡判定
             if (enemy_hp <= 0)
             {
-                Console.WriteLine("敵はその場に倒れ、もう二度と動かなくなった。");
-                Console.ReadLine();//次のコメントを表示
+                switch (command)
+                {
+                    case "6":
+                    case "7":
+                        break;
+
+                    default:
+                        //逃げた場合以外表示
+                        Console.WriteLine("敵はその場に倒れ、もう二度と動かなくなった。");
+                        Console.ReadLine();//次のコメントを表示
+                        break;
+                }
                 Console.WriteLine(" -+-+- 戦闘終了 -+-+- ");
                 Console.ReadLine();//次のコメントを表示
                 Console.WriteLine("「ふう。何とかなったわね。」");
