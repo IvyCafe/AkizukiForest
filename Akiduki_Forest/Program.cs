@@ -468,6 +468,12 @@ while (playing == true)
             Console.ReadLine();//次のコメントを表示
             Console.WriteLine("「急に現れて、本当にびっくりしたわ。」");
             Console.ReadLine();//次のコメントを表示
+            Console.WriteLine("敵が現れた方向を見てみると、そこには階段が続いていた。");
+            Console.ReadLine();//次のコメントを表示
+            Console.WriteLine("また新たな敵が来ないか、注意深く近づいていくと、階段は上下に続いているようだった。");
+            Console.ReadLine();//次のコメントを表示
+            Console.WriteLine("「ここ、本当に何の場所なのかしらね…」");
+            Console.ReadLine();//次のコメントを表示
 
             //天空世界
             //下の階に行くか、上の階に行くかで大きく√分岐
