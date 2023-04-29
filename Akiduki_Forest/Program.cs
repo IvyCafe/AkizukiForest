@@ -618,10 +618,42 @@ while (playing == true)
                         Console.ReadLine();//次のコメントを表示
                         Console.WriteLine("「こちらの手違いで地上と天界がつながってしまったらしくて…」");
                         Console.ReadLine();//次のコメントを表示
-                        Console.WriteLine("「」");
+                        Console.WriteLine("「あの洞窟には何もなかったのね…」");
+                        //何か歴史的な遺産やお宝があると期待して洞窟に入ったが、秋月にとってはどうでもよい天界のワープゲートしかなかったということ。
                         Console.ReadLine();//次のコメントを表示
-
-
+                        Console.WriteLine("「本当に申し訳ないわ…」");
+                        Console.ReadLine();//次のコメントを表示
+                        Console.WriteLine("「別にいいわ…暇つぶしになったし。」");
+                        Console.ReadLine();//次のコメントを表示
+                        Console.WriteLine("そういうと、彼女は少し上を向いて次の言葉を言った。");
+                        Console.ReadLine();//次のコメントを表示
+                        Console.WriteLine("「天界のほうで、黒い化け物がいたでしょう…」");
+                        Console.ReadLine();//次のコメントを表示
+                        Console.WriteLine("「そうね。」");
+                        Console.ReadLine();//次のコメントを表示
+                        Console.WriteLine("「天界の平和が脅かされるような事態になっていて…」");
+                        Console.ReadLine();//次のコメントを表示
+                        Console.WriteLine("「大変そうね。」");
+                        Console.ReadLine();//次のコメントを表示
+                        Console.WriteLine("「まあ、あなたには関係ないことよね…そろそろ別れましょうかね…」");
+                        Console.ReadLine();//次のコメントを表示
+                        Console.WriteLine("「それでは。じゃあね。」");
+                        Console.ReadLine();//次のコメントを表示
+                        Console.WriteLine("「ええ。さようなら。」");
+                        Console.ReadLine();//次のコメントを表示
+                        Console.WriteLine("そういうと、彼女はだんだんと透明になり、消えていった。");
+                        Console.ReadLine();//次のコメントを表示
+                        Console.WriteLine("非現実的な世界に思えたが、先ほどあったことを説明するには現実だと受け入れざるを得ない。");
+                        Console.ReadLine();//次のコメントを表示
+                        Console.WriteLine("「奇妙なこともあるもんだね…」");
+                        Console.ReadLine();//次のコメントを表示
+                        Console.WriteLine("先ほど彼女がいた方向に背を向け、歩き始めた。");
+                        Console.ReadLine();//次のコメントを表示
+                        Console.WriteLine("");
+                        Console.WriteLine("END:天界の青空(通常ルート1)");
+                        Console.WriteLine("[天界の運命]");
+                        Console.WriteLine("");
+                        Console.ReadLine();//次のコメントを表示
                         break;
 
                     case "2":
@@ -766,6 +798,11 @@ while (playing == true)
             Console.WriteLine("");
             Console.WriteLine("終了です。お疲れさまでした。");
             Console.ReadLine();//次のコメントを表示
+            //裏話…手榴弾を実装したのは、実はトンネル内にふさがっているところがあって、そこを爆破して進んでいくためだったんだけど、
+            //トンネルの話が長くなりすぎてつまらなかったから辞めた。だから、攻撃と逃げるときの両方で使えるくらいしかメリットはない
+            //っていうか、手榴弾はともかく、銃の弾丸は普通に余るな…
+            //医療品なんかそもそも使わなくても魔法回復できるし…(戦闘前のMP回復のおかげでほぼMP切れにならないし)
+            //難易度調整はミスったかも(だからといって今から調整するのも面倒)
             break;
 
         //ロード
@@ -930,7 +967,7 @@ void Buttle()
                         Console.WriteLine("秋月は後ろずさりで少しずつ後退しながら、手榴弾のピンを抜いて、");
                         Console.WriteLine("敵のほうに向かって投げつけた。");
                         Console.ReadLine();//次のコメントを表示
-                        Console.WriteLine("しばらくすると、大きな爆発音を上げ、トンネルの中は白い煙に包まれた。");
+                        Console.WriteLine("しばらくすると、大きな爆発音を上げ、付近は白い煙に包まれた。");
                         Console.ReadLine();//次のコメントを表示
                         enemy_hp -= 150 + rand.Next(0, 4) * 10;//150~180(10刻み)
                     }
@@ -966,9 +1003,9 @@ void Buttle()
 
                 case "4":
                     //治療処理
+                    where = true;
                     if (mp >= 3)
                     {
-                        where = true;
                         mp -= 3;
                         Console.WriteLine("「リヴァレド・ハート」");
                         Console.WriteLine("両手を空にかざし、回復魔法を唱えた。");
@@ -977,16 +1014,15 @@ void Buttle()
                         Console.ReadLine();//次のコメントを表示
                         Console.WriteLine("傷は見る見るうちに回復していった。");
                         Console.ReadLine();//次のコメントを表示
-                        hp += 160;//固定
+                        hp += 150;//固定
                     }
                     else
                     {
-                        where = true;
                         Console.WriteLine("魔力が足りないため、簡易的な治療のみ行うことにした。");
                         Console.ReadLine();//次のコメントを表示
                         Console.WriteLine("ナイフでスカートの先を切り、その布で傷ついた部分を保護した。");
                         Console.ReadLine();//次のコメントを表示
-                        hp += 50;//固定
+                        hp += 40;//固定
                     }
 
                     break;
@@ -1001,7 +1037,7 @@ void Buttle()
                         Console.ReadLine();//次のコメントを表示
                         Console.WriteLine("傷ついた部分に治療薬を塗り、包帯で巻いて痛みを和らげることができた。");
                         Console.ReadLine();//次のコメントを表示
-                        hp += 200;//固定
+                        hp += 220;//固定
                     }
                     else
                     {
@@ -1012,8 +1048,8 @@ void Buttle()
 
                 case "6":
                     where = true;
-                    //確立で逃げる処理(50%の確率で逃げられる)
-                    if (rand.Next(0, 101) >= 50)
+                    //確立で逃げる処理(20%の確率で逃げられる)
+                    if (rand.Next(0, 101) <= 20)
                     {
                         Console.WriteLine("敵からなんとか逃げ切ることができた。");
                         Console.ReadLine();//次のコメントを表示
@@ -1028,9 +1064,38 @@ void Buttle()
                     break;
 
                 case "7":
-                    where = true;
-                    //逃げる処理(必ず)
-                    enemy_hp = 0;
+                    //手榴弾があるかを確認
+                    if (item_bom > 0)
+                    {
+                        where = true;
+                        item_bom -= 1;
+                        Console.WriteLine("秋月は後ろずさりで少しずつ後退しながら、手榴弾のピンを抜いて、");
+                        Console.WriteLine("明後日のほうに向かって投げつけた。");
+                        Console.ReadLine();//次のコメントを表示
+                        Console.WriteLine("しばらくすると、大きな爆発音を上げ、付近は白い煙に包まれた。");
+                        Console.ReadLine();//次のコメントを表示
+                        Console.WriteLine("煙に紛れて逃げようと試みる。");
+                        Console.ReadLine();//次のコメントを表示
+
+                        //確立で逃げる処理(60%の確率で逃げられる)
+                        if (rand.Next(0, 101) <= 60)
+                        {
+                            Console.WriteLine("なんとか逃げ切ることができた。");
+                            Console.ReadLine();//次のコメントを表示
+                            enemy_hp = 0;
+                        }
+                        else
+                        {
+                            Console.WriteLine("しかし、敵に回り込まれてしまった。");
+                            Console.ReadLine();//次のコメントを表示
+                            //敵にダメージはなし
+                        }
+                    }
+                    else
+                    {
+                        Console.WriteLine("爆弾がないようだ。");
+                        Console.ReadLine();//次のコメントを表示
+                    }
                     break;
 
                 case "8":
