@@ -21,6 +21,10 @@ int item_bom = 0;//手榴弾の数(手榴弾の重さは*2で算出)
 int item_bullet = 0;//弾丸の数
 int item_cure = 0;//医療品の数
 
+//敵のステータス
+int enemy_hp = 0;
+string enemy_name = "";
+
 //誤ったコマンドを入力しているときはループ
 while (playing == true)
 {
@@ -504,12 +508,119 @@ while (playing == true)
                 {
                     case "1":
                         where = true;
+                        //天空ルート(戦闘(ボス戦)後に神が現れて現世に戻らせてくれる)
                         Console.WriteLine("上の階へと進んでいくが、同じような風景が続いている。");
                         Console.ReadLine();//次のコメントを表示
                         Console.WriteLine("全ての階が同じ内装で、家具や物がなく、ループしているように思える。");
                         Console.ReadLine();//次のコメントを表示
+                        Console.WriteLine("20階以上は上がっただろうか。");
+                        Console.ReadLine();//次のコメントを表示
+                        Console.WriteLine("ここが最上階のようで、部屋は今までの階よりもかなり小さく、扉があるようだった。");
+                        Console.ReadLine();//次のコメントを表示
+                        Console.WriteLine("扉を開けるとそこは屋上になっており、広い場所と1体の黒い奇妙な姿が、上には明るい空と白い雲が広がっていた。");
+                        Console.ReadLine();//次のコメントを表示
+                        Console.WriteLine("向こうの黒い奇妙な姿は、こちらを確認すると同時に、一気に近づいてきた。");
+                        Console.ReadLine();//次のコメントを表示
+                        //ボス戦
+                        //(ボス能力指定)
+                        enemy_hp = 1200;
+                        enemy_name = "黒色の影";
+                        //(秋月回復)
+                        if (hp <= 300)
+                            hp = 300;
+                        hp += 240;
+                        mp += 10;
+                        //戦闘開始
+                        Buttle();
+                        //もし死んでいるなら終了する
+                        if (section == 99)
+                            goto label99;
 
-                        //天空ルート(戦闘(ボス戦)後に神が現れて現世に戻らせてくれる)
+                        Console.WriteLine("「はぁ、はぁ…」");
+                        Console.ReadLine();//次のコメントを表示
+                        Console.WriteLine("「なんなのよ…こいつ。結構強いじゃない…」");
+                        Console.ReadLine();//次のコメントを表示
+                        Console.WriteLine("何とか倒せたもののかなりけがをしてしまった。");
+                        Console.ReadLine();//次のコメントを表示
+                        Console.WriteLine("屋上のフェンスへと近づき、周辺を見回してみると、そこには絶景が広がっていた。");
+                        Console.ReadLine();//次のコメントを表示
+                        Console.WriteLine("雲海が広がり、ところどころ青色の山が顔をのぞかせている。");
+                        Console.ReadLine();//次のコメントを表示
+                        Console.WriteLine("雲の切れ目からは草原や色彩豊かな花畑が広がる。");
+                        Console.ReadLine();//次のコメントを表示
+                        lack += 5;
+                        Console.WriteLine("風景に見とれていると、後ろから気配を感じるようになった。");
+                        Console.ReadLine();//次のコメントを表示
+                        Console.WriteLine("急いで拳銃を手に取り、後ろを振り返ってみると…");
+                        Console.ReadLine();//次のコメントを表示
+                        Console.WriteLine("そこには長髪の神々しい人の姿があった。");
+                        Console.ReadLine();//次のコメントを表示
+                        Console.WriteLine("「あの、敵ではないわ…」");
+                        Console.ReadLine();//次のコメントを表示
+                        Console.WriteLine("彼女はそうつぶやいた。");
+                        Console.ReadLine();//次のコメントを表示
+                        Console.WriteLine("「私は秋月小鞠。あなたは？」");
+                        //人の名前を聞く前に、自分の名前を言うという理論を通している秋月。
+                        Console.ReadLine();//次のコメントを表示
+                        Console.WriteLine("銃は持ったままそのように質問をした。");
+                        Console.ReadLine();//次のコメントを表示
+                        Console.WriteLine("すると、");
+                        Console.ReadLine();//次のコメントを表示
+                        Console.WriteLine("「ええと…名前はないかしらね。」");
+                        Console.ReadLine();//次のコメントを表示
+                        Console.WriteLine("といった。続けて、");
+                        Console.ReadLine();//次のコメントを表示
+                        Console.WriteLine("「出身はどこかしら？」");
+                        Console.ReadLine();//次のコメントを表示
+                        Console.WriteLine("彼女は私に対してそう投げかける。");
+                        Console.ReadLine();//次のコメントを表示
+                        Console.WriteLine("「どこ出身に見える？」");
+                        Console.ReadLine();//次のコメントを表示
+                        Console.WriteLine("わざとそういうように訊ねてみた");
+                        Console.ReadLine();//次のコメントを表示
+                        Console.WriteLine("「ええと、地上のほうよね…」");
+                        Console.ReadLine();//次のコメントを表示
+                        Console.WriteLine("その回答に疑問を覚えた。");
+                        Console.ReadLine();//次のコメントを表示
+                        Console.WriteLine("「あの、ここはどこの国なのかしら…？」");
+                        Console.ReadLine();//次のコメントを表示
+                        Console.WriteLine("そう聞いてみた。すると、すぐにこのように返された。");
+                        Console.ReadLine();//次のコメントを表示
+                        Console.WriteLine("「ここは、天界。あなたの知っている場所ではないわ。」");
+                        Console.ReadLine();//次のコメントを表示
+                        Console.WriteLine("天界…昔聞いたことがあるような気がした。とても平和で、景色の綺麗な場所があると…");
+                        Console.ReadLine();//次のコメントを表示
+                        Console.WriteLine("「あの…元の世界には戻れるの…？」");
+                        Console.ReadLine();//次のコメントを表示
+                        Console.WriteLine("不安になって聞いてみる。");
+                        Console.ReadLine();//次のコメントを表示
+                        Console.WriteLine("彼女は困ったような顔をした。");
+                        Console.ReadLine();//次のコメントを表示
+                        Console.WriteLine("「え…戻れないの？」");
+                        Console.ReadLine();//次のコメントを表示
+                        Console.WriteLine("と聞くと、すぐに彼女は笑顔になり、口を開いた。");
+                        Console.ReadLine();//次のコメントを表示
+                        Console.WriteLine("「冗談よ。すぐに戻れる。」");
+                        Console.ReadLine();//次のコメントを表示
+                        Console.WriteLine("「だ、だよね…」");
+                        Console.ReadLine();//次のコメントを表示
+                        Console.WriteLine("「少し待っててね。」");
+                        Console.ReadLine();//次のコメントを表示
+                        Console.WriteLine("その言葉の次には、視界が暖かな白い光で覆われた。");
+                        Console.ReadLine();//次のコメントを表示
+                        Console.WriteLine("ほんの僅かの時間の後、視界を支配する白い光はだんだんと薄くなっていき、やがて緑色が見えた。");
+                        Console.ReadLine();//次のコメントを表示
+                        Console.WriteLine("鬱蒼と茂る白樺の森林、この季節ならではの涼しさをまとったこの空間はまぎれもなく私の知る森だった。");
+                        Console.ReadLine();//次のコメントを表示
+                        Console.WriteLine("「本当にごめんなさいね。」");
+                        Console.ReadLine();//次のコメントを表示
+                        Console.WriteLine("声の聞こえる後ろを見てみると、彼女の姿があった。");
+                        Console.ReadLine();//次のコメントを表示
+                        Console.WriteLine("「こちらの手違いで地上と天界がつながってしまったらしくて…」");
+                        Console.ReadLine();//次のコメントを表示
+                        Console.WriteLine("「」");
+                        Console.ReadLine();//次のコメントを表示
+
 
                         break;
 
@@ -749,10 +860,19 @@ void Buttle()
     //ランダムな数値用
     Random rand = new();
 
-    //敵の体力(初期値):100~240(10刻み)
-    int enemy_hp = 100 + rand.Next(0,15) * 10;
-    //他のところから変更ができるように
-    string enemy_name = "異形の存在";
+    //もしhpが指定されていないなら
+    if (enemy_hp <= 0)
+    {
+        //敵の体力(初期値):100~240(10刻み)
+        enemy_hp = 100 + rand.Next(0, 15) * 10;
+    }
+
+    //もし名前が指定されていないなら
+    if (enemy_name == "")
+    {
+        //初期値
+        enemy_name = "異形の存在";
+    }
 
     //難易度調節のために戦闘開始時自動回復
     hp += 20 + rand.Next(0,3) * 10;//20~40(10刻み)
@@ -943,6 +1063,7 @@ void Buttle()
                         Console.ReadLine();//次のコメントを表示
                         break;
                 }
+                enemy_name = "";//敵の名前を未指定状態にする
                 Console.WriteLine(" -+-+- 戦闘終了 -+-+- ");
                 Console.ReadLine();//次のコメントを表示
                 Console.WriteLine("「ふう。何とかなったわね。」");
