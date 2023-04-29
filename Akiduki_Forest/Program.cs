@@ -658,6 +658,7 @@ while (playing == true)
 
                     case "2":
                         where = true;
+                        //地上ルート(地下の場所に関する文献を読める。また、魔導書かワープ装置か何かで現世に戻る。)
                         Console.WriteLine("下の階へ進んでいくと、窓からだんだんと地上の様子が見えてきた。");
                         Console.ReadLine();//次のコメントを表示
                         Console.WriteLine("地面から雑草が生える風景が広がっている。");
@@ -666,11 +667,37 @@ while (playing == true)
                         Console.ReadLine();//次のコメントを表示
                         Console.WriteLine("地上についたことで、この建物の外の様子がよくわかるようになったが、ほとんど他の建物はなかった。");
                         Console.ReadLine();//次のコメントを表示
+                        Console.WriteLine("広がっていたのは、建物の残骸。それだけだった。");
+                        Console.ReadLine();//次のコメントを表示
                         Console.WriteLine("しかし、やや離れた場所に1つだけぽつんと建物があるように見えた。");
                         Console.ReadLine();//次のコメントを表示
+                        Console.WriteLine("建物に近づいてみることにした。");
+                        Console.ReadLine();//次のコメントを表示
+                        Console.WriteLine("その建物は、周りの建物の残骸に比べるとかなりましだが、それでもかなり損傷があり、今にも崩れそうだ。");
+                        Console.ReadLine();//次のコメントを表示
+                        Console.WriteLine("また、白い壁と蒼い屋根を基調とし、窓がいくつかついていた。");
+                        Console.ReadLine();//次のコメントを表示
+                        Console.WriteLine("窓…といっても窓自体はほとんど割れていて、その残骸と窓枠だけが残っているのだが。");
+                        Console.ReadLine();//次のコメントを表示
+                        Console.WriteLine("家というには外から見てもあまりに狭く、一部屋分くらいの広さしかないように見えた。");
+                        Console.ReadLine();//次のコメントを表示
+                        Console.WriteLine("窓から中の様子を覗いてみても、中に人影や生物の姿は見えなかった。");
+                        Console.ReadLine();//次のコメントを表示
+                        Console.WriteLine("「誰もいないのか…」");
+                        Console.ReadLine();//次のコメントを表示
+                        Console.WriteLine("安全なことを確認できたため、中に実際に入ることにした。");
+                        Console.ReadLine();//次のコメントを表示
+                        Console.WriteLine("中には、小さな本棚が壁側に、それと机と椅子があった。");
+                        Console.ReadLine();//次のコメントを表示
 
-                        //地上ルート(地下の場所に関する文献を読める。また、魔導書かワープ装置か何かで現世に戻る。)
-                        
+                        //探索ターン
+                        //机のメモを読む→本棚からメモに書いてある題名の本を探す→斜め読み→地上世界へ戻る魔法→終了(神には遭遇しない)
+
+                        Console.WriteLine("");
+                        Console.WriteLine("END:小屋の本(通常ルート2)");
+                        Console.WriteLine("[真実を記す手記]");
+                        Console.WriteLine("");
+                        Console.ReadLine();//次のコメントを表示
                         break;
 
                     case "3":
@@ -802,7 +829,7 @@ while (playing == true)
             //トンネルの話が長くなりすぎてつまらなかったから辞めた。だから、攻撃と逃げるときの両方で使えるくらいしかメリットはない
             //っていうか、手榴弾はともかく、銃の弾丸は普通に余るな…
             //医療品なんかそもそも使わなくても魔法回復できるし…(戦闘前のMP回復のおかげでほぼMP切れにならないし)
-            //難易度調整はミスったかも(だからといって今から調整するのも面倒)
+            //難易度調整はミスった(簡単すぎた)かも(だからといって今から調整するのも面倒)
             break;
 
         //ロード
