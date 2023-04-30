@@ -6,6 +6,16 @@
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
     <Authors>LEC, $(AssemblyName) Project</Authors>
+    <Description>暇をした少女が森に探索に行くお話。</Description>
+    <PackageReadmeFile>README.md</PackageReadmeFile>
+    <NeutralLanguage>ja-JP</NeutralLanguage>
   </PropertyGroup>
+
+  <ItemGroup>
+    <None Include="..\README.md">
+      <Pack>True</Pack>
+      <PackagePath>\</PackagePath>
+    </None>
+  </ItemGroup>
 
 </Project>
