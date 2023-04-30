@@ -928,7 +928,7 @@ while (playing == true)
             Console.WriteLine("シナリオ:Lemon73[LEC]");
             Console.WriteLine("");
             Console.WriteLine("素材");
-            Console.WriteLine("ベース:.NET Framework4.8 (Console)[Microsoft社]");
+            Console.WriteLine("ベース:.NET7.0 (Console)[Microsoft社]");
             Console.WriteLine("");
             Console.WriteLine("終了です。お疲れさまでした。");
             Console.ReadLine();//次のコメントを表示
