@@ -523,7 +523,7 @@ while (playing == true)
                         Console.ReadLine();//次のコメントを表示
                         //ボス戦
                         //(ボス能力指定)
-                        enemy_hp = 1200;
+                        enemy_hp = 1000;
                         enemy_name = "黒色の影";
                         //(秋月回復)
                         if (hp <= 300)
@@ -689,10 +689,116 @@ while (playing == true)
                         Console.ReadLine();//次のコメントを表示
                         Console.WriteLine("中には、小さな本棚が壁側に、それと机と椅子があった。");
                         Console.ReadLine();//次のコメントを表示
-
                         //探索ターン
-                        //机のメモを読む→本棚からメモに書いてある題名の本を探す→斜め読み→地上世界へ戻る魔法→終了(神には遭遇しない)
+                        //最短√…机のメモを読む→本棚からメモに書いてある題名の本を探す→斜め読み→地上世界へ戻る魔法→終了(神には遭遇しない)
+                        bool which = false;
+                        bool note = false;
+                        while (which == false)
+                        {
+                            Console.WriteLine("");
+                            Console.WriteLine("どこを調べますか");
+                            Console.WriteLine("1:本棚");
+                            Console.WriteLine("2:机");
+                            Console.WriteLine("3:椅子");
 
+                            command = Console.ReadLine();
+                            switch (command)
+                            {
+                                case "1":
+                                    Console.WriteLine("20冊以上の本が並んでいた。");
+                                    Console.ReadLine();//次のコメントを表示
+                                    //机のメモ帳を見ているか見ていないか
+                                    if (note == false)
+                                    {
+                                        //机のメモ帳を見ていないときの処理
+                                        Console.WriteLine("右から1冊取り、読んでみたがいまいち意味が分からなかった。");
+                                        Console.ReadLine();//次のコメントを表示
+                                    }
+                                    else
+                                    {
+                                        //机のメモ帳を見ているときの処理
+                                        Console.WriteLine("その中には、先ほど机上のメモに書かれていた「天界のレートピシ」という題名の本があった。");
+                                        Console.ReadLine();//次のコメントを表示
+                                        Console.WriteLine("手に取り、近年の部分を斜め読みしてみることにした。");
+                                        Console.ReadLine();//次のコメントを表示
+                                        Console.WriteLine("");
+                                        Console.WriteLine(" - 天界のレートピシ - ");
+                                        Console.ReadLine();//次のコメントを表示
+                                        Console.WriteLine("xx32年、天界に黒い魔物が現れた。");
+                                        Console.WriteLine("至急、防衛隊が駆けつけ対処できたものの、原因の究明が課題となっている。");
+                                        Console.ReadLine();//次のコメントを表示
+                                        Console.WriteLine("xx35年、天界にて黒い魔物は増え続けた。");
+                                        Console.WriteLine("原因は、地上との通信の際に誤って移送空間ができたことだといわれている。");
+                                        Console.ReadLine();//次のコメントを表示
+                                        Console.WriteLine("xx36年、天界西地域を中心として調査が進み、移送空間の場所の特定ができた。");
+                                        Console.WriteLine("しかし、まだ数か所は発見できておらず、そこから侵入した魔物が新しい移送空間を設立し続けている。");
+                                        Console.ReadLine();//次のコメントを表示
+                                        Console.WriteLine("xx40年、天界全域にてほとんどの移送空間の破壊が完了した。");
+                                        Console.WriteLine("ただし、天界の主要な地域はほとんど魔物によって建築物が破壊されている。");
+                                        Console.ReadLine();//次のコメントを表示
+                                        Console.WriteLine("xx42年、主要地域にて都市の修復を開始。");
+                                        Console.WriteLine("また、地上の主要国家との連携もあり、天界中心都市付近の移送空間が完全に破壊されたことを報告する。");
+                                        Console.ReadLine();//次のコメントを表示
+                                        Console.WriteLine("xxxx年、地上国家の戦争によって支援を受けられなくなった。");
+                                        Console.WriteLine("わずかに残る移送空間からいまだに魔物の進行が進んでいる。");
+                                        Console.WriteLine("");
+                                        Console.WriteLine(" - - - - - ");
+                                        Console.WriteLine("");
+                                        Console.ReadLine();//次のコメントを表示
+                                        Console.WriteLine("読み終わると、メモが落ちてきた。");
+                                        Console.ReadLine();//次のコメントを表示
+                                        Console.WriteLine("メモは丁寧な文字で、次のように書かれていた。");
+                                        Console.ReadLine();//次のコメントを表示
+                                        Console.WriteLine("「地上世界へ逃げる方法…ここで天井を見て右に1回転、下を向いて左に1回転する」");
+                                        Console.ReadLine();//次のコメントを表示
+                                        Console.WriteLine("書かれているようにする。");
+                                        Console.ReadLine();//次のコメントを表示
+                                        Console.WriteLine("すると、視界は暖かい白の光に覆われた。");
+                                        Console.ReadLine();//次のコメントを表示
+                                        Console.WriteLine("そのような状態で何秒か経つと、だんだんとその白い光は薄くなっていった。");
+                                        Console.ReadLine();//次のコメントを表示
+                                        Console.WriteLine("気が付くと、目の前には白樺の樹林、雑草の中に見覚えのある秘色と紅の花々が咲き乱れていた。");
+                                        Console.ReadLine();//次のコメントを表示
+                                        Console.WriteLine("「戻れたのね…」");
+                                        Console.ReadLine();//次のコメントを表示
+                                        Console.WriteLine("少し左を向いて先ほどのことを思い出す。");
+                                        Console.ReadLine();//次のコメントを表示
+                                        Console.WriteLine("「何だったのから…さっきのは。書物には天界って書いてあったけど。」");
+                                        Console.ReadLine();//次のコメントを表示
+                                        Console.WriteLine("先ほどの記憶は確かにあるが、現実的にそんなことがありうるとは思えなかった。");
+                                        Console.ReadLine();//次のコメントを表示
+                                        Console.WriteLine("論理的に証明できない不安感を忘れるため、先ほどの現実は忘れることにした。");
+                                        Console.ReadLine();//次のコメントを表示
+                                        Console.WriteLine("秋月は、更なる森の探検へと足を動かした。");
+                                        Console.ReadLine();//次のコメントを表示
+                                        which = true;
+                                    }
+                                    break;
+
+                                case "2":
+                                    Console.WriteLine("白い塗装が施されている机だ。");
+                                    Console.ReadLine();//次のコメントを表示
+                                    Console.WriteLine("机上にはメモ帳と、ペンが1本ある。");
+                                    Console.ReadLine();//次のコメントを表示
+                                    Console.WriteLine("メモ帳には次の文字が殴り書きされていた。");
+                                    Console.ReadLine();//次のコメントを表示
+                                    Console.WriteLine("「天界のレートピシ」");//レートピシ=歴史書
+                                    Console.ReadLine();//次のコメントを表示
+                                    note = true;
+                                    break;
+
+                                case "3":
+                                    Console.WriteLine("何一つ変哲のない木製の椅子だ。");
+                                    Console.ReadLine();//次のコメントを表示
+                                    Console.WriteLine("座る部分は水色の布に白い糸で刺繍がされている。");
+                                    Console.ReadLine();//次のコメントを表示
+                                    break;
+
+                                default:
+                                    Console.WriteLine("半角数字を入力してください。");
+                                    break;
+                            }
+                        }
                         Console.WriteLine("");
                         Console.WriteLine("END:小屋の本(通常ルート2)");
                         Console.WriteLine("[真実を記す手記]");
@@ -704,9 +810,9 @@ while (playing == true)
                         where = true;
                         Console.WriteLine("彼女は、階段の逆の方向を向いた。");
                         Console.ReadLine();//次のコメントを表示
-                        Console.WriteLine("すると、走って窓に向かって飛び蹴りを炸裂し、見事にその窓を割って地上へ落ちていった。");
-                        Console.ReadLine();//次のコメントを表示
                         Console.WriteLine("「もう、疲れたよ…」");
+                        Console.ReadLine();//次のコメントを表示
+                        Console.WriteLine("すると、走って窓に向かって飛び蹴りを炸裂し、見事にその窓を割って地上へ落ちていった。");
                         Console.ReadLine();//次のコメントを表示
                         Console.WriteLine("今までの記憶をたどる。");
                         Console.ReadLine();//次のコメントを表示
@@ -785,9 +891,8 @@ while (playing == true)
             //(親友=椿とわかる人はすごい。親友→×親、上司、△世界の終焉の前に。(長い間合っていないので一緒に喋る機会がない)、〇旧黒軍師
             //→旧黒軍師では3人いるが、航空隊2人の名前や詳細がまだ決まっていないため、椿という推測は一応可能だが。
             //(未来になって航空隊2人の名前が決まっても、決まっていなかった時代のストーリーということで未来になっても上記と同じ考察が可能。))
-            if (lack >= 5)
+            if (lack >= 8)
             {
-                Console.WriteLine("");
                 Console.WriteLine(" - - - - - ");
                 Console.WriteLine("「っていうことがあったのよね」");//秋月
                 Console.ReadLine();//次のコメントを表示
@@ -800,6 +905,8 @@ while (playing == true)
                 Console.WriteLine("「わかってるよ。それより…」");//椿
                 Console.ReadLine();//次のコメントを表示
                 Console.WriteLine("「今日の計画でしょ。」");//秋月
+                Console.ReadLine();//次のコメントを表示
+                Console.WriteLine("持っている小銃を傾けた。");//秋月
                 Console.ReadLine();//次のコメントを表示
                 Console.WriteLine("「そうね。」");//椿
                 Console.ReadLine();//次のコメントを表示
@@ -817,8 +924,8 @@ while (playing == true)
             }
 
             Console.WriteLine("開発");
-            Console.WriteLine("プログラム:Lemon73(LEC)");
-            Console.WriteLine("シナリオ:Lemon73(LEC)");
+            Console.WriteLine("プログラム:Lemon73[LEC]");
+            Console.WriteLine("シナリオ:Lemon73[LEC]");
             Console.WriteLine("");
             Console.WriteLine("素材");
             Console.WriteLine("ベース:.NET Framework4.8 (Console)[Microsoft社]");
