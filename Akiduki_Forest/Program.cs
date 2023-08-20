@@ -991,7 +991,11 @@ while (playing == true)
             }
             catch (Exception ex)
             {
+                playing = true;
+                Console.WriteLine("エラーが発生しました。");
+                Console.WriteLine("エラーメッセージ:");
                 Console.WriteLine(ex.ToString());
+                Console.WriteLine("");
             }
             break;
 
