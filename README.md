@@ -1,79 +1,61 @@
 # Akiduki_Forest
 
 ## 概要
+本ゲームは、尾花と桜Projectの第一作目として作成されました。<br />
+こちらのMarkDownファイルやゲーム内の言語はすべて日本語表記となっています。<br />
+ソースコードについては、余りにも汚いコード&組織機密なため、非公開とします。<br />
 
-本ゲームは、尾花と桜Projectの第一作目として作成されました。<br>
-完全日本人向けに開発しているため、こちらのMarkDownファイルやゲーム内の言語はすべて日本語です。<br>
-ソースコードについては、余りにも汚いコード&組織機密なため、非公開とします。<br>
+### 開発情報
+開発元:LEC<br />
+開発チーム:LEC-KISS<br />
+開発メンバー:Lemon73<br />
+開発コード:Akiduki_Forest<br />
 
-#### 開発情報
+最新バージョン:1.0.0.0<br />
+対応OS:Windows/Linux<br />
+対応言語:日本語<br />
+ライセンス:未定<br />
 
-	開発元:LEC
-	開発チーム:LEC-KISS
-	開発メンバー:Lemon73
-	開発コード:Akiduki_Forest
-
-	最新バージョン:1.0.0.0
-	対応OS:Windows/Linux
-	対応言語:日本語
-	ライセンス:未定
-
-	プログラム言語:C#
-	フレームワーク:.NET7.0(コンソールアプリケーション)[Microsoft]
-	IDE:Visual Studio[Microsoft]
+プログラム言語:C#<br />
+フレームワーク:.NET7.0(Console)[Microsoft]<br />
+IDE:Visual Studio[Microsoft]<br />
+エディター: Visual Studio Code[Microsoft]<br />
 
 ## インストール方法
+### Windows版
+```
+動作確認…Windows10 22H2
+```
+GitHub内のWindowsと書かれているファイルをインストール後、exeファイルを開く事でゲームを開始できます。<br />
 
-#### Windows版
-
-	動作確認…Windows10 22H2
-
-GitHub内のWindowsと書かれているファイルをインストール後、exeファイルを開く事でゲームを開始できます。<br>
-.NET7.0がインストールされていない場合は動作しませんので、Microsoft公式からインストールしてください。<br>
-(おそらく最新版のWindowsなら既にインストールされていると思います。)<br>
-
-また、PowerShellで、ファイルに移動後、
-
-	./Akiduki_Forest.exe
-	
+または、あなたが好きなターミナル(Windows Terminalなど)で、.exeファイルのあるディレクトリに移動後、
+```
+./Akiduki_Forest.exe
+```
 にて起動ができます。
 
-#### MacOS版
+### MacOS版
+LECではMacOSの環境がないため、ビルドができていません。<br />
+そのため、MacOSでのプレイは不可能となっています。<br />
 
-LECではMacOSの環境がないため、ビルドができていません。<br>
-そのため、MacOSでのプレイは不可能となっています。<br>
-
-#### Linux版
-
-	動作確認…Windows10 22H2内のWSL2 Debian版
-
-なお、Linux実機での動作確認はしていません。<br>
-
-Linuxでは既存の状態では.NET7.0がインストールされていないので、そちらのインストールを先に行います。
-
-(以下はすでにインストールされている可能性があります)
-
-		sudo apt-get install -y apt-transport-https
-
-(.NET7.0)
-
-		sudo apt-get install -y dotnet-sdk-7.0
-
-(更新)
-
-		sudo apt-get update
+### Linux版
+```
+動作確認…Windows10 22H2 | WSL2 Debian
+```
+(Linux実機での動作確認はしていません。)<br />
 
 GitHub内のLinuxと書かれているファイルをインストール。
 
 (起動)
+```
+(cdコマンドでインストールしたLinuxファイルの場所まで移動)
+./Akiduki_Forest
+```
+(場合によってはchmodで権限を付与しないと動かない可能性もあります。)<br />
+(ターミナルで日本語が表示できる環境が整っていないと文字化けして読めません。)<br />
 
-		(cdコマンドでインストールしたLinuxファイルの場所まで移動)
-		./Akiduki_Forest
-
-(場合によってはchmodで権限を付与しないと動かない可能性もあります。)
-(ターミナルで日本語が表示できる環境が整っていないと文字化けして読めません。)
-
-## 開発者用
-ビルド設定…
-
-		dotnet publish -r linux-x64 -c Release --self-contained true /p:PublishTrimmde=true /p:Publish
+#### 開発者向け情報
+Linux向けビルドコマンド…
+```
+dotnet publish -r linux-x64 -c Release --self-contained true /p:PublishTrimmde=true /p:Publish
+```
