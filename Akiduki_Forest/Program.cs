@@ -989,12 +989,10 @@ while (playing == true)
                     }
                 }
             }
-            catch (Exception ex)
+            catch
             {
                 playing = true;
-                Console.WriteLine("エラーが発生しました。");
-                Console.WriteLine("エラーメッセージ:");
-                Console.WriteLine(ex.ToString());
+                Console.WriteLine("セーブデータが見つかりません。");
                 Console.WriteLine("");
             }
             break;
@@ -1028,6 +1026,7 @@ void Save()
         );
     element.Save("Data.xml");
     Console.WriteLine("セーブが完了しました。");
+    Console.WriteLine("終了する際は、Ctrl+Cを押してください。");
 }
 
 //戦闘処理
