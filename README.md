@@ -8,29 +8,35 @@
 
 #### 開発情報
 
-		開発元:LEC
-		開発チーム:LEC-KISS
-		開発メンバー:Lemon73
-		開発コード:Akiduki_Forest
+	開発元:LEC
+	開発チーム:LEC-KISS
+	開発メンバー:Lemon73
+	開発コード:Akiduki_Forest
 
-		最新バージョン:1.0.0.0
-		対応OS:Windows/Linux
-		対応言語:日本語
-		ライセンス:未定
+	最新バージョン:1.0.0.0
+	対応OS:Windows/Linux
+	対応言語:日本語
+	ライセンス:未定
 
-		プログラム言語:C#
-		フレームワーク:.NET7.0(コンソールアプリケーション)[Microsoft]
-		IDE:Visual Studio[Microsoft]
+	プログラム言語:C#
+	フレームワーク:.NET7.0(コンソールアプリケーション)[Microsoft]
+	IDE:Visual Studio[Microsoft]
 
 ## インストール方法
 
 #### Windows版
 
-		動作確認…Windows10 22H2
+	動作確認…Windows10 22H2
 
 GitHub内のWindowsと書かれているファイルをインストール後、exeファイルを開く事でゲームを開始できます。<br>
 .NET7.0がインストールされていない場合は動作しませんので、Microsoft公式からインストールしてください。<br>
 (おそらく最新版のWindowsなら既にインストールされていると思います。)<br>
+
+また、PowerShellで、ファイルに移動後、
+
+	./Akiduki_Forest.exe
+	
+にて起動ができます。
 
 #### MacOS版
 
@@ -39,7 +45,7 @@ LECではMacOSの環境がないため、ビルドができていません。<br
 
 #### Linux版
 
-		動作確認…Windows10 22H2内のWSL2 Debian版
+	動作確認…Windows10 22H2内のWSL2 Debian版
 
 なお、Linux実機での動作確認はしていません。<br>
 
@@ -65,6 +71,7 @@ GitHub内のLinuxと書かれているファイルをインストール。
 		./Akiduki_Forest
 
 (場合によってはchmodで権限を付与しないと動かない可能性もあります。)
+(ターミナルで日本語が表示できる環境が整っていないと文字化けして読めません。)
 
 ## 開発者用
 ビルド設定…
