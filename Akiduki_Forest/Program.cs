@@ -943,52 +943,56 @@ while (playing == true)
         case "2":
             playing = false;
 
-            //新システム
-
-            //ファイル読み込み
-            XDocument file_read = XDocument.Load(@"./Data.xml");
-
-            IEnumerable<XElement> datas = file_read.Elements("Data");
-            foreach (XElement data_read in datas)
+            try
             {
-                if (int.TryParse(data_read.Element("Section")?.Value, out int temp2))
-                    section = temp2;
-                if (int.TryParse(data_read.Element("HP")?.Value, out int temp4))
-                    hp = temp4;
-                if (int.TryParse(data_read.Element("MP")?.Value, out int temp5))
-                    mp = temp5;
-                if (int.TryParse(data_read.Element("Luck")?.Value, out int temp3))
-                    lack = temp3;
-                if (int.TryParse(data_read.Element("item")?.Value, out int temp_item1))
-                    item = temp_item1;
-                if (int.TryParse(data_read.Element("item_bom")?.Value, out int temp_item2))
-                    item_bom = temp_item2;
-                if (int.TryParse(data_read.Element("item_bullet")?.Value, out int temp_item3))
-                    item_bullet = temp_item3;
-                if (int.TryParse(data_read.Element("item_cure")?.Value, out int temp_item4))
-                    item_cure = temp_item4;
+                //ファイル読み込み
+                XDocument file_read = XDocument.Load(@"./Data.xml");
 
-                Console.WriteLine("ロードが成功しました。");
-                Console.ReadLine();//次のコメントを表示
-                switch (section)
+                IEnumerable<XElement> datas = file_read.Elements("Data");
+                foreach (XElement data_read in datas)
                 {
-                    case 1:
-                        goto label1;
+                    if (int.TryParse(data_read.Element("Section")?.Value, out int temp2))
+                        section = temp2;
+                    if (int.TryParse(data_read.Element("HP")?.Value, out int temp4))
+                        hp = temp4;
+                    if (int.TryParse(data_read.Element("MP")?.Value, out int temp5))
+                        mp = temp5;
+                    if (int.TryParse(data_read.Element("Luck")?.Value, out int temp3))
+                        lack = temp3;
+                    if (int.TryParse(data_read.Element("item")?.Value, out int temp_item1))
+                        item = temp_item1;
+                    if (int.TryParse(data_read.Element("item_bom")?.Value, out int temp_item2))
+                        item_bom = temp_item2;
+                    if (int.TryParse(data_read.Element("item_bullet")?.Value, out int temp_item3))
+                        item_bullet = temp_item3;
+                    if (int.TryParse(data_read.Element("item_cure")?.Value, out int temp_item4))
+                        item_cure = temp_item4;
 
-                    case 2:
-                        goto label2;
+                    Console.WriteLine("ロードが成功しました。");
+                    Console.ReadLine();//次のコメントを表示
+                    switch (section)
+                    {
+                        case 1:
+                            goto label1;
 
-                    case 3:
-                        goto label3;
+                        case 2:
+                            goto label2;
 
-                    case 6:
-                        goto label4c;
+                        case 3:
+                            goto label3;
 
-                    default:
-                        break;
+                        case 6:
+                            goto label4c;
+
+                        default:
+                            break;
+                    }
                 }
             }
-
+            catch (Exception ex)
+            {
+                Console.WriteLine(ex.ToString());
+            }
             break;
 
         case "3":
