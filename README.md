@@ -6,20 +6,24 @@
 ソースコードについては、余りにも汚いコード&組織機密なため、非公開とします。<br />
 
 ### 開発情報
-- 開発元: LEC
-- 開発チーム: LEC-KISS
-- 開発メンバー: Lemon73
-- 開発コード: Akiduki_Forest
+- 開発体制
+  - 開発元: LEC
+  - 開発チーム: LEC-KISS
+  - 開発メンバー: Lemon73
+  - 開発コード: Akiduki_Forest
 
-- 最新バージョン: 1.0.0
-- 対応OS: Windows / Linux
-- 対応言語: 日本語
-- ライセンス: 未定
+- 管理体制
+  - 最新バージョン: 1.0.0
+  - 対応OS: Windows / Linux
+  - 対応言語: 日本語
+  - ライセンス: 未定
 
-- プログラム言語: C#
-- フレームワーク: .NET7.0(Console)[Microsoft]
-- IDE: Visual Studio[Microsoft]
-- エディター: Visual Studio Code[Microsoft]
+- 技術
+  - プログラム言語: C#
+  - フレームワーク: .NET8.0(Console)
+  - バージョン管理: GitHub / Git
+  - IDE: Visual Studio
+  - エディター: Visual Studio Code
 
 ## インストール方法
 ### Windows版
