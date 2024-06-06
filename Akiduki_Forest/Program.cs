@@ -77,13 +77,13 @@ while (playing == true)
                         Console.WriteLine("半角数値を入力してください");
                     else
                         if (item - item_bom * 2 >= 0)
-                    {
-                        item -= item_bom * 2;
-                        Console.WriteLine("{0}個(重さ{1}|残り重量{2})", item_bom, item_bom * 2, item);
-                        choose_item_bom = false;
-                    }
-                    else
-                        Console.WriteLine("数値が正しくありません。");
+                        {
+                            item -= item_bom * 2;
+                            Console.WriteLine("{0}個(重さ{1}|残り重量{2})", item_bom, item_bom * 2, item);
+                            choose_item_bom = false;
+                        }
+                        else
+                            Console.WriteLine("数値が正しくありません。");
                 }
 
                 bool choose_item_bullet = true;
@@ -94,13 +94,13 @@ while (playing == true)
                         Console.WriteLine("半角数値を入力してください");
                     else
                         if (item - item_bullet >= 0)
-                    {
-                        item -= item_bullet;
-                        Console.WriteLine("{0}個(重さ{1}|残り重量{2})", item_bullet, item_bullet, item);
-                        choose_item_bullet = false;
-                    }
-                    else
-                        Console.WriteLine("数値が正しくありません。");
+                        {
+                            item -= item_bullet;
+                            Console.WriteLine("{0}個(重さ{1}|残り重量{2})", item_bullet, item_bullet, item);
+                            choose_item_bullet = false;
+                        }
+                        else
+                            Console.WriteLine("数値が正しくありません。");
                 }
 
                 bool choose_item_cure = true;
@@ -111,13 +111,13 @@ while (playing == true)
                         Console.WriteLine("半角数値を入力してください");
                     else
                         if (item - item_cure >= 0)
-                    {
-                        item -= item_cure;
-                        Console.WriteLine("{0}個(重さ{1}|残り重量{2})", item_cure, item_cure, item);
-                        choose_item_cure = false;
-                    }
-                    else
-                        Console.WriteLine("数値が正しくありません。");
+                        {
+                            item -= item_cure;
+                            Console.WriteLine("{0}個(重さ{1}|残り重量{2})", item_cure, item_cure, item);
+                            choose_item_cure = false;
+                        }
+                        else
+                            Console.WriteLine("数値が正しくありません。");
                 }
 
                 Console.WriteLine("手榴弾{0}個、弾丸{1}個、医療品{2}個でよろしいですか?)", item_bom, item_bullet, item_cure);
@@ -1016,17 +1016,11 @@ void Buttle()
 
     //もしhpが指定されていないなら
     if (enemy_hp <= 0)
-    {
-        //敵の体力(初期値):100~240(10刻み)
-        enemy_hp = 100 + rand.Next(0, 15) * 10;
-    }
+        enemy_hp = 100 + rand.Next(0, 15) * 10; // 敵の体力(初期値):100~240(10刻み)
 
     //もし名前が指定されていないなら
     if (enemy_name == "")
-    {
-        //初期値
-        enemy_name = "異形の存在";
-    }
+        enemy_name = "異形の存在"; // 初期値
 
     //難易度調節のために戦闘開始時自動回復
     hp += 20 + rand.Next(0, 3) * 10;//20~40(10刻み)
