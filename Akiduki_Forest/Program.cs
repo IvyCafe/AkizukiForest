@@ -1,7 +1,4 @@
-﻿using System.ComponentModel;
-using System.Reflection.Emit;
-using System.Text;
-using System.Xml.Linq;
+﻿using System.Xml.Linq;
 
 bool playing = true;
 //Null警告を出さないためにstring"?"としている。
@@ -34,7 +31,7 @@ while (playing == true)
     Console.Write("数値を入力してください:");
     command = Console.ReadLine();
     Console.WriteLine("");
-    switch (command) 
+    switch (command)
     {
         case "1":
             playing = false;
@@ -61,7 +58,7 @@ while (playing == true)
 
             //アイテム選択処理
             bool choose_item = true;
-            while (choose_item == true) 
+            while (choose_item == true)
             {
                 Console.WriteLine("");
                 Console.WriteLine("その他に冒険に持っていくものを決めてください");
@@ -77,22 +74,16 @@ while (playing == true)
                 {
                     Console.WriteLine("1:手榴弾 を何個持っていきますか?");
                     if (!int.TryParse(Console.ReadLine(), out item_bom))
-                    {
                         Console.WriteLine("半角数値を入力してください");
+                    else
+                        if (item - item_bom * 2 >= 0)
+                    {
+                        item -= item_bom * 2;
+                        Console.WriteLine("{0}個(重さ{1}|残り重量{2})", item_bom, item_bom * 2, item);
+                        choose_item_bom = false;
                     }
                     else
-                    {
-                        if (item - item_bom * 2 >= 0) 
-                        {
-                            item -= item_bom * 2;
-                            Console.WriteLine("{0}個(重さ{1}|残り重量{2})", item_bom, item_bom * 2, item);
-                            choose_item_bom = false;
-                        }
-                        else
-                        {
-                            Console.WriteLine("数値が正しくありません。");
-                        }
-                    }
+                        Console.WriteLine("数値が正しくありません。");
                 }
 
                 bool choose_item_bullet = true;
@@ -100,22 +91,16 @@ while (playing == true)
                 {
                     Console.WriteLine("2:弾薬 を何セット持っていきますか?");
                     if (!int.TryParse(Console.ReadLine(), out item_bullet))
-                    {
                         Console.WriteLine("半角数値を入力してください");
+                    else
+                        if (item - item_bullet >= 0)
+                    {
+                        item -= item_bullet;
+                        Console.WriteLine("{0}個(重さ{1}|残り重量{2})", item_bullet, item_bullet, item);
+                        choose_item_bullet = false;
                     }
                     else
-                    {
-                        if (item - item_bullet >= 0)
-                        {
-                            item -= item_bullet;
-                            Console.WriteLine("{0}個(重さ{1}|残り重量{2})", item_bullet, item_bullet, item);
-                            choose_item_bullet = false;
-                        }
-                        else
-                        {
-                            Console.WriteLine("数値が正しくありません。");
-                        }
-                    }
+                        Console.WriteLine("数値が正しくありません。");
                 }
 
                 bool choose_item_cure = true;
@@ -123,22 +108,16 @@ while (playing == true)
                 {
                     Console.WriteLine("3:医療品 を何個持っていきますか?");
                     if (!int.TryParse(Console.ReadLine(), out item_cure))
-                    {
                         Console.WriteLine("半角数値を入力してください");
+                    else
+                        if (item - item_cure >= 0)
+                    {
+                        item -= item_cure;
+                        Console.WriteLine("{0}個(重さ{1}|残り重量{2})", item_cure, item_cure, item);
+                        choose_item_cure = false;
                     }
                     else
-                    {
-                        if (item - item_cure >= 0)
-                        {
-                            item -= item_cure;
-                            Console.WriteLine("{0}個(重さ{1}|残り重量{2})", item_cure, item_cure, item);
-                            choose_item_cure = false;
-                        }
-                        else
-                        {
-                            Console.WriteLine("数値が正しくありません。");
-                        }
-                    }
+                        Console.WriteLine("数値が正しくありません。");
                 }
 
                 Console.WriteLine("手榴弾{0}個、弾丸{1}個、医療品{2}個でよろしいですか?)", item_bom, item_bullet, item_cure);
@@ -166,17 +145,15 @@ while (playing == true)
                         item_cure = 0;
                     }
                     else
-                    {
                         Console.WriteLine("入力が正しくありません。");
-                    }
                     Console.WriteLine("");
                 }
             }
 
-            //ロード地点(1)
-            label1:
+        //ロード地点(1)
+        label1:
             section = 1;
-            
+
             Console.WriteLine("移動中…");
             Console.ReadLine();//次のコメントを表示
             Console.WriteLine("「ん～」");
@@ -201,20 +178,20 @@ while (playing == true)
                 switch (command)
                 {
                     case "1":
-                    where = true;
+                        where = true;
                         lack += 5;
                         Console.WriteLine("珍しい植物を見つけた！");
                         Console.ReadLine();//次のコメントを表示
                         break;
 
                     case "2":
-                    where = true;
+                        where = true;
                         Console.WriteLine("特にめぼしい物は見当たらなかった。");
                         Console.ReadLine();//次のコメントを表示
                         break;
 
                     case "3":
-                    where = true;
+                        where = true;
                         Console.WriteLine("怪しい影に近づいてみると、何かはわからないが、中型の生物のように見える。");
                         Console.ReadLine();//次のコメントを表示
                         Console.WriteLine("こちらに対して敵対的な視線を向けて、今すぐにでも攻撃してきそうだ。");
@@ -238,8 +215,8 @@ while (playing == true)
                 }
             }
 
-            //ロード地点(2)
-            label2:
+        //ロード地点(2)
+        label2:
             section = 2;
 
             Console.WriteLine("更に森の奥を進んでいく。");
@@ -326,8 +303,8 @@ while (playing == true)
                 }
             }
 
-            //ロード地点(3)
-            label3:
+        //ロード地点(3)
+        label3:
             section = 3;
 
             Console.WriteLine("石で建造されたトンネルのようなその建造物は、山の内部へ続いている。");
@@ -375,7 +352,7 @@ while (playing == true)
                         Console.ReadLine();//次のコメントを表示
                         Console.WriteLine("こちらにはまだ気づいていないようだ。");
                         Console.ReadLine();//次のコメントを表示
-                        
+
                         //戦闘or道を戻って分岐点の右側の道に行くかの選択肢
                         bool which = false;
                         while (which == false)
@@ -469,8 +446,8 @@ while (playing == true)
             if (section == 99)
                 goto label99;
 
-            //ロード地点(4c)
-            label4c:
+        //ロード地点(4c)
+        label4c:
             section = 6;
 
             Console.WriteLine("「はぁ、はぁ。」");
@@ -924,11 +901,10 @@ while (playing == true)
             }
 
             Console.WriteLine("開発");
-            Console.WriteLine("プログラム:Lemon73[LEC]");
-            Console.WriteLine("シナリオ:Lemon73[LEC]");
+            Console.WriteLine("プログラム: Lemon73 (Ivy Cafeteria)");
+            Console.WriteLine("シナリオ: Lemon73 (Ivy Cafeteria)");
             Console.WriteLine("");
-            Console.WriteLine("素材");
-            Console.WriteLine("ベース:.NET7.0 (Console)[Microsoft社]");
+            Console.WriteLine("ベース: .NET 8.0 (Console) (Microsoft)");
             Console.WriteLine("");
             Console.WriteLine("終了です。お疲れさまでした。");
             Console.ReadLine();//次のコメントを表示
@@ -998,7 +974,7 @@ while (playing == true)
             break;
 
         case "3":
-            label99:
+        label99:
             playing = false;
             break;
 
@@ -1030,11 +1006,11 @@ void Save()
 }
 
 //戦闘処理
-void Buttle() 
+void Buttle()
 {
     Console.WriteLine(" -+-+- 戦闘開始 -+-+- ");
     Console.ReadLine();//次のコメントを表示
-    
+
     //ランダムな数値用
     Random rand = new();
 
@@ -1053,8 +1029,8 @@ void Buttle()
     }
 
     //難易度調節のために戦闘開始時自動回復
-    hp += 20 + rand.Next(0,3) * 10;//20~40(10刻み)
-    mp += rand.Next(2,6);//2~5
+    hp += 20 + rand.Next(0, 3) * 10;//20~40(10刻み)
+    mp += rand.Next(2, 6);//2~5
 
     while (enemy_hp > 0)
     {
@@ -1118,7 +1094,7 @@ void Buttle()
                         Console.ReadLine();//次のコメントを表示
                     }
                     break;
-                    
+
                 case "3":
                     //射撃攻撃処理
                     //(ナイフ/爆弾との違いのために命中率は低く、ダメージが大きい、貫通するとさらにダメージ増加とかのほうがいいかも。
@@ -1253,7 +1229,6 @@ void Buttle()
                     break;
             }
 
-
             //敵死亡判定
             if (enemy_hp <= 0)
             {
@@ -1321,7 +1296,7 @@ void Buttle()
                         Console.ReadLine();//次のコメントを表示
                         Console.WriteLine("言葉を言い終える前に、その人生の終わりを早々と迎えた。");
                         Console.ReadLine();//次のコメントを表示
-                                            //終了判定
+                        //終了判定
                         enemy_hp = 0;
                         section = 99;
                     }
