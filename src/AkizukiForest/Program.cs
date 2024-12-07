@@ -1,4 +1,4 @@
-﻿using System.Xml.Linq;
+using System.Xml.Linq;
 
 bool playing = true;    // ループ用
 int section = 0;        // セーブ用
@@ -949,13 +949,13 @@ void Save()
         (
             "Data",
             new XElement("Section", section),
-            new XElement("HP", komariHP),
-            new XElement("MP", komariMP),
-            new XElement("Luck", komariLack),
-            new XElement("item", item),
-            new XElement("item_bom", itemBom),
-            new XElement("item_bullet", itemBullet),
-            new XElement("item_cure", itemMedicine)
+            new XElement("KomariHP", komariHP),
+            new XElement("KomariMP", komariMP),
+            new XElement("KomariLuck", komariLack),
+            new XElement("Item", item),
+            new XElement("ItemBom", itemBom),
+            new XElement("ItemBullet", itemBullet),
+            new XElement("ItemMedicine", itemMedicine)
         );
     element.Save("Data.xml");
     Console.WriteLine("セーブが完了しました。");
@@ -973,19 +973,19 @@ void Load()
     {
         if (int.TryParse(data_read.Element("Section")?.Value, out int temp2))
             section = temp2;
-        if (int.TryParse(data_read.Element("HP")?.Value, out int temp4))
+        if (int.TryParse(data_read.Element("KomariHP")?.Value, out int temp4))
             komariHP = temp4;
-        if (int.TryParse(data_read.Element("MP")?.Value, out int temp5))
+        if (int.TryParse(data_read.Element("KomariMP")?.Value, out int temp5))
             komariMP = temp5;
-        if (int.TryParse(data_read.Element("Luck")?.Value, out int temp3))
+        if (int.TryParse(data_read.Element("KomariLuck")?.Value, out int temp3))
             komariLack = temp3;
-        if (int.TryParse(data_read.Element("item")?.Value, out int temp_item1))
+        if (int.TryParse(data_read.Element("Item")?.Value, out int temp_item1))
             item = temp_item1;
-        if (int.TryParse(data_read.Element("item_bom")?.Value, out int temp_item2))
+        if (int.TryParse(data_read.Element("ItemBom")?.Value, out int temp_item2))
             itemBom = temp_item2;
-        if (int.TryParse(data_read.Element("item_bullet")?.Value, out int temp_item3))
+        if (int.TryParse(data_read.Element("ItemBullet")?.Value, out int temp_item3))
             itemBullet = temp_item3;
-        if (int.TryParse(data_read.Element("item_cure")?.Value, out int temp_item4))
+        if (int.TryParse(data_read.Element("ItemMedicine")?.Value, out int temp_item4))
             itemMedicine = temp_item4;
     }
 
