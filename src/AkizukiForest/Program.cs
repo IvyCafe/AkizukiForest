@@ -74,7 +74,7 @@ while (playing == true)
                 {
                     Console.WriteLine("1:手榴弾 を何個持っていきますか?");
                     if (!int.TryParse(Console.ReadLine(), out item_bom))
-                        Console.WriteLine("半角数値を入力してください");
+                        InvalidInput();
                     else
                         if (item - item_bom * 2 >= 0)
                         {
@@ -83,7 +83,7 @@ while (playing == true)
                             choose_item_bom = false;
                         }
                         else
-                            Console.WriteLine("数値が正しくありません。");
+                            InvalidInput();
                 }
 
                 bool choose_item_bullet = true;
@@ -91,7 +91,7 @@ while (playing == true)
                 {
                     Console.WriteLine("2:弾薬 を何セット持っていきますか?");
                     if (!int.TryParse(Console.ReadLine(), out item_bullet))
-                        Console.WriteLine("半角数値を入力してください");
+                        InvalidInput();
                     else
                         if (item - item_bullet >= 0)
                         {
@@ -100,7 +100,7 @@ while (playing == true)
                             choose_item_bullet = false;
                         }
                         else
-                            Console.WriteLine("数値が正しくありません。");
+                            InvalidInput();
                 }
 
                 bool choose_item_cure = true;
@@ -108,7 +108,7 @@ while (playing == true)
                 {
                     Console.WriteLine("3:医療品 を何個持っていきますか?");
                     if (!int.TryParse(Console.ReadLine(), out item_cure))
-                        Console.WriteLine("半角数値を入力してください");
+                        InvalidInput();
                     else
                         if (item - item_cure >= 0)
                         {
@@ -117,7 +117,7 @@ while (playing == true)
                             choose_item_cure = false;
                         }
                         else
-                            Console.WriteLine("数値が正しくありません。");
+                            InvalidInput();
                 }
 
                 Console.WriteLine("手榴弾{0}個、弾丸{1}個、医療品{2}個でよろしいですか?)", item_bom, item_bullet, item_cure);
@@ -145,7 +145,7 @@ while (playing == true)
                         item_cure = 0;
                     }
                     else
-                        Console.WriteLine("入力が正しくありません。");
+                        InvalidInput();
                     Console.WriteLine("");
                 }
             }
@@ -210,7 +210,7 @@ while (playing == true)
                         break;
 
                     default:
-                        Console.WriteLine("半角数字を入力してください。");
+                        InvalidInput();
                         break;
                 }
             }
@@ -298,7 +298,7 @@ while (playing == true)
                         break;
 
                     default:
-                        Console.WriteLine("半角数字を入力してください。");
+                        InvalidInput();
                         break;
                 }
             }
@@ -382,7 +382,7 @@ while (playing == true)
                                     break;
 
                                 default:
-                                    Console.WriteLine("半角数字を入力してください。");
+                                    InvalidInput();
                                     break;
                             }
                         }
@@ -394,7 +394,7 @@ while (playing == true)
                         break;
 
                     default:
-                        Console.WriteLine("半角数字を入力してください。");
+                        InvalidInput();
                         break;
                 }
             }
@@ -772,7 +772,7 @@ while (playing == true)
                                     break;
 
                                 default:
-                                    Console.WriteLine("半角数字を入力してください。");
+                                    InvalidInput();
                                     break;
                             }
                         }
@@ -858,7 +858,7 @@ while (playing == true)
                         break;
 
                     default:
-                        Console.WriteLine("半角数字を入力してください。");
+                        InvalidInput();
                         break;
                 }
             }
@@ -979,9 +979,17 @@ while (playing == true)
             break;
 
         default:
-            Console.WriteLine("誤ったコマンドを入力しています。");
+            InvalidInput();
             break;
     }
+}
+
+// 誤った入力
+void InvalidInput()
+{
+    Console.ForegroundColor = ConsoleColor.Yellow;
+    Console.Error.WriteLine("誤ったコマンドを入力しています。");
+    Console.ResetColor();
 }
 
 //セーブ処理
@@ -1219,7 +1227,7 @@ void Buttle()
                     break;
 
                 default:
-                    Console.WriteLine("半角数字を入力してください。");
+                    InvalidInput();
                     break;
             }
 
@@ -1279,6 +1287,7 @@ void Buttle()
                     //秋月死亡判定
                     if (hp <= 0)
                     {
+                        Console.ForegroundColor = ConsoleColor.Red; // 文字の色を変更
                         Console.WriteLine("");
                         Console.WriteLine("「う、うそ…」");
                         Console.ReadLine();//次のコメントを表示
@@ -1290,6 +1299,7 @@ void Buttle()
                         Console.ReadLine();//次のコメントを表示
                         Console.WriteLine("言葉を言い終える前に、その人生の終わりを早々と迎えた。");
                         Console.ReadLine();//次のコメントを表示
+                        Console.ResetColor(); // 色をリセット
                         //終了判定
                         enemy_hp = 0;
                         section = 99;
