@@ -1020,20 +1020,19 @@ void Buttle()
     Console.WriteLine(" -+-+- 戦闘開始 -+-+- ");
     Console.ReadLine();
 
-    //ランダムな数値用
     Random rand = new();
 
-    //もしhpが指定されていないなら
-    if (enemyHP <= 0)
-        enemyHP = 100 + rand.Next(0, 15) * 10; // 敵の体力(初期値):100~240(10刻み)
+    int enemyDefaultHP = 100 + rand.Next(0, 15) * 10; // 100-240 (10刻み)
+    const string enemyDefaultName = "異形の存在";
 
-    //もし名前が指定されていないなら
-    if (enemyName == "")
-        enemyName = "異形の存在"; // 初期値
+    // HP が設定されていないときはランダム値に設定
+    enemyHP = (enemyHP <= 0) ? enemyHP : enemyDefaultHP;
+    // 名前が設定されていないときは初期値に設定
+    enemyName = (enemyName == "") ? enemyName : enemyDefaultName;
 
-    //難易度調節のために戦闘開始時自動回復
-    komariHP += 20 + rand.Next(0, 3) * 10;//20~40(10刻み)
-    komariMP += rand.Next(2, 6);//2~5
+    // 戦闘開始時自動回復 (難易度調節)
+    komariHP += 20 + rand.Next(0, 3) * 10; // 20-40 (10刻み)
+    komariMP += rand.Next(2, 6); // 2-5
 
     while (enemyHP > 0)
     {
