@@ -1,28 +1,25 @@
 ﻿using System.Xml.Linq;
 
-bool playing = true;
-//Null警告を出さないためにstring"?"としている。
-string? command;
+bool playing = true;    // ループ用
+int section = 0;        // セーブ用
+string? command;        // コマンド読み取り
 
-//セーブ用の区切り(節)
-int section = 0;
+// ステータス
+int komariHP = 200;     // 体力
+int komariMP = 30;      // 魔力
+int komariLack = 0;     // 運
 
-//ステータス
-int komariHP = 200;//体力
-int komariMP = 30;//魔力
-int komariLack = 0;//運
+// アイテム
+int item = 12;          // アイテムの総重量
+int itemBom = 0;        // 手榴弾の数 (手榴弾の重さはx2で算出)
+int itemBullet = 0;     // 弾丸の数
+int itemMedicine = 0;   // 医療品の数
 
-//アイテム
-int item = 0;//アイテムの総重量
-int itemBom = 0;//手榴弾の数(手榴弾の重さは*2で算出)
-int itemBullet = 0;//弾丸の数
-int itemMedicine = 0;//医療品の数
+// 敵のステータス
+int enemyHP = 0;        // 体力
+string enemyName = "";  // 名称
 
-//敵のステータス
-int enemyHP = 0;
-string enemyName = "";
-
-//誤ったコマンドを入力しているときはループ
+// 誤ったコマンドを入力しているときはループ
 while (playing == true)
 {
     Console.WriteLine("1:はじめから");
@@ -50,13 +47,7 @@ while (playing == true)
             Console.WriteLine("近くの机に置いている拳銃と、2本の小型ナイフを持ち、近くのリュックを背負った。");
             Console.ReadLine();
 
-            //初期状態
-            item = 12;//アイテムの総重量
-            itemBom = 0;//手榴弾の数(手榴弾の重さは*2で算出)
-            itemBullet = 0;//弾丸の数
-            itemMedicine = 0;//医療品の数
-
-            //アイテム選択処理
+            // アイテム選択処理
             bool selectingItem = true;
             while (selectingItem == true)
             {
@@ -69,76 +60,67 @@ while (playing == true)
                 Console.WriteLine("3:医療品(回復)[1つ当たりの重さ:1]");
                 Console.WriteLine("");
 
-                bool selectingItemBom = true;
-                while (selectingItemBom == true)
+                bool selectingEachItems = true;
+                while (selectingEachItems == true)
                 {
                     Console.WriteLine("1:手榴弾 を何個持っていきますか?");
-                    if (!int.TryParse(Console.ReadLine(), out itemBom))
-                        InvalidInput();
+                    if (int.TryParse(Console.ReadLine(), out itemBom) && (item - itemBom * 2 >= 0))
+                    {
+                        item -= itemBom * 2;
+                        Console.WriteLine("{0}個(重さ{1}|残り重量{2})", itemBom, itemBom * 2, item);
+                        selectingEachItems = false;
+                    }
                     else
-                        if (item - itemBom * 2 >= 0)
-                        {
-                            item -= itemBom * 2;
-                            Console.WriteLine("{0}個(重さ{1}|残り重量{2})", itemBom, itemBom * 2, item);
-                            selectingItemBom = false;
-                        }
-                        else
-                            InvalidInput();
+                        InvalidInput();
                 }
 
-                bool selectingItemBullet = true;
-                while (selectingItemBullet == true)
+                selectingEachItems = true;
+                while (selectingEachItems == true)
                 {
                     Console.WriteLine("2:弾薬 を何セット持っていきますか?");
-                    if (!int.TryParse(Console.ReadLine(), out itemBullet))
-                        InvalidInput();
+                    if (int.TryParse(Console.ReadLine(), out itemBullet) && (item - itemBullet >= 0))
+                    {
+                        item -= itemBullet;
+                        Console.WriteLine("{0}個(重さ{1}|残り重量{2})", itemBullet, itemBullet, item);
+                        selectingEachItems = false;
+                    }
                     else
-                        if (item - itemBullet >= 0)
-                        {
-                            item -= itemBullet;
-                            Console.WriteLine("{0}個(重さ{1}|残り重量{2})", itemBullet, itemBullet, item);
-                            selectingItemBullet = false;
-                        }
-                        else
-                            InvalidInput();
+                        InvalidInput();
                 }
 
-                bool selectingItemMedicine = true;
-                while (selectingItemMedicine == true)
+                selectingEachItems = true;
+                while (selectingEachItems == true)
                 {
                     Console.WriteLine("3:医療品 を何個持っていきますか?");
-                    if (!int.TryParse(Console.ReadLine(), out itemMedicine))
-                        InvalidInput();
+                    if (int.TryParse(Console.ReadLine(), out itemMedicine) && (item - itemMedicine >= 0))
+                    {
+                        item -= itemMedicine;
+                        Console.WriteLine("{0}個(重さ{1}|残り重量{2})", itemMedicine, itemMedicine, item);
+                        selectingEachItems = false;
+                    }
                     else
-                        if (item - itemMedicine >= 0)
-                        {
-                            item -= itemMedicine;
-                            Console.WriteLine("{0}個(重さ{1}|残り重量{2})", itemMedicine, itemMedicine, item);
-                            selectingItemMedicine = false;
-                        }
-                        else
-                            InvalidInput();
+                        InvalidInput();
                 }
 
                 Console.WriteLine("手榴弾{0}個、弾丸{1}個、医療品{2}個でよろしいですか?)", itemBom, itemBullet, itemMedicine);
-                bool CheckingItems = true;
-                while (CheckingItems == true)
+                bool checkingItems = true;
+                while (checkingItems == true)
                 {
                     Console.WriteLine("1:はい/2:いいえ");
                     command = Console.ReadLine();
                     if (command == "1")
                     {
-                        CheckingItems = false;
+                        checkingItems = false;
                         selectingItem = false;
-                        //現時点では、弾丸のセット数を記録しているため、弾数表記に変更
+                        // 現時点では、弾丸のセット数を記録しているため、弾数表記に変更
                         itemBullet *= 10;
                         Console.WriteLine("");
                     }
                     else if (command == "2")
                     {
-                        CheckingItems = false;
+                        checkingItems = false;
                         Console.WriteLine("もう一度再設定します。");
-                        //アイテム数の初期化
+                        // アイテム数の初期化
                         item = 12;
                         itemBom = 0;
                         itemBullet = 0;
