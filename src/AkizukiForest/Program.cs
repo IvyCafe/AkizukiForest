@@ -60,46 +60,25 @@ while (playing == true)
                 Console.WriteLine("3:医療品(回復)[1つ当たりの重さ:1]");
                 Console.WriteLine("");
 
-                bool selectingEachItems = true;
-                while (selectingEachItems == true)
-                {
-                    Console.WriteLine("1:手榴弾 を何個持っていきますか?");
-                    if (int.TryParse(Console.ReadLine(), out itemBom) && (item - itemBom * 2 >= 0))
-                    {
-                        item -= itemBom * 2;
-                        Console.WriteLine("{0}個(重さ{1}|残り重量{2})", itemBom, itemBom * 2, item);
-                        selectingEachItems = false;
-                    }
-                    else
-                        InvalidInput();
-                }
+                ItemSelection("1:手榴弾", ref item, ref itemBom, 2);
+                ItemSelection("2:弾薬", ref item, ref itemBullet, 1);
+                ItemSelection("3:医療品", ref item, ref itemMedicine, 1);
 
-                selectingEachItems = true;
-                while (selectingEachItems == true)
+                void ItemSelection(string _itemName, ref int _item, ref int _itemEach, int _itemWeight)
                 {
-                    Console.WriteLine("2:弾薬 を何セット持っていきますか?");
-                    if (int.TryParse(Console.ReadLine(), out itemBullet) && (item - itemBullet >= 0))
+                    bool selectingEachItems = true;
+                    while (selectingEachItems == true)
                     {
-                        item -= itemBullet;
-                        Console.WriteLine("{0}個(重さ{1}|残り重量{2})", itemBullet, itemBullet, item);
-                        selectingEachItems = false;
+                        Console.WriteLine(_itemName + " を何個持っていきますか?");
+                        if (int.TryParse(Console.ReadLine(), out _itemEach) && (_item - _itemEach * _itemWeight >= 0))
+                        {
+                            _item -= _itemEach * _itemWeight;
+                            Console.WriteLine("{0}個(重さ{1}|残り重量{2})", _itemEach, _itemEach * _itemWeight, _item);
+                            selectingEachItems = false;
+                        }
+                        else
+                            InvalidInput();
                     }
-                    else
-                        InvalidInput();
-                }
-
-                selectingEachItems = true;
-                while (selectingEachItems == true)
-                {
-                    Console.WriteLine("3:医療品 を何個持っていきますか?");
-                    if (int.TryParse(Console.ReadLine(), out itemMedicine) && (item - itemMedicine >= 0))
-                    {
-                        item -= itemMedicine;
-                        Console.WriteLine("{0}個(重さ{1}|残り重量{2})", itemMedicine, itemMedicine, item);
-                        selectingEachItems = false;
-                    }
-                    else
-                        InvalidInput();
                 }
 
                 Console.WriteLine("手榴弾{0}個、弾丸{1}個、医療品{2}個でよろしいですか?)", itemBom, itemBullet, itemMedicine);
