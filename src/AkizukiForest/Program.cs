@@ -8,19 +8,19 @@ string? command;
 int section = 0;
 
 //ステータス
-int hp = 200;//体力
-int mp = 30;//魔力
-int lack = 0;//運
+int komariHP = 200;//体力
+int komariMP = 30;//魔力
+int komariLack = 0;//運
 
 //アイテム
 int item = 0;//アイテムの総重量
-int item_bom = 0;//手榴弾の数(手榴弾の重さは*2で算出)
-int item_bullet = 0;//弾丸の数
-int item_cure = 0;//医療品の数
+int itemBom = 0;//手榴弾の数(手榴弾の重さは*2で算出)
+int itemBullet = 0;//弾丸の数
+int itemMedicine = 0;//医療品の数
 
 //敵のステータス
-int enemy_hp = 0;
-string enemy_name = "";
+int enemyHP = 0;
+string enemyName = "";
 
 //誤ったコマンドを入力しているときはループ
 while (playing == true)
@@ -52,13 +52,13 @@ while (playing == true)
 
             //初期状態
             item = 12;//アイテムの総重量
-            item_bom = 0;//手榴弾の数(手榴弾の重さは*2で算出)
-            item_bullet = 0;//弾丸の数
-            item_cure = 0;//医療品の数
+            itemBom = 0;//手榴弾の数(手榴弾の重さは*2で算出)
+            itemBullet = 0;//弾丸の数
+            itemMedicine = 0;//医療品の数
 
             //アイテム選択処理
-            bool choose_item = true;
-            while (choose_item == true)
+            bool selectingItem = true;
+            while (selectingItem == true)
             {
                 Console.WriteLine("");
                 Console.WriteLine("その他に冒険に持っていくものを決めてください");
@@ -69,80 +69,80 @@ while (playing == true)
                 Console.WriteLine("3:医療品(回復)[1つ当たりの重さ:1]");
                 Console.WriteLine("");
 
-                bool choose_item_bom = true;
-                while (choose_item_bom == true)
+                bool selectingItemBom = true;
+                while (selectingItemBom == true)
                 {
                     Console.WriteLine("1:手榴弾 を何個持っていきますか?");
-                    if (!int.TryParse(Console.ReadLine(), out item_bom))
+                    if (!int.TryParse(Console.ReadLine(), out itemBom))
                         InvalidInput();
                     else
-                        if (item - item_bom * 2 >= 0)
+                        if (item - itemBom * 2 >= 0)
                         {
-                            item -= item_bom * 2;
-                            Console.WriteLine("{0}個(重さ{1}|残り重量{2})", item_bom, item_bom * 2, item);
-                            choose_item_bom = false;
+                            item -= itemBom * 2;
+                            Console.WriteLine("{0}個(重さ{1}|残り重量{2})", itemBom, itemBom * 2, item);
+                            selectingItemBom = false;
                         }
                         else
                             InvalidInput();
                 }
 
-                bool choose_item_bullet = true;
-                while (choose_item_bullet == true)
+                bool selectingItemBullet = true;
+                while (selectingItemBullet == true)
                 {
                     Console.WriteLine("2:弾薬 を何セット持っていきますか?");
-                    if (!int.TryParse(Console.ReadLine(), out item_bullet))
+                    if (!int.TryParse(Console.ReadLine(), out itemBullet))
                         InvalidInput();
                     else
-                        if (item - item_bullet >= 0)
+                        if (item - itemBullet >= 0)
                         {
-                            item -= item_bullet;
-                            Console.WriteLine("{0}個(重さ{1}|残り重量{2})", item_bullet, item_bullet, item);
-                            choose_item_bullet = false;
+                            item -= itemBullet;
+                            Console.WriteLine("{0}個(重さ{1}|残り重量{2})", itemBullet, itemBullet, item);
+                            selectingItemBullet = false;
                         }
                         else
                             InvalidInput();
                 }
 
-                bool choose_item_cure = true;
-                while (choose_item_cure == true)
+                bool selectingItemMedicine = true;
+                while (selectingItemMedicine == true)
                 {
                     Console.WriteLine("3:医療品 を何個持っていきますか?");
-                    if (!int.TryParse(Console.ReadLine(), out item_cure))
+                    if (!int.TryParse(Console.ReadLine(), out itemMedicine))
                         InvalidInput();
                     else
-                        if (item - item_cure >= 0)
+                        if (item - itemMedicine >= 0)
                         {
-                            item -= item_cure;
-                            Console.WriteLine("{0}個(重さ{1}|残り重量{2})", item_cure, item_cure, item);
-                            choose_item_cure = false;
+                            item -= itemMedicine;
+                            Console.WriteLine("{0}個(重さ{1}|残り重量{2})", itemMedicine, itemMedicine, item);
+                            selectingItemMedicine = false;
                         }
                         else
                             InvalidInput();
                 }
 
-                Console.WriteLine("手榴弾{0}個、弾丸{1}個、医療品{2}個でよろしいですか?)", item_bom, item_bullet, item_cure);
-                bool choose_item_last = true;
-                while (choose_item_last == true)
+                Console.WriteLine("手榴弾{0}個、弾丸{1}個、医療品{2}個でよろしいですか?)", itemBom, itemBullet, itemMedicine);
+                bool CheckingItems = true;
+                while (CheckingItems == true)
                 {
                     Console.WriteLine("1:はい/2:いいえ");
                     command = Console.ReadLine();
                     if (command == "1")
                     {
-                        choose_item_last = false;
-                        choose_item = false;
+                        CheckingItems = false;
+                        selectingItem = false;
                         //現時点では、弾丸のセット数を記録しているため、弾数表記に変更
-                        item_bullet *= 10;
+                        itemBullet *= 10;
                         Console.WriteLine("");
                     }
                     else if (command == "2")
                     {
-                        choose_item_last = false;
+                        CheckingItems = false;
                         Console.WriteLine("もう一度再設定します。");
                         //アイテム数の初期化
                         item = 12;
-                        item_bom = 0;
-                        item_bullet = 0;
-                        item_cure = 0;
+                        itemBom = 0;
+                        itemBullet = 0;
+                        itemMedicine = 0;
                     }
                     else
                         InvalidInput();
@@ -179,7 +179,7 @@ while (playing == true)
                 {
                     case "1":
                         where = true;
-                        lack += 5;
+                        komariLack += 5;
                         Console.WriteLine("珍しい植物を見つけた！");
                         Console.ReadLine();//次のコメントを表示
                         break;
@@ -196,7 +196,7 @@ while (playing == true)
                         Console.ReadLine();//次のコメントを表示
                         Console.WriteLine("こちらに対して敵対的な視線を向けて、今すぐにでも攻撃してきそうだ。");
                         Console.ReadLine();//次のコメントを表示
-                        lack -= 5;
+                        komariLack -= 5;
                         //戦闘処理
                         Buttle();
                         //もし死んでいるなら終了する
@@ -205,7 +205,6 @@ while (playing == true)
                         break;
 
                     case "4":
-                        //セーブ処理
                         Save();
                         break;
 
@@ -268,8 +267,8 @@ while (playing == true)
                         Console.ReadLine();//次のコメントを表示
                         Console.WriteLine("微かに香る花の香りで癒された。");
                         Console.ReadLine();//次のコメントを表示
-                        lack += 3;
-                        hp += 20;//微妙に回復(本作ではHPの最大値はない(しいて言うならint(32bit整数(負の数を含める))が最大値。))
+                        komariLack += 3;
+                        komariHP += 20;//微妙に回復(本作ではHPの最大値はない(しいて言うならint(32bit整数(負の数を含める))が最大値。))
                         Console.WriteLine("先ほどの建物ことをふと思い出した。");
                         Console.ReadLine();//次のコメントを表示
                         Console.WriteLine("こんな森の奥に誰が作ったのかが気になり、気が付くとその足はそちらへと動いていた。");
@@ -284,8 +283,8 @@ while (playing == true)
                         Console.ReadLine();//次のコメントを表示
                         Console.WriteLine("視界、音、匂い。それらすべての要素が私の気分をとても穏やかにさせた。");
                         Console.ReadLine();//次のコメントを表示
-                        hp += 50;
-                        mp += 10;
+                        komariHP += 50;
+                        komariMP += 10;
                         Console.WriteLine("先ほどの建物ことをふと思い出した。");
                         Console.ReadLine();//次のコメントを表示
                         Console.WriteLine("こんな森の奥に誰が作ったのかが気になり、気が付くとその足はそちらへと動いていた。");
@@ -293,7 +292,6 @@ while (playing == true)
                         break;
 
                     case "4":
-                        //セーブ処理
                         Save();
                         break;
 
@@ -389,7 +387,6 @@ while (playing == true)
                         break;
 
                     case "3":
-                        //セーブ処理
                         Save();
                         break;
 
@@ -436,10 +433,10 @@ while (playing == true)
             Console.ReadLine();//次のコメントを表示
             //強制戦闘
             //強制戦闘のため、自動回復
-            if (hp <= 260)
-                hp = 260;
-            if (mp <= 30)
-                mp = 30;
+            if (komariHP <= 260)
+                komariHP = 260;
+            if (komariMP <= 30)
+                komariMP = 30;
             //戦闘開始
             Buttle();
             //もし死んでいるなら終了する
@@ -500,13 +497,13 @@ while (playing == true)
                         Console.ReadLine();//次のコメントを表示
                         //ボス戦
                         //(ボス能力指定)
-                        enemy_hp = 1000;
-                        enemy_name = "黒色の影";
+                        enemyHP = 1000;
+                        enemyName = "黒色の影";
                         //(秋月回復)
-                        if (hp <= 300)
-                            hp = 300;
-                        hp += 240;
-                        mp += 10;
+                        if (komariHP <= 300)
+                            komariHP = 300;
+                        komariHP += 240;
+                        komariMP += 10;
                         //戦闘開始
                         Buttle();
                         //もし死んでいるなら終了する
@@ -525,7 +522,7 @@ while (playing == true)
                         Console.ReadLine();//次のコメントを表示
                         Console.WriteLine("雲の切れ目からは草原や色彩豊かな花畑が広がる。");
                         Console.ReadLine();//次のコメントを表示
-                        lack += 5;
+                        komariLack += 5;
                         Console.WriteLine("風景に見とれていると、後ろから気配を感じるようになった。");
                         Console.ReadLine();//次のコメントを表示
                         Console.WriteLine("急いで拳銃を手に取り、後ろを振り返ってみると…");
@@ -853,7 +850,6 @@ while (playing == true)
                         break;
 
                     case "4":
-                        //セーブ処理
                         Save();
                         break;
 
@@ -868,7 +864,7 @@ while (playing == true)
             //(親友=椿とわかる人はすごい。親友→×親、上司、△世界の終焉の前に。(長い間合っていないので一緒に喋る機会がない)、〇旧黒軍師
             //→旧黒軍師では3人いるが、航空隊2人の名前や詳細がまだ決まっていないため、椿という推測は一応可能だが。
             //(未来になって航空隊2人の名前が決まっても、決まっていなかった時代のストーリーということで未来になっても上記と同じ考察が可能。))
-            if (lack >= 8)
+            if (komariLack >= 8)
             {
                 Console.WriteLine(" - - - - - ");
                 Console.WriteLine("「っていうことがあったのよね」");//秋月
@@ -930,19 +926,19 @@ while (playing == true)
                     if (int.TryParse(data_read.Element("Section")?.Value, out int temp2))
                         section = temp2;
                     if (int.TryParse(data_read.Element("HP")?.Value, out int temp4))
-                        hp = temp4;
+                        komariHP = temp4;
                     if (int.TryParse(data_read.Element("MP")?.Value, out int temp5))
-                        mp = temp5;
+                        komariMP = temp5;
                     if (int.TryParse(data_read.Element("Luck")?.Value, out int temp3))
-                        lack = temp3;
+                        komariLack = temp3;
                     if (int.TryParse(data_read.Element("item")?.Value, out int temp_item1))
                         item = temp_item1;
                     if (int.TryParse(data_read.Element("item_bom")?.Value, out int temp_item2))
-                        item_bom = temp_item2;
+                        itemBom = temp_item2;
                     if (int.TryParse(data_read.Element("item_bullet")?.Value, out int temp_item3))
-                        item_bullet = temp_item3;
+                        itemBullet = temp_item3;
                     if (int.TryParse(data_read.Element("item_cure")?.Value, out int temp_item4))
-                        item_cure = temp_item4;
+                        itemMedicine = temp_item4;
 
                     Console.WriteLine("ロードが成功しました。");
                     Console.ReadLine();//次のコメントを表示
@@ -992,7 +988,7 @@ void InvalidInput()
     Console.ResetColor();
 }
 
-//セーブ処理
+// セーブ処理
 void Save()
 {
     //データ保存(xml)
@@ -1000,13 +996,13 @@ void Save()
         (
             "Data",
             new XElement("Section", section),
-            new XElement("HP", hp),
-            new XElement("MP", mp),
-            new XElement("Luck", lack),
+            new XElement("HP", komariHP),
+            new XElement("MP", komariMP),
+            new XElement("Luck", komariLack),
             new XElement("item", item),
-            new XElement("item_bom", item_bom),
-            new XElement("item_bullet", item_bullet),
-            new XElement("item_cure", item_cure)
+            new XElement("item_bom", itemBom),
+            new XElement("item_bullet", itemBullet),
+            new XElement("item_cure", itemMedicine)
         );
     element.Save("Data.xml");
     Console.WriteLine("セーブが完了しました。");
@@ -1023,18 +1019,18 @@ void Buttle()
     Random rand = new();
 
     //もしhpが指定されていないなら
-    if (enemy_hp <= 0)
-        enemy_hp = 100 + rand.Next(0, 15) * 10; // 敵の体力(初期値):100~240(10刻み)
+    if (enemyHP <= 0)
+        enemyHP = 100 + rand.Next(0, 15) * 10; // 敵の体力(初期値):100~240(10刻み)
 
     //もし名前が指定されていないなら
-    if (enemy_name == "")
-        enemy_name = "異形の存在"; // 初期値
+    if (enemyName == "")
+        enemyName = "異形の存在"; // 初期値
 
     //難易度調節のために戦闘開始時自動回復
-    hp += 20 + rand.Next(0, 3) * 10;//20~40(10刻み)
-    mp += rand.Next(2, 6);//2~5
+    komariHP += 20 + rand.Next(0, 3) * 10;//20~40(10刻み)
+    komariMP += rand.Next(2, 6);//2~5
 
-    while (enemy_hp > 0)
+    while (enemyHP > 0)
     {
         Console.WriteLine(" - あなたのターン - ");
         Console.ReadLine();//次のコメントを表示
@@ -1042,10 +1038,10 @@ void Buttle()
         //キャラクターステータス表示
         Console.WriteLine("");
         Console.WriteLine("味方ステータス");
-        Console.WriteLine("|秋月小鞠|HP:{0}|MP:{1}|", hp, mp);
+        Console.WriteLine("|秋月小鞠|HP:{0}|MP:{1}|", komariHP, komariMP);
         Console.WriteLine("");
         Console.WriteLine("敵ステータス");
-        Console.WriteLine("|{0}|HP:{1}|", enemy_name, enemy_hp);
+        Console.WriteLine("|{0}|HP:{1}|", enemyName, enemyHP);
 
         //作成途中
         bool where = false;
@@ -1055,12 +1051,12 @@ void Buttle()
             Console.WriteLine("");
             Console.WriteLine("どのような行動をしますか");
             Console.WriteLine("1:ナイフ攻撃");
-            Console.WriteLine("2:手榴弾攻撃(残り{0}個)", item_bom);
-            Console.WriteLine("3:拳銃射撃(残り{0}発)", item_bullet);
+            Console.WriteLine("2:手榴弾攻撃(残り{0}個)", itemBom);
+            Console.WriteLine("3:拳銃射撃(残り{0}発)", itemBullet);
             Console.WriteLine("4:治療魔法");//MPを使って回復
-            Console.WriteLine("5:回復薬治療(残り{0}個)", item_cure);
+            Console.WriteLine("5:回復薬治療(残り{0}個)", itemMedicine);
             Console.WriteLine("6:戦略的撤退");//逃げる
-            Console.WriteLine("7:手榴弾退散(残り{0}個)", item_bom);//手榴弾の爆破と同時に逃げることで「戦略的撤退」よりも高確率で逃げ切れる
+            Console.WriteLine("7:手榴弾退散(残り{0}個)", itemBom);//手榴弾の爆破と同時に逃げることで「戦略的撤退」よりも高確率で逃げ切れる
             Console.WriteLine("8:敵味方のステータスを再確認");
 
             command = Console.ReadLine();
@@ -1074,21 +1070,21 @@ void Buttle()
                     Console.ReadLine();//次のコメントを表示
                     Console.WriteLine("敵はダメージを受けたようだ。");
                     Console.ReadLine();//次のコメントを表示
-                    enemy_hp -= 50;//固定ダメージ
+                    enemyHP -= 50;//固定ダメージ
                     break;
 
                 case "2":
                     //爆破攻撃
-                    if (item_bom > 0)
+                    if (itemBom > 0)
                     {
                         where = true;
-                        item_bom -= 1;
+                        itemBom -= 1;
                         Console.WriteLine("秋月は後ろずさりで少しずつ後退しながら、手榴弾のピンを抜いて、");
                         Console.WriteLine("敵のほうに向かって投げつけた。");
                         Console.ReadLine();//次のコメントを表示
                         Console.WriteLine("しばらくすると、大きな爆発音を上げ、付近は白い煙に包まれた。");
                         Console.ReadLine();//次のコメントを表示
-                        enemy_hp -= 150 + rand.Next(0, 4) * 10;//150~180(10刻み)
+                        enemyHP -= 150 + rand.Next(0, 4) * 10;//150~180(10刻み)
                     }
                     else
                     {
@@ -1101,17 +1097,17 @@ void Buttle()
                     //射撃攻撃処理
                     //(ナイフ/爆弾との違いのために命中率は低く、ダメージが大きい、貫通するとさらにダメージ増加とかのほうがいいかも。
                     //↑一応、弾薬数が多いため攻撃可能回数がほぼ無限というメリットもあるけど。)
-                    if (item_bullet > 0)
+                    if (itemBullet > 0)
                     {
                         where = true;
-                        item_bullet -= 1;
+                        itemBullet -= 1;
                         Console.WriteLine("拳銃に弾丸を込め、単発射撃を行った。");
                         Console.ReadLine();//次のコメントを表示
                         Console.WriteLine("拳銃は、爆音を上げて、強い反動を受けた。");
                         Console.ReadLine();//次のコメントを表示
                         Console.WriteLine("弾丸は敵を直撃して、敵の体を貫通した。");
                         Console.ReadLine();//次のコメントを表示
-                        enemy_hp -= 40 + rand.Next(0, 27) * 10;// 40~300(10刻み)
+                        enemyHP -= 40 + rand.Next(0, 27) * 10;// 40~300(10刻み)
                     }
                     else
                     {
@@ -1123,9 +1119,9 @@ void Buttle()
                 case "4":
                     //治療処理
                     where = true;
-                    if (mp >= 3)
+                    if (komariMP >= 3)
                     {
-                        mp -= 3;
+                        komariMP -= 3;
                         Console.WriteLine("「リヴァレド・ハート」");
                         Console.WriteLine("両手を空にかざし、回復魔法を唱えた。");
                         Console.ReadLine();//次のコメントを表示
@@ -1133,7 +1129,7 @@ void Buttle()
                         Console.ReadLine();//次のコメントを表示
                         Console.WriteLine("傷は見る見るうちに回復していった。");
                         Console.ReadLine();//次のコメントを表示
-                        hp += 150;//固定
+                        komariHP += 150;//固定
                     }
                     else
                     {
@@ -1141,22 +1137,22 @@ void Buttle()
                         Console.ReadLine();//次のコメントを表示
                         Console.WriteLine("ナイフでスカートの先を切り、その布で傷ついた部分を保護した。");
                         Console.ReadLine();//次のコメントを表示
-                        hp += 40;//固定
+                        komariHP += 40;//固定
                     }
 
                     break;
 
                 case "5":
                     //アイテム治療処理
-                    if (item_cure > 0)
+                    if (itemMedicine > 0)
                     {
                         where = true;
-                        item_cure -= 1;
+                        itemMedicine -= 1;
                         Console.WriteLine("医療品をあさり、治療に使えそうな薬品などを取り出した。");
                         Console.ReadLine();//次のコメントを表示
                         Console.WriteLine("傷ついた部分に治療薬を塗り、包帯で巻いて痛みを和らげることができた。");
                         Console.ReadLine();//次のコメントを表示
-                        hp += 220;//固定
+                        komariHP += 220;//固定
                     }
                     else
                     {
@@ -1172,7 +1168,7 @@ void Buttle()
                     {
                         Console.WriteLine("敵からなんとか逃げ切ることができた。");
                         Console.ReadLine();//次のコメントを表示
-                        enemy_hp = 0;
+                        enemyHP = 0;
                     }
                     else
                     {
@@ -1184,10 +1180,10 @@ void Buttle()
 
                 case "7":
                     //手榴弾があるかを確認
-                    if (item_bom > 0)
+                    if (itemBom > 0)
                     {
                         where = true;
-                        item_bom -= 1;
+                        itemBom -= 1;
                         Console.WriteLine("秋月は後ろずさりで少しずつ後退しながら、手榴弾のピンを抜いて、");
                         Console.WriteLine("明後日のほうに向かって投げつけた。");
                         Console.ReadLine();//次のコメントを表示
@@ -1201,7 +1197,7 @@ void Buttle()
                         {
                             Console.WriteLine("なんとか逃げ切ることができた。");
                             Console.ReadLine();//次のコメントを表示
-                            enemy_hp = 0;
+                            enemyHP = 0;
                         }
                         else
                         {
@@ -1220,10 +1216,10 @@ void Buttle()
                 case "8":
                     Console.WriteLine("");
                     Console.WriteLine("味方ステータス");
-                    Console.WriteLine("|秋月小鞠|HP:{0}|MP:{1}|", hp, mp);
+                    Console.WriteLine("|秋月小鞠|HP:{0}|MP:{1}|", komariHP, komariMP);
                     Console.WriteLine("");
                     Console.WriteLine("敵ステータス");
-                    Console.WriteLine("|{0}|HP:{1}|", enemy_name, enemy_hp);
+                    Console.WriteLine("|{0}|HP:{1}|", enemyName, enemyHP);
                     break;
 
                 default:
@@ -1232,7 +1228,7 @@ void Buttle()
             }
 
             //敵死亡判定
-            if (enemy_hp <= 0)
+            if (enemyHP <= 0)
             {
                 switch (command)
                 {
@@ -1246,7 +1242,7 @@ void Buttle()
                         Console.ReadLine();//次のコメントを表示
                         break;
                 }
-                enemy_name = "";//敵の名前を未指定状態にする
+                enemyName = "";//敵の名前を未指定状態にする
                 Console.WriteLine(" -+-+- 戦闘終了 -+-+- ");
                 Console.ReadLine();//次のコメントを表示
                 Console.WriteLine("「ふう。何とかなったわね。」");
@@ -1270,7 +1266,7 @@ void Buttle()
                     {
                         Console.WriteLine("敵からの攻撃");
                         Console.ReadLine();//次のコメントを表示
-                        hp -= rand.Next(5, 14) * 10;//50~130(10刻み)(最大値が出るとまあまあ強いのでHPに注意。)
+                        komariHP -= rand.Next(5, 14) * 10;//50~130(10刻み)(最大値が出るとまあまあ強いのでHPに注意。)
                     }
                     else if (rand.Next(0, 101) <= 50)//全体で15%の確率(残り30%のうち、更に半分の確率)
                     {
@@ -1281,11 +1277,11 @@ void Buttle()
                     {
                         Console.WriteLine("敵は回復魔法を唱えた。");
                         Console.ReadLine();//次のコメントを表示
-                        enemy_hp += 120;//固定
+                        enemyHP += 120;//固定
                     }
 
                     //秋月死亡判定
-                    if (hp <= 0)
+                    if (komariHP <= 0)
                     {
                         Console.ForegroundColor = ConsoleColor.Red; // 文字の色を変更
                         Console.WriteLine("");
@@ -1301,7 +1297,7 @@ void Buttle()
                         Console.ReadLine();//次のコメントを表示
                         Console.ResetColor(); // 色をリセット
                         //終了判定
-                        enemy_hp = 0;
+                        enemyHP = 0;
                         section = 99;
                     }
                 }
