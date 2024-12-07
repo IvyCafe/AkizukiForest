@@ -959,22 +959,14 @@ void Load()
     IEnumerable<XElement> datas = file_read.Elements("Data");
     foreach (XElement data_read in datas)
     {
-        if (int.TryParse(data_read.Element("Section")?.Value, out int temp2))
-            section = temp2;
-        if (int.TryParse(data_read.Element("KomariHP")?.Value, out int temp4))
-            komariHP = temp4;
-        if (int.TryParse(data_read.Element("KomariMP")?.Value, out int temp5))
-            komariMP = temp5;
-        if (int.TryParse(data_read.Element("KomariLuck")?.Value, out int temp3))
-            komariLack = temp3;
-        if (int.TryParse(data_read.Element("Item")?.Value, out int temp_item1))
-            item = temp_item1;
-        if (int.TryParse(data_read.Element("ItemBom")?.Value, out int temp_item2))
-            itemBom = temp_item2;
-        if (int.TryParse(data_read.Element("ItemBullet")?.Value, out int temp_item3))
-            itemBullet = temp_item3;
-        if (int.TryParse(data_read.Element("ItemMedicine")?.Value, out int temp_item4))
-            itemMedicine = temp_item4;
+        section         = int.TryParse(data_read.Element("Section")?.Value, out var tempSection) ? tempSection : 0;
+        komariHP        = int.TryParse(data_read.Element("KomariHP")?.Value, out int tempKomariHP) ? tempKomariHP : 200;
+        komariMP        = int.TryParse(data_read.Element("KomariMP")?.Value, out int tempKomariMP) ? tempKomariMP : 20;
+        komariLack      = int.TryParse(data_read.Element("KomariLuck")?.Value, out int tempKomariLack) ? tempKomariLack : 10;
+        item            = int.TryParse(data_read.Element("Item")?.Value, out int tempItem) ? tempItem : 0;
+        itemBom         = int.TryParse(data_read.Element("ItemBom")?.Value, out int tempItemBom) ? tempItemBom : 2;
+        itemBullet      = int.TryParse(data_read.Element("ItemBullet")?.Value, out int tempItemBullet) ? tempItemBullet : 4;
+        itemMedicine    = int.TryParse(data_read.Element("ItemMedicine")?.Value, out int tempItemMedicine) ? tempItemMedicine : 4;
     }
 
     Console.WriteLine("ロードが成功しました。");
