@@ -1,4 +1,4 @@
-using System.Xml.Linq;
+﻿using System.Xml.Linq;
 
 bool playing = true;    // ループ用
 int section = 0;        // セーブ用
@@ -941,6 +941,15 @@ void InvalidInput()
     Console.ResetColor();
 }
 
+// 警告文字
+void WarningConsole(string message)
+{
+    Console.ForegroundColor = ConsoleColor.Yellow;
+    Console.WriteLine(message);
+    Console.ReadLine();
+    Console.ResetColor();
+}
+
 // セーブ処理
 void Save()
 {
@@ -1070,12 +1079,7 @@ void Buttle()
                         enemyHP -= 150 + rand.Next(0, 4) * 10;//150~180(10刻み)
                     }
                     else
-                    {
-                        Console.ForegroundColor = ConsoleColor.Yellow;
-                        Console.WriteLine("爆弾がないようだ。");
-                        Console.ReadLine();
-                        Console.ResetColor();
-                    }
+                        WarningConsole("爆弾がないようだ。");
                     break;
 
                 case "3":
@@ -1095,12 +1099,7 @@ void Buttle()
                         enemyHP -= 40 + rand.Next(0, 27) * 10;// 40~300(10刻み)
                     }
                     else
-                    {
-                        Console.ForegroundColor = ConsoleColor.Yellow;
-                        Console.WriteLine("弾薬が足りないようだ。");
-                        Console.ReadLine();
-                        Console.ResetColor();
-                    }
+                        WarningConsole("弾薬が足りないようだ。");
                     break;
 
                 case "4":
@@ -1142,12 +1141,7 @@ void Buttle()
                         komariHP += 220;//固定
                     }
                     else
-                    {
-                        Console.ForegroundColor = ConsoleColor.Yellow;
-                        Console.WriteLine("治療薬がないようだ。");
-                        Console.ReadLine();
-                        Console.ResetColor();
-                    }
+                        WarningConsole("治療薬がないようだ。");
                     break;
 
                 case "6":
@@ -1160,13 +1154,7 @@ void Buttle()
                         enemyHP = 0;
                     }
                     else
-                    {
-                        Console.ForegroundColor = ConsoleColor.Yellow;
-                        Console.WriteLine("敵に回り込まれた。");
-                        Console.ReadLine();
-                        Console.ResetColor();
-                    }
-
+                        WarningConsole("敵に回り込まれた。");
                     break;
 
                 case "7":
@@ -1191,21 +1179,10 @@ void Buttle()
                             enemyHP = 0;
                         }
                         else
-                        {
-                            Console.ForegroundColor = ConsoleColor.Yellow;
-                            Console.WriteLine("しかし、敵に回り込まれてしまった。");
-                            Console.ReadLine();
-                            Console.ResetColor();
-                            //敵にダメージはなし
-                        }
+                            WarningConsole("しかし、敵に回り込まれてしまった。"); // 敵にダメージはなし
                     }
                     else
-                    {
-                        Console.ForegroundColor = ConsoleColor.Yellow;
-                        Console.WriteLine("爆弾がないようだ。");
-                        Console.ReadLine();
-                        Console.ResetColor();
-                    }
+                        WarningConsole("爆弾がないようだ。");
                     break;
 
                 case "8":
