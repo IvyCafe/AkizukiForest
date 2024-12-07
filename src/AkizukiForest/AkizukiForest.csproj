@@ -5,7 +5,7 @@
     <TargetFramework>net8.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-    <Authors>Lemon's Resting Area, Ivy Cafeteria, $(AssemblyName) Project</Authors>
+    <Authors>Lemon's Resting Area, Ivy Cafeteria, Lemon73</Authors>
     <Description>暇をした少女が森に探索に行くお話。</Description>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <NeutralLanguage>ja-JP</NeutralLanguage>
