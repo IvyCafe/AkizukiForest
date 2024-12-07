@@ -415,10 +415,8 @@ while (playing == true)
             Console.ReadLine();
             //強制戦闘
             //強制戦闘のため、自動回復
-            if (komariHP <= 260)
-                komariHP = 260;
-            if (komariMP <= 30)
-                komariMP = 30;
+            komariHP = (komariHP >= 260) ? komariHP : 260;
+            komariMP = (komariMP >= 30) ? komariMP : 30;
             //戦闘開始
             Buttle();
             //もし死んでいるなら終了する
@@ -441,10 +439,10 @@ while (playing == true)
             Console.ReadLine();
             Console.WriteLine("「さて、上か下か。」");
             Console.ReadLine();
-                               //下の階に行くか、上の階に行くかで大きく√分岐
-                               //天空世界の頂上到達√…天空世界の結末(たまたま地下洞窟と天空世界でつながってしまったことなど)を明かす
-                               //天空世界の地上到達√…地下空洞の過去を明かす
-                               //秘密コマンドにて窓から飛び降りる→森の泉(隠し)√…次回作や尾花と桜(北大陸)の世界観についてのフラグ・ヒント/秋月の過去について
+            // 下の階に行くか、上の階に行くかで大きく√分岐
+            // 天空世界の頂上到達√…天空世界の結末(たまたま地下洞窟と天空世界でつながってしまったことなど)を明かす
+            // 天空世界の地上到達√…地下空洞の過去を明かす
+            // 秘密コマンドにて窓から飛び降りる→森の泉(隠し)√…次回作や尾花と桜(北大陸)の世界観についてのフラグ・ヒント/秋月の過去について
             where = false;
             while (where == false)
             {
@@ -452,10 +450,10 @@ while (playing == true)
                 Console.WriteLine("どうしますか");
                 Console.WriteLine("1:上の階へ行く");
                 Console.WriteLine("2:下の階へ行く");
-                //3:窓から飛び降りる(隠し√)
-                //3番を隠すことでフラグにしている。
-                //(隠し√だけど、3番が飛ばされているというのは違和感があるし、結構見つけやすい√だと思う。)
-                //(3番を飛ばしているのはただのミスだと思われるかもしれないけど)
+                // 3:窓から飛び降りる (隠し√)
+                // 3番を隠すことでフラグにしている。
+                // (隠し√だけど、3番が飛ばされているというのは違和感があるし、結構見つけやすい√だと思う。)
+                // (3番を飛ばしているのはただのミスだと思われるかもしれないけど)
                 Console.WriteLine("----------");
                 Console.WriteLine("4:セーブ");
 
@@ -482,8 +480,7 @@ while (playing == true)
                         enemyHP = 1000;
                         enemyName = "黒色の影";
                         //(秋月回復)
-                        if (komariHP <= 300)
-                            komariHP = 300;
+                        komariHP = (komariHP >= 300) ? komariHP : 300;
                         komariHP += 240;
                         komariMP += 10;
                         //戦闘開始
@@ -1008,7 +1005,7 @@ void Buttle()
     const string enemyDefaultName = "異形の存在";
 
     // HP が設定されていないときはランダム値に設定
-    enemyHP = (enemyHP <= 0) ? enemyHP : enemyDefaultHP;
+    enemyHP = (enemyHP > 0) ? enemyHP : enemyDefaultHP;
     // 名前が設定されていないときは初期値に設定
     enemyName = (enemyName == "") ? enemyName : enemyDefaultName;
 
@@ -1074,8 +1071,10 @@ void Buttle()
                     }
                     else
                     {
+                        Console.ForegroundColor = ConsoleColor.Yellow;
                         Console.WriteLine("爆弾がないようだ。");
                         Console.ReadLine();
+                        Console.ResetColor();
                     }
                     break;
 
@@ -1097,8 +1096,10 @@ void Buttle()
                     }
                     else
                     {
+                        Console.ForegroundColor = ConsoleColor.Yellow;
                         Console.WriteLine("弾薬が足りないようだ。");
                         Console.ReadLine();
+                        Console.ResetColor();
                     }
                     break;
 
@@ -1142,8 +1143,10 @@ void Buttle()
                     }
                     else
                     {
+                        Console.ForegroundColor = ConsoleColor.Yellow;
                         Console.WriteLine("治療薬がないようだ。");
                         Console.ReadLine();
+                        Console.ResetColor();
                     }
                     break;
 
@@ -1158,8 +1161,10 @@ void Buttle()
                     }
                     else
                     {
+                        Console.ForegroundColor = ConsoleColor.Yellow;
                         Console.WriteLine("敵に回り込まれた。");
                         Console.ReadLine();
+                        Console.ResetColor();
                     }
 
                     break;
@@ -1187,15 +1192,19 @@ void Buttle()
                         }
                         else
                         {
+                            Console.ForegroundColor = ConsoleColor.Yellow;
                             Console.WriteLine("しかし、敵に回り込まれてしまった。");
                             Console.ReadLine();
+                            Console.ResetColor();
                             //敵にダメージはなし
                         }
                     }
                     else
                     {
+                        Console.ForegroundColor = ConsoleColor.Yellow;
                         Console.WriteLine("爆弾がないようだ。");
                         Console.ReadLine();
+                        Console.ResetColor();
                     }
                     break;
 
@@ -1238,35 +1247,38 @@ void Buttle()
             }
             else
             {
-                //もし攻撃or回復(逃げる+誤入力以外)なら
-                //このif文で↓のバグを回避できる。
-                //(8の「様子を見る」や誤コマンドの際に本来なら再度コマンドを選べるはずなのに、すぐに敵ターンに移行してしまうバグ。
-                //原因:whileの中に敵の処理を入れているから)
+                // もし攻撃or回復(逃げる+誤入力以外)なら
+                // このif文で↓のバグを回避できる。
+                // (8の「様子を見る」や誤コマンドの際に本来なら再度コマンドを選べるはずなのに、すぐに敵ターンに移行してしまうバグ。
+                // 原因:whileの中に敵の処理を入れているから)
                 if (where == true)
                 {
-                    //続行(敵ターン)
+                    // 続行 (敵ターン)
                     Console.WriteLine(" - 敵のターン - ");
                     Console.ReadLine();
 
-                    if (rand.Next(0, 101) <= 70)//70%の確率
+                    // 70%の確率
+                    if (rand.Next(0, 101) <= 70)
                     {
                         Console.WriteLine("敵からの攻撃");
                         Console.ReadLine();
                         komariHP -= rand.Next(5, 14) * 10;//50~130(10刻み)(最大値が出るとまあまあ強いのでHPに注意。)
                     }
-                    else if (rand.Next(0, 101) <= 50)//全体で15%の確率(残り30%のうち、更に半分の確率)
+                    // 全体で15%の確率 (残り30%のうち、更に半分の確率)
+                    else if (rand.Next(0, 101) <= 50)
                     {
                         Console.WriteLine("敵は様子を見ている。");
                         Console.ReadLine();
                     }
-                    else//全体で15%
+                    // 全体で15%
+                    else
                     {
                         Console.WriteLine("敵は回復魔法を唱えた。");
                         Console.ReadLine();
-                        enemyHP += 120;//固定
+                        enemyHP += 120; // 固定
                     }
 
-                    //秋月死亡判定
+                    // 秋月死亡判定
                     if (komariHP <= 0)
                     {
                         Console.ForegroundColor = ConsoleColor.Red; // 文字の色を変更
@@ -1282,7 +1294,7 @@ void Buttle()
                         Console.WriteLine("言葉を言い終える前に、その人生の終わりを早々と迎えた。");
                         Console.ReadLine();
                         Console.ResetColor(); // 色をリセット
-                        //終了判定
+                        // 終了判定
                         enemyHP = 0;
                         section = 99;
                     }
