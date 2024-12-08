@@ -1,28 +1,25 @@
 ﻿using System.Xml.Linq;
 
-bool playing = true;
-//Null警告を出さないためにstring"?"としている。
-string? command;
+bool playing = true;    // ループ用
+int section = 0;        // セーブ用
+string? command;        // コマンド読み取り
 
-//セーブ用の区切り(節)
-int section = 0;
+// ステータス
+int komariHP = 200;     // 体力
+int komariMP = 30;      // 魔力
+int komariLack = 0;     // 運
 
-//ステータス
-int hp = 200;//体力
-int mp = 30;//魔力
-int lack = 0;//運
+// アイテム
+int item = 12;          // アイテムの総重量
+int itemBom = 0;        // 手榴弾の数 (手榴弾の重さはx2で算出)
+int itemBullet = 0;     // 弾丸の数
+int itemMedicine = 0;   // 医療品の数
 
-//アイテム
-int item = 0;//アイテムの総重量
-int item_bom = 0;//手榴弾の数(手榴弾の重さは*2で算出)
-int item_bullet = 0;//弾丸の数
-int item_cure = 0;//医療品の数
+// 敵のステータス
+int enemyHP = 0;        // 体力
+string enemyName = "";  // 名称
 
-//敵のステータス
-int enemy_hp = 0;
-string enemy_name = "";
-
-//誤ったコマンドを入力しているときはループ
+// 誤ったコマンドを入力しているときはループ
 while (playing == true)
 {
     Console.WriteLine("1:はじめから");
@@ -36,29 +33,23 @@ while (playing == true)
         case "1":
             playing = false;
             Console.WriteLine("「うーん…暇だなぁ」");
-            Console.ReadLine();//次のコメントを表示(ReadKeyでもいいけど、ReadLineのほうが改行されて読みやすい気がするのでこちらに。)
+            Console.ReadLine(); // 次のコメントを表示 (ReadKey でもいいけど、ReadLine のほうが改行されて読みやすい気がするのでこちらに)
             Console.WriteLine("彼女、秋月は暇をしていた。");
-            Console.ReadLine();//次のコメントを表示
+            Console.ReadLine();
             Console.WriteLine("数年前の大規模な戦争も今は終わり、平和な世の中となった今では傭兵としての仕事はなくなっていた。");
-            Console.ReadLine();//次のコメントを表示
+            Console.ReadLine();
             Console.WriteLine("ここ、アネリアの森は都市から離れた場所にあり、秋月が住んでいる家はその森の中にあった。");
-            Console.ReadLine();//次のコメントを表示
+            Console.ReadLine();
             Console.WriteLine("「とりあえず、外で散歩でもしようかなぁ…」");
-            Console.ReadLine();//次のコメントを表示
+            Console.ReadLine();
             Console.WriteLine("秋月はそう言って椅子から立ち上がった。");
-            Console.ReadLine();//次のコメントを表示
+            Console.ReadLine();
             Console.WriteLine("近くの机に置いている拳銃と、2本の小型ナイフを持ち、近くのリュックを背負った。");
-            Console.ReadLine();//次のコメントを表示
+            Console.ReadLine();
 
-            //初期状態
-            item = 12;//アイテムの総重量
-            item_bom = 0;//手榴弾の数(手榴弾の重さは*2で算出)
-            item_bullet = 0;//弾丸の数
-            item_cure = 0;//医療品の数
-
-            //アイテム選択処理
-            bool choose_item = true;
-            while (choose_item == true)
+            // アイテム選択処理
+            bool selectingItem = true;
+            while (selectingItem == true)
             {
                 Console.WriteLine("");
                 Console.WriteLine("その他に冒険に持っていくものを決めてください");
@@ -69,80 +60,50 @@ while (playing == true)
                 Console.WriteLine("3:医療品(回復)[1つ当たりの重さ:1]");
                 Console.WriteLine("");
 
-                bool choose_item_bom = true;
-                while (choose_item_bom == true)
+                ItemSelection("1:手榴弾", ref item, ref itemBom, 2);
+                ItemSelection("2:弾薬", ref item, ref itemBullet, 1);
+                ItemSelection("3:医療品", ref item, ref itemMedicine, 1);
+
+                void ItemSelection(string _itemName, ref int _item, ref int _itemEach, int _itemWeight)
                 {
-                    Console.WriteLine("1:手榴弾 を何個持っていきますか?");
-                    if (!int.TryParse(Console.ReadLine(), out item_bom))
-                        InvalidInput();
-                    else
-                        if (item - item_bom * 2 >= 0)
+                    bool selectingEachItems = true;
+                    while (selectingEachItems == true)
+                    {
+                        Console.WriteLine(_itemName + " を何個持っていきますか?");
+                        if (int.TryParse(Console.ReadLine(), out _itemEach) && (_item - _itemEach * _itemWeight >= 0))
                         {
-                            item -= item_bom * 2;
-                            Console.WriteLine("{0}個(重さ{1}|残り重量{2})", item_bom, item_bom * 2, item);
-                            choose_item_bom = false;
+                            _item -= _itemEach * _itemWeight;
+                            Console.WriteLine("{0}個(重さ{1}|残り重量{2})", _itemEach, _itemEach * _itemWeight, _item);
+                            selectingEachItems = false;
                         }
                         else
                             InvalidInput();
+                    }
                 }
 
-                bool choose_item_bullet = true;
-                while (choose_item_bullet == true)
-                {
-                    Console.WriteLine("2:弾薬 を何セット持っていきますか?");
-                    if (!int.TryParse(Console.ReadLine(), out item_bullet))
-                        InvalidInput();
-                    else
-                        if (item - item_bullet >= 0)
-                        {
-                            item -= item_bullet;
-                            Console.WriteLine("{0}個(重さ{1}|残り重量{2})", item_bullet, item_bullet, item);
-                            choose_item_bullet = false;
-                        }
-                        else
-                            InvalidInput();
-                }
-
-                bool choose_item_cure = true;
-                while (choose_item_cure == true)
-                {
-                    Console.WriteLine("3:医療品 を何個持っていきますか?");
-                    if (!int.TryParse(Console.ReadLine(), out item_cure))
-                        InvalidInput();
-                    else
-                        if (item - item_cure >= 0)
-                        {
-                            item -= item_cure;
-                            Console.WriteLine("{0}個(重さ{1}|残り重量{2})", item_cure, item_cure, item);
-                            choose_item_cure = false;
-                        }
-                        else
-                            InvalidInput();
-                }
-
-                Console.WriteLine("手榴弾{0}個、弾丸{1}個、医療品{2}個でよろしいですか?)", item_bom, item_bullet, item_cure);
-                bool choose_item_last = true;
-                while (choose_item_last == true)
+                Console.WriteLine("手榴弾{0}個、弾丸{1}個、医療品{2}個でよろしいですか?)", itemBom, itemBullet, itemMedicine);
+                bool checkingItems = true;
+                while (checkingItems == true)
                 {
                     Console.WriteLine("1:はい/2:いいえ");
                     command = Console.ReadLine();
                     if (command == "1")
                     {
-                        choose_item_last = false;
-                        choose_item = false;
-                        //現時点では、弾丸のセット数を記録しているため、弾数表記に変更
-                        item_bullet *= 10;
+                        checkingItems = false;
+                        selectingItem = false;
+                        // 現時点では、弾丸のセット数を記録しているため、弾数表記に変更
+                        itemBullet *= 10;
                         Console.WriteLine("");
                     }
                     else if (command == "2")
                     {
-                        choose_item_last = false;
+                        checkingItems = false;
                         Console.WriteLine("もう一度再設定します。");
-                        //アイテム数の初期化
+                        // アイテム数の初期化
                         item = 12;
-                        item_bom = 0;
-                        item_bullet = 0;
-                        item_cure = 0;
+                        itemBom = 0;
+                        itemBullet = 0;
+                        itemMedicine = 0;
                     }
                     else
                         InvalidInput();
@@ -155,13 +116,13 @@ while (playing == true)
             section = 1;
 
             Console.WriteLine("移動中…");
-            Console.ReadLine();//次のコメントを表示
+            Console.ReadLine();
             Console.WriteLine("「ん～」");
-            Console.ReadLine();//次のコメントを表示
+            Console.ReadLine();
             Console.WriteLine("「外は涼しくて気持ちいいねぇ～」");
-            Console.ReadLine();//次のコメントを表示
+            Console.ReadLine();
             Console.WriteLine("「さて、今日はどこに行こうかなぁ」");
-            Console.ReadLine();//次のコメントを表示
+            Console.ReadLine();
 
             bool where = false;
             while (where == false)
@@ -179,33 +140,32 @@ while (playing == true)
                 {
                     case "1":
                         where = true;
-                        lack += 5;
+                        komariLack += 5;
                         Console.WriteLine("珍しい植物を見つけた！");
-                        Console.ReadLine();//次のコメントを表示
+                        Console.ReadLine();
                         break;
 
                     case "2":
                         where = true;
                         Console.WriteLine("特にめぼしい物は見当たらなかった。");
-                        Console.ReadLine();//次のコメントを表示
+                        Console.ReadLine();
                         break;
 
                     case "3":
                         where = true;
                         Console.WriteLine("怪しい影に近づいてみると、何かはわからないが、中型の生物のように見える。");
-                        Console.ReadLine();//次のコメントを表示
+                        Console.ReadLine();
                         Console.WriteLine("こちらに対して敵対的な視線を向けて、今すぐにでも攻撃してきそうだ。");
-                        Console.ReadLine();//次のコメントを表示
-                        lack -= 5;
-                        //戦闘処理
+                        Console.ReadLine();
+                        komariLack -= 5;
+                        // 戦闘処理
                         Buttle();
-                        //もし死んでいるなら終了する
+                        // もし死んでいるなら終了する
                         if (section == 99)
                             goto label99;
                         break;
 
                     case "4":
-                        //セーブ処理
                         Save();
                         break;
 
@@ -220,17 +180,17 @@ while (playing == true)
             section = 2;
 
             Console.WriteLine("更に森の奥を進んでいく。");
-            Console.ReadLine();//次のコメントを表示
+            Console.ReadLine();
             Console.WriteLine("すると、山の斜面に石の建造物らしきものが見えた。");
-            Console.ReadLine();//次のコメントを表示
+            Console.ReadLine();
             Console.WriteLine("「あれは…何かしらね。」");
-            Console.ReadLine();//次のコメントを表示
+            Console.ReadLine();
             Console.WriteLine("ここまで遠くに来たのは今日が初めてだ。");
-            Console.ReadLine();//次のコメントを表示
+            Console.ReadLine();
             Console.WriteLine("また、こんな森の奥まで来る人はほとんどいないだろう。");
-            Console.ReadLine();//次のコメントを表示
+            Console.ReadLine();
             Console.WriteLine("「こんなところに…何の建物かしら？」");
-            Console.ReadLine();//次のコメントを表示
+            Console.ReadLine();
 
             where = false;
             while (where == false)
@@ -249,51 +209,50 @@ while (playing == true)
                     case "1":
                         where = true;
                         Console.WriteLine("見たことがない建物を見た秋月は、すぐにそこへ近づいた。");
-                        Console.ReadLine();//次のコメントを表示
+                        Console.ReadLine();
                         break;
 
                     case "2":
                         where = true;
                         Console.WriteLine("建造物の周辺を見渡すと、近くには紅の花と、鮮やかな秘色(ひそく)の花が咲き乱れていた。");
-                        /*特に意味はないが、花の紹介(後付け設定)
+                        // 特に意味はないが、花の紹介 (後付け設定)
 
-                        紅の花:ゼラニウム(天竺葵-てんじくあおい)
-                        4月~6月開花の四季咲き植物。北大陸は冬の寒さが厳しいので冬は散ってしまう。
-                        花言葉:信頼 真の友情 尊敬 決心 | (外国)愚かさ 良い育ち 上流階級 | (赤色)君ありて幸福 あなたがいて幸せ
-                        ハンガリーの国花。
+                        // 紅の花: ゼラニウム (天竺葵-てんじくあおい)
+                        // 4月~6月開花の四季咲き植物。北大陸は冬の寒さが厳しいので冬は散ってしまう。
+                        // 花言葉: 信頼 真の友情 尊敬 決心 | (外国) 愚かさ 良い育ち 上流階級 | (赤色) 君ありて幸福 あなたがいて幸せ
+                        // ハンガリーの国花。
 
-                        秘色の花:ワスレナグサ(勿忘草)
-                        3月下旬~4月に見られる。(北大陸は夏でもそれほど気温が上がらないため(もちろん地域による差はあるが)、夏設定の本作品でもつじつまは合う。)
-                        花言葉:私を忘れないで 真実の愛*/
-                        Console.ReadLine();//次のコメントを表示
+                        // 秘色の花: ワスレナグサ (勿忘草)
+                        // 3月下旬~4月に見られる。(北大陸は夏でもそれほど気温が上がらないため (もちろん地域による差はあるが)、夏設定の本作品でもつじつまは合う。)
+                        // 花言葉: 私を忘れないで 真実の愛
+                        Console.ReadLine();
                         Console.WriteLine("微かに香る花の香りで癒された。");
-                        Console.ReadLine();//次のコメントを表示
-                        lack += 3;
-                        hp += 20;//微妙に回復(本作ではHPの最大値はない(しいて言うならint(32bit整数(負の数を含める))が最大値。))
+                        Console.ReadLine();
+                        komariLack += 3;
+                        komariHP += 20; // 微妙に回復 (本作では HP の最大値はない (しいて言うなら int 32bit が最大値))
                         Console.WriteLine("先ほどの建物ことをふと思い出した。");
-                        Console.ReadLine();//次のコメントを表示
+                        Console.ReadLine();
                         Console.WriteLine("こんな森の奥に誰が作ったのかが気になり、気が付くとその足はそちらへと動いていた。");
-                        Console.ReadLine();//次のコメントを表示
+                        Console.ReadLine();
                         break;
 
                     case "3":
                         where = true;
                         Console.WriteLine("一旦木陰で休憩することにした。");
-                        Console.ReadLine();//次のコメントを表示
+                        Console.ReadLine();
                         Console.WriteLine("森林ならではの爽やかな風が頬に当たり心地が良い。");
-                        Console.ReadLine();//次のコメントを表示
+                        Console.ReadLine();
                         Console.WriteLine("視界、音、匂い。それらすべての要素が私の気分をとても穏やかにさせた。");
-                        Console.ReadLine();//次のコメントを表示
-                        hp += 50;
-                        mp += 10;
+                        Console.ReadLine();
+                        komariHP += 50;
+                        komariMP += 10;
                         Console.WriteLine("先ほどの建物ことをふと思い出した。");
-                        Console.ReadLine();//次のコメントを表示
+                        Console.ReadLine();
                         Console.WriteLine("こんな森の奥に誰が作ったのかが気になり、気が付くとその足はそちらへと動いていた。");
-                        Console.ReadLine();//次のコメントを表示
+                        Console.ReadLine();
                         break;
 
                     case "4":
-                        //セーブ処理
                         Save();
                         break;
 
@@ -308,14 +267,14 @@ while (playing == true)
             section = 3;
 
             Console.WriteLine("石で建造されたトンネルのようなその建造物は、山の内部へ続いている。");
-            Console.ReadLine();//次のコメントを表示
+            Console.ReadLine();
             Console.WriteLine("トンネルへ入り奥へ進んでいくと、道は二股に別れていた。");
-            Console.ReadLine();//次のコメントを表示
+            Console.ReadLine();
             Console.WriteLine("道は、両方とも壁掛けのたいまつで照らされていて、");
             Console.WriteLine("右の道は細い道が、左の道は曲がりくねった道が続いていた。");
-            Console.ReadLine();//次のコメントを表示
+            Console.ReadLine();
             Console.WriteLine("「うーん…どっちに行こうかなぁ」");
-            Console.ReadLine();//次のコメントを表示
+            Console.ReadLine();
 
             where = false;
             while (where == false)
@@ -333,27 +292,27 @@ while (playing == true)
                     case "1":
                         where = true;
                         Console.WriteLine("右の道へ進んでいくと、その道はだんだんと細くなってきた。");
-                        Console.ReadLine();//次のコメントを表示
+                        Console.ReadLine();
                         Console.WriteLine("だんだんと地下へと進んでいった。");
-                        Console.ReadLine();//次のコメントを表示
+                        Console.ReadLine();
                         Console.WriteLine("「さ、寒いわね…」");
-                        Console.ReadLine();//次のコメントを表示
+                        Console.ReadLine();
                         Console.WriteLine("夏とはいえ、この地域は地上でも涼しいため、地下では寒いほどになってきた。");
-                        Console.ReadLine();//次のコメントを表示
+                        Console.ReadLine();
                         break;
 
                     case "2":
                         where = true;
                         Console.WriteLine("道なりに進んでいくと、何かの影のようなものが見えた。");
-                        Console.ReadLine();//次のコメントを表示
+                        Console.ReadLine();
                         Console.WriteLine("「なにかしら？」");
-                        Console.ReadLine();//次のコメントを表示
+                        Console.ReadLine();
                         Console.WriteLine("隠れながらのぞいてみると、そこには異様な機影が見えた。");
-                        Console.ReadLine();//次のコメントを表示
+                        Console.ReadLine();
                         Console.WriteLine("こちらにはまだ気づいていないようだ。");
-                        Console.ReadLine();//次のコメントを表示
+                        Console.ReadLine();
 
-                        //戦闘or道を戻って分岐点の右側の道に行くかの選択肢
+                        // 戦闘or道を戻って分岐点の右側の道に行くかの選択肢
                         bool which = false;
                         while (which == false)
                         {
@@ -378,7 +337,7 @@ while (playing == true)
                                     which = true;
                                     where = false;
                                     Console.WriteLine("先ほどの分岐点まで戻った。");
-                                    Console.ReadLine();//次のコメントを表示
+                                    Console.ReadLine();
                                     break;
 
                                 default:
@@ -389,7 +348,6 @@ while (playing == true)
                         break;
 
                     case "3":
-                        //セーブ処理
                         Save();
                         break;
 
@@ -400,72 +358,69 @@ while (playing == true)
             }
 
             Console.WriteLine("広い空間に出たので、一旦周りを見渡すことにした。");
-            Console.ReadLine();//次のコメントを表示
+            Console.ReadLine();
             Console.WriteLine("右手前側には、水たまりのような場所がある。");
-            Console.ReadLine();//次のコメントを表示
+            Console.ReadLine();
             Console.WriteLine("正面側には何もなく、左側に道が続いているようだった。");
-            Console.ReadLine();//次のコメントを表示
+            Console.ReadLine();
             Console.WriteLine("左側の道は一本道となっていて、特に迷うこともなく進んでいく。");
-            Console.ReadLine();//次のコメントを表示
+            Console.ReadLine();
             Console.WriteLine("しばらく進んでいると、見慣れないものがあった。");
-            Console.ReadLine();//次のコメントを表示
+            Console.ReadLine();
             Console.WriteLine("「なに？これ…魔法陣かしら？」");
-            Console.ReadLine();//次のコメントを表示
+            Console.ReadLine();
             Console.WriteLine("床には星形の模様がつき、天井に向けて水色の半透明なオーラが浮かび上がっていた。");
-            Console.ReadLine();//次のコメントを表示
+            Console.ReadLine();
             Console.WriteLine("そのオーラを左手で触れようとする。");
-            Console.ReadLine();//次のコメントを表示
+            Console.ReadLine();
             Console.WriteLine("一瞬の間をおいて、視界は真っ白になった。");
-            Console.ReadLine();//次のコメントを表示
+            Console.ReadLine();
             Console.WriteLine("白い光はただ眩しいではなく、温かさが感じられた。");
-            Console.ReadLine();//次のコメントを表示
+            Console.ReadLine();
             Console.WriteLine("数秒経った後、だんだんとその光は消えていった。");
-            Console.ReadLine();//次のコメントを表示
+            Console.ReadLine();
             Console.WriteLine("しかし、その視界に映っていたのは、先ほど居た地下ではなく、レンガ造りの建物の中だった。");
-            //天空世界
-            Console.ReadLine();//次のコメントを表示
+            // 天空世界
+            Console.ReadLine();
             Console.WriteLine("建物にはアーチ状の窓が適度につけられており、先ほどの地下とは打って変わって明るい様子だった。");
-            Console.ReadLine();//次のコメントを表示
+            Console.ReadLine();
             Console.WriteLine("窓を覗いてみると、下の様子は霧で見えず、今いる場所はかなり高い階なのだろうと思った。");
-            Console.ReadLine();//次のコメントを表示
+            Console.ReadLine();
             Console.WriteLine("窓の外に気を取られていると、ふと後ろのほうに気配を感じた。");
-            Console.ReadLine();//次のコメントを表示
+            Console.ReadLine();
             Console.WriteLine("急いで振り返ると、そこには身長の高い怪物がいた。");
-            Console.ReadLine();//次のコメントを表示
+            Console.ReadLine();
             Console.WriteLine("急いで、近くの柱へ隠れ、そこから銃撃を開始することにした。");
-            Console.ReadLine();//次のコメントを表示
-            //強制戦闘
-            //強制戦闘のため、自動回復
-            if (hp <= 260)
-                hp = 260;
-            if (mp <= 30)
-                mp = 30;
-            //戦闘開始
+            Console.ReadLine();
+            // 強制戦闘のため、自動回復
+            komariHP = (komariHP >= 260) ? komariHP : 260;
+            komariMP = (komariMP >= 30) ? komariMP : 30;
+            // 戦闘開始
             Buttle();
-            //もし死んでいるなら終了する
+            // もし死んでいるなら終了する
             if (section == 99)
                 goto label99;
 
-        //ロード地点(4c)
+        // ロード地点 (4c)
         label4c:
             section = 6;
 
             Console.WriteLine("「はぁ、はぁ。」");
-            Console.ReadLine();//次のコメントを表示
+            Console.ReadLine();
             Console.WriteLine("「急に現れて、本当にびっくりしたわ。」");
-            Console.ReadLine();//次のコメントを表示
+            Console.ReadLine();
             Console.WriteLine("敵が現れた方向を見てみると、そこには階段が続いていた。");
-            Console.ReadLine();//次のコメントを表示
+            Console.ReadLine();
             Console.WriteLine("また新たな敵が来ないか、注意深く近づいていくと、階段は上下に続いているようだった。");
-            Console.ReadLine();//次のコメントを表示
+            Console.ReadLine();
             Console.WriteLine("「ここ、本当に何の場所なのかしらね…」");
-            Console.ReadLine();//次のコメントを表示
+            Console.ReadLine();
             Console.WriteLine("「さて、上か下か。」");
-            Console.ReadLine();//次のコメントを表示
-                               //下の階に行くか、上の階に行くかで大きく√分岐
-                               //天空世界の頂上到達√…天空世界の結末(たまたま地下洞窟と天空世界でつながってしまったことなど)を明かす
-                               //天空世界の地上到達√…地下空洞の過去を明かす
-                               //秘密コマンドにて窓から飛び降りる→森の泉(隠し)√…次回作や尾花と桜(北大陸)の世界観についてのフラグ・ヒント/秋月の過去について
+            Console.ReadLine();
+            // 下の階に行くか、上の階に行くかで大きく√分岐
+            // 天空世界の頂上到達√…天空世界の結末(たまたま地下洞窟と天空世界でつながってしまったことなど)を明かす
+            // 天空世界の地上到達√…地下空洞の過去を明かす
+            // 秘密コマンドにて窓から飛び降りる→森の泉(隠し)√…次回作や尾花と桜(北大陸)の世界観についてのフラグ・ヒント/秋月の過去について
             where = false;
             while (where == false)
             {
@@ -473,10 +428,10 @@ while (playing == true)
                 Console.WriteLine("どうしますか");
                 Console.WriteLine("1:上の階へ行く");
                 Console.WriteLine("2:下の階へ行く");
-                //3:窓から飛び降りる(隠し√)
-                //3番を隠すことでフラグにしている。
-                //(隠し√だけど、3番が飛ばされているというのは違和感があるし、結構見つけやすい√だと思う。)
-                //(3番を飛ばしているのはただのミスだと思われるかもしれないけど)
+                // 3:窓から飛び降りる (隠し√)
+                // 3番を隠すことでフラグにしている。
+                // (隠し√だけど、3番が飛ばされているというのは違和感があるし、結構見つけやすい√だと思う。)
+                // (3番を飛ばしているのはただのミスだと思われるかもしれないけど)
                 Console.WriteLine("----------");
                 Console.WriteLine("4:セーブ");
 
@@ -485,189 +440,187 @@ while (playing == true)
                 {
                     case "1":
                         where = true;
-                        //天空ルート(戦闘(ボス戦)後に神が現れて現世に戻らせてくれる)
+                        // 天空ルート(戦闘(ボス戦)後に神が現れて現世に戻らせてくれる)
                         Console.WriteLine("上の階へと進んでいくが、同じような風景が続いている。");
-                        Console.ReadLine();//次のコメントを表示
+                        Console.ReadLine();
                         Console.WriteLine("全ての階が同じ内装で、家具や物がなく、ループしているように思える。");
-                        Console.ReadLine();//次のコメントを表示
+                        Console.ReadLine();
                         Console.WriteLine("20階以上は上がっただろうか。");
-                        Console.ReadLine();//次のコメントを表示
+                        Console.ReadLine();
                         Console.WriteLine("ここが最上階のようで、部屋は今までの階よりもかなり小さく、扉があるようだった。");
-                        Console.ReadLine();//次のコメントを表示
+                        Console.ReadLine();
                         Console.WriteLine("扉を開けるとそこは屋上になっており、広い場所と1体の黒い奇妙な姿が、上には明るい空と白い雲が広がっていた。");
-                        Console.ReadLine();//次のコメントを表示
+                        Console.ReadLine();
                         Console.WriteLine("向こうの黒い奇妙な姿は、こちらを確認すると同時に、一気に近づいてきた。");
-                        Console.ReadLine();//次のコメントを表示
-                        //ボス戦
-                        //(ボス能力指定)
-                        enemy_hp = 1000;
-                        enemy_name = "黒色の影";
-                        //(秋月回復)
-                        if (hp <= 300)
-                            hp = 300;
-                        hp += 240;
-                        mp += 10;
-                        //戦闘開始
+                        Console.ReadLine();
+                        // ボス戦
+                        enemyHP = 1000;
+                        enemyName = "黒色の影";
+                        // (秋月回復)
+                        komariHP = (komariHP >= 300) ? komariHP : 300;
+                        komariHP += 240;
+                        komariMP += 10;
+                        // 戦闘開始
                         Buttle();
-                        //もし死んでいるなら終了する
+                        // もし死んでいるなら終了する
                         if (section == 99)
                             goto label99;
 
                         Console.WriteLine("「はぁ、はぁ…」");
-                        Console.ReadLine();//次のコメントを表示
+                        Console.ReadLine();
                         Console.WriteLine("「なんなのよ…こいつ。結構強いじゃない…」");
-                        Console.ReadLine();//次のコメントを表示
+                        Console.ReadLine();
                         Console.WriteLine("何とか倒せたもののかなりけがをしてしまった。");
-                        Console.ReadLine();//次のコメントを表示
+                        Console.ReadLine();
                         Console.WriteLine("屋上のフェンスへと近づき、周辺を見回してみると、そこには絶景が広がっていた。");
-                        Console.ReadLine();//次のコメントを表示
+                        Console.ReadLine();
                         Console.WriteLine("雲海が広がり、ところどころ青色の山が顔をのぞかせている。");
-                        Console.ReadLine();//次のコメントを表示
+                        Console.ReadLine();
                         Console.WriteLine("雲の切れ目からは草原や色彩豊かな花畑が広がる。");
-                        Console.ReadLine();//次のコメントを表示
-                        lack += 5;
+                        Console.ReadLine();
+                        komariLack += 5;
                         Console.WriteLine("風景に見とれていると、後ろから気配を感じるようになった。");
-                        Console.ReadLine();//次のコメントを表示
+                        Console.ReadLine();
                         Console.WriteLine("急いで拳銃を手に取り、後ろを振り返ってみると…");
-                        Console.ReadLine();//次のコメントを表示
+                        Console.ReadLine();
                         Console.WriteLine("そこには長髪の神々しい人の姿があった。");
-                        Console.ReadLine();//次のコメントを表示
+                        Console.ReadLine();
                         Console.WriteLine("「あの、敵ではないわ…」");
-                        Console.ReadLine();//次のコメントを表示
+                        Console.ReadLine();
                         Console.WriteLine("彼女はそうつぶやいた。");
-                        Console.ReadLine();//次のコメントを表示
+                        Console.ReadLine();
                         Console.WriteLine("「私は秋月小鞠。あなたは？」");
-                        //人の名前を聞く前に、自分の名前を言うという理論を通している秋月。
-                        Console.ReadLine();//次のコメントを表示
+                        // 人の名前を聞く前に、自分の名前を言うという礼儀を通している秋月。
+                        Console.ReadLine();
                         Console.WriteLine("銃は持ったままそのように質問をした。");
-                        Console.ReadLine();//次のコメントを表示
+                        Console.ReadLine();
                         Console.WriteLine("すると、");
-                        Console.ReadLine();//次のコメントを表示
+                        Console.ReadLine();
                         Console.WriteLine("「ええと…名前はないかしらね。」");
-                        Console.ReadLine();//次のコメントを表示
+                        Console.ReadLine();
                         Console.WriteLine("といった。続けて、");
-                        Console.ReadLine();//次のコメントを表示
+                        Console.ReadLine();
                         Console.WriteLine("「出身はどこかしら？」");
-                        Console.ReadLine();//次のコメントを表示
+                        Console.ReadLine();
                         Console.WriteLine("彼女は私に対してそう投げかける。");
-                        Console.ReadLine();//次のコメントを表示
+                        Console.ReadLine();
                         Console.WriteLine("「どこ出身に見える？」");
-                        Console.ReadLine();//次のコメントを表示
+                        Console.ReadLine();
                         Console.WriteLine("わざとそういうように訊ねてみた");
-                        Console.ReadLine();//次のコメントを表示
+                        Console.ReadLine();
                         Console.WriteLine("「ええと、地上のほうよね…」");
-                        Console.ReadLine();//次のコメントを表示
+                        Console.ReadLine();
                         Console.WriteLine("その回答に疑問を覚えた。");
-                        Console.ReadLine();//次のコメントを表示
+                        Console.ReadLine();
                         Console.WriteLine("「あの、ここはどこの国なのかしら…？」");
-                        Console.ReadLine();//次のコメントを表示
+                        Console.ReadLine();
                         Console.WriteLine("そう聞いてみた。すると、すぐにこのように返された。");
-                        Console.ReadLine();//次のコメントを表示
+                        Console.ReadLine();
                         Console.WriteLine("「ここは、天界。あなたの知っている場所ではないわ。」");
-                        Console.ReadLine();//次のコメントを表示
+                        Console.ReadLine();
                         Console.WriteLine("天界…昔聞いたことがあるような気がした。とても平和で、景色の綺麗な場所があると…");
-                        Console.ReadLine();//次のコメントを表示
+                        Console.ReadLine();
                         Console.WriteLine("「あの…元の世界には戻れるの…？」");
-                        Console.ReadLine();//次のコメントを表示
+                        Console.ReadLine();
                         Console.WriteLine("不安になって聞いてみる。");
-                        Console.ReadLine();//次のコメントを表示
+                        Console.ReadLine();
                         Console.WriteLine("彼女は困ったような顔をした。");
-                        Console.ReadLine();//次のコメントを表示
+                        Console.ReadLine();
                         Console.WriteLine("「え…戻れないの？」");
-                        Console.ReadLine();//次のコメントを表示
+                        Console.ReadLine();
                         Console.WriteLine("と聞くと、すぐに彼女は笑顔になり、口を開いた。");
-                        Console.ReadLine();//次のコメントを表示
+                        Console.ReadLine();
                         Console.WriteLine("「冗談よ。すぐに戻れる。」");
-                        Console.ReadLine();//次のコメントを表示
+                        Console.ReadLine();
                         Console.WriteLine("「だ、だよね…」");
-                        Console.ReadLine();//次のコメントを表示
+                        Console.ReadLine();
                         Console.WriteLine("「少し待っててね。」");
-                        Console.ReadLine();//次のコメントを表示
+                        Console.ReadLine();
                         Console.WriteLine("その言葉の次には、視界が暖かな白い光で覆われた。");
-                        Console.ReadLine();//次のコメントを表示
+                        Console.ReadLine();
                         Console.WriteLine("ほんの僅かの時間の後、視界を支配する白い光はだんだんと薄くなっていき、やがて緑色が見えた。");
-                        Console.ReadLine();//次のコメントを表示
+                        Console.ReadLine();
                         Console.WriteLine("鬱蒼と茂る白樺の森林、この季節ならではの涼しさをまとったこの空間はまぎれもなく私の知る森だった。");
-                        Console.ReadLine();//次のコメントを表示
+                        Console.ReadLine();
                         Console.WriteLine("「本当にごめんなさいね。」");
-                        Console.ReadLine();//次のコメントを表示
+                        Console.ReadLine();
                         Console.WriteLine("声の聞こえる後ろを見てみると、彼女の姿があった。");
-                        Console.ReadLine();//次のコメントを表示
+                        Console.ReadLine();
                         Console.WriteLine("「こちらの手違いで地上と天界がつながってしまったらしくて…」");
-                        Console.ReadLine();//次のコメントを表示
+                        Console.ReadLine();
                         Console.WriteLine("「あの洞窟には何もなかったのね…」");
-                        //何か歴史的な遺産やお宝があると期待して洞窟に入ったが、秋月にとってはどうでもよい天界のワープゲートしかなかったということ。
-                        Console.ReadLine();//次のコメントを表示
+                        // 何か歴史的な遺産やお宝があると期待して洞窟に入ったが、秋月にとってはどうでもよい天界のワープゲートしかなかったということ。
+                        Console.ReadLine();
                         Console.WriteLine("「本当に申し訳ないわ…」");
-                        Console.ReadLine();//次のコメントを表示
+                        Console.ReadLine();
                         Console.WriteLine("「別にいいわ…暇つぶしになったし。」");
-                        Console.ReadLine();//次のコメントを表示
+                        Console.ReadLine();
                         Console.WriteLine("そういうと、彼女は少し上を向いて次の言葉を言った。");
-                        Console.ReadLine();//次のコメントを表示
+                        Console.ReadLine();
                         Console.WriteLine("「天界のほうで、黒い化け物がいたでしょう…」");
-                        Console.ReadLine();//次のコメントを表示
+                        Console.ReadLine();
                         Console.WriteLine("「そうね。」");
-                        Console.ReadLine();//次のコメントを表示
+                        Console.ReadLine();
                         Console.WriteLine("「天界の平和が脅かされるような事態になっていて…」");
-                        Console.ReadLine();//次のコメントを表示
+                        Console.ReadLine();
                         Console.WriteLine("「大変そうね。」");
-                        Console.ReadLine();//次のコメントを表示
+                        Console.ReadLine();
                         Console.WriteLine("「まあ、あなたには関係ないことよね…そろそろ別れましょうかね…」");
-                        Console.ReadLine();//次のコメントを表示
+                        Console.ReadLine();
                         Console.WriteLine("「それでは。じゃあね。」");
-                        Console.ReadLine();//次のコメントを表示
+                        Console.ReadLine();
                         Console.WriteLine("「ええ。さようなら。」");
-                        Console.ReadLine();//次のコメントを表示
+                        Console.ReadLine();
                         Console.WriteLine("そういうと、彼女はだんだんと透明になり、消えていった。");
-                        Console.ReadLine();//次のコメントを表示
+                        Console.ReadLine();
                         Console.WriteLine("非現実的な世界に思えたが、先ほどあったことを説明するには現実だと受け入れざるを得ない。");
-                        Console.ReadLine();//次のコメントを表示
+                        Console.ReadLine();
                         Console.WriteLine("「奇妙なこともあるもんだね…」");
-                        Console.ReadLine();//次のコメントを表示
+                        Console.ReadLine();
                         Console.WriteLine("先ほど彼女がいた方向に背を向け、歩き始めた。");
-                        Console.ReadLine();//次のコメントを表示
+                        Console.ReadLine();
                         Console.WriteLine("");
                         Console.WriteLine("END:天界の青空(通常ルート1)");
                         Console.WriteLine("[天界の運命]");
                         Console.WriteLine("");
-                        Console.ReadLine();//次のコメントを表示
+                        Console.ReadLine();
                         break;
 
                     case "2":
                         where = true;
-                        //地上ルート(地下の場所に関する文献を読める。また、魔導書かワープ装置か何かで現世に戻る。)
+                        // 地上ルート(地下の場所に関する文献を読める。また、魔導書かワープ装置か何かで現世に戻る。)
                         Console.WriteLine("下の階へ進んでいくと、窓からだんだんと地上の様子が見えてきた。");
-                        Console.ReadLine();//次のコメントを表示
+                        Console.ReadLine();
                         Console.WriteLine("地面から雑草が生える風景が広がっている。");
-                        Console.ReadLine();//次のコメントを表示
+                        Console.ReadLine();
                         Console.WriteLine("階段は地上までで、建物に地下は存在しないようだ。");
-                        Console.ReadLine();//次のコメントを表示
+                        Console.ReadLine();
                         Console.WriteLine("地上についたことで、この建物の外の様子がよくわかるようになったが、ほとんど他の建物はなかった。");
-                        Console.ReadLine();//次のコメントを表示
+                        Console.ReadLine();
                         Console.WriteLine("広がっていたのは、建物の残骸。それだけだった。");
-                        Console.ReadLine();//次のコメントを表示
+                        Console.ReadLine();
                         Console.WriteLine("しかし、やや離れた場所に1つだけぽつんと建物があるように見えた。");
-                        Console.ReadLine();//次のコメントを表示
+                        Console.ReadLine();
                         Console.WriteLine("建物に近づいてみることにした。");
-                        Console.ReadLine();//次のコメントを表示
+                        Console.ReadLine();
                         Console.WriteLine("その建物は、周りの建物の残骸に比べるとかなりましだが、それでもかなり損傷があり、今にも崩れそうだ。");
-                        Console.ReadLine();//次のコメントを表示
+                        Console.ReadLine();
                         Console.WriteLine("また、白い壁と蒼い屋根を基調とし、窓がいくつかついていた。");
-                        Console.ReadLine();//次のコメントを表示
+                        Console.ReadLine();
                         Console.WriteLine("窓…といっても窓自体はほとんど割れていて、その残骸と窓枠だけが残っているのだが。");
-                        Console.ReadLine();//次のコメントを表示
+                        Console.ReadLine();
                         Console.WriteLine("家というには外から見てもあまりに狭く、一部屋分くらいの広さしかないように見えた。");
-                        Console.ReadLine();//次のコメントを表示
+                        Console.ReadLine();
                         Console.WriteLine("窓から中の様子を覗いてみても、中に人影や生物の姿は見えなかった。");
-                        Console.ReadLine();//次のコメントを表示
+                        Console.ReadLine();
                         Console.WriteLine("「誰もいないのか…」");
-                        Console.ReadLine();//次のコメントを表示
+                        Console.ReadLine();
                         Console.WriteLine("安全なことを確認できたため、中に実際に入ることにした。");
-                        Console.ReadLine();//次のコメントを表示
+                        Console.ReadLine();
                         Console.WriteLine("中には、小さな本棚が壁側に、それと机と椅子があった。");
-                        Console.ReadLine();//次のコメントを表示
-                        //探索ターン
-                        //最短√…机のメモを読む→本棚からメモに書いてある題名の本を探す→斜め読み→地上世界へ戻る魔法→終了(神には遭遇しない)
+                        Console.ReadLine();
+                        // 探索ターン
+                        // 最短√…机のメモを読む→本棚からメモに書いてある題名の本を探す→斜め読み→地上世界へ戻る魔法→終了(神には遭遇しない)
                         bool which = false;
                         bool note = false;
                         while (which == false)
@@ -683,92 +636,92 @@ while (playing == true)
                             {
                                 case "1":
                                     Console.WriteLine("20冊以上の本が並んでいた。");
-                                    Console.ReadLine();//次のコメントを表示
-                                    //机のメモ帳を見ているか見ていないか
+                                    Console.ReadLine();
+                                    // 机のメモ帳を見ているか見ていないか
                                     if (note == false)
                                     {
-                                        //机のメモ帳を見ていないときの処理
+                                        // 机のメモ帳を見ていないときの処理
                                         Console.WriteLine("右から1冊取り、読んでみたがいまいち意味が分からなかった。");
-                                        Console.ReadLine();//次のコメントを表示
+                                        Console.ReadLine();
                                     }
                                     else
                                     {
-                                        //机のメモ帳を見ているときの処理
+                                        // 机のメモ帳を見ているときの処理
                                         Console.WriteLine("その中には、先ほど机上のメモに書かれていた「天界のレートピシ」という題名の本があった。");
-                                        Console.ReadLine();//次のコメントを表示
+                                        Console.ReadLine();
                                         Console.WriteLine("手に取り、近年の部分を斜め読みしてみることにした。");
-                                        Console.ReadLine();//次のコメントを表示
+                                        Console.ReadLine();
                                         Console.WriteLine("");
                                         Console.WriteLine(" - 天界のレートピシ - ");
-                                        Console.ReadLine();//次のコメントを表示
+                                        Console.ReadLine();
                                         Console.WriteLine("xx32年、天界に黒い魔物が現れた。");
                                         Console.WriteLine("至急、防衛隊が駆けつけ対処できたものの、原因の究明が課題となっている。");
-                                        Console.ReadLine();//次のコメントを表示
+                                        Console.ReadLine();
                                         Console.WriteLine("xx35年、天界にて黒い魔物は増え続けた。");
                                         Console.WriteLine("原因は、地上との通信の際に誤って移送空間ができたことだといわれている。");
-                                        Console.ReadLine();//次のコメントを表示
+                                        Console.ReadLine();
                                         Console.WriteLine("xx36年、天界西地域を中心として調査が進み、移送空間の場所の特定ができた。");
                                         Console.WriteLine("しかし、まだ数か所は発見できておらず、そこから侵入した魔物が新しい移送空間を設立し続けている。");
-                                        Console.ReadLine();//次のコメントを表示
+                                        Console.ReadLine();
                                         Console.WriteLine("xx40年、天界全域にてほとんどの移送空間の破壊が完了した。");
                                         Console.WriteLine("ただし、天界の主要な地域はほとんど魔物によって建築物が破壊されている。");
-                                        Console.ReadLine();//次のコメントを表示
+                                        Console.ReadLine();
                                         Console.WriteLine("xx42年、主要地域にて都市の修復を開始。");
                                         Console.WriteLine("また、地上の主要国家との連携もあり、天界中心都市付近の移送空間が完全に破壊されたことを報告する。");
-                                        Console.ReadLine();//次のコメントを表示
+                                        Console.ReadLine();
                                         Console.WriteLine("xxxx年、地上国家の戦争によって支援を受けられなくなった。");
                                         Console.WriteLine("わずかに残る移送空間からいまだに魔物の進行が進んでいる。");
                                         Console.WriteLine("");
                                         Console.WriteLine(" - - - - - ");
                                         Console.WriteLine("");
-                                        Console.ReadLine();//次のコメントを表示
+                                        Console.ReadLine();
                                         Console.WriteLine("読み終わると、メモが落ちてきた。");
-                                        Console.ReadLine();//次のコメントを表示
+                                        Console.ReadLine();
                                         Console.WriteLine("メモは丁寧な文字で、次のように書かれていた。");
-                                        Console.ReadLine();//次のコメントを表示
+                                        Console.ReadLine();
                                         Console.WriteLine("「地上世界へ逃げる方法…ここで天井を見て右に1回転、下を向いて左に1回転する」");
-                                        Console.ReadLine();//次のコメントを表示
+                                        Console.ReadLine();
                                         Console.WriteLine("書かれているようにする。");
-                                        Console.ReadLine();//次のコメントを表示
+                                        Console.ReadLine();
                                         Console.WriteLine("すると、視界は暖かい白の光に覆われた。");
-                                        Console.ReadLine();//次のコメントを表示
+                                        Console.ReadLine();
                                         Console.WriteLine("そのような状態で何秒か経つと、だんだんとその白い光は薄くなっていった。");
-                                        Console.ReadLine();//次のコメントを表示
+                                        Console.ReadLine();
                                         Console.WriteLine("気が付くと、目の前には白樺の樹林、雑草の中に見覚えのある秘色と紅の花々が咲き乱れていた。");
-                                        Console.ReadLine();//次のコメントを表示
+                                        Console.ReadLine();
                                         Console.WriteLine("「戻れたのね…」");
-                                        Console.ReadLine();//次のコメントを表示
+                                        Console.ReadLine();
                                         Console.WriteLine("少し左を向いて先ほどのことを思い出す。");
-                                        Console.ReadLine();//次のコメントを表示
+                                        Console.ReadLine();
                                         Console.WriteLine("「何だったのから…さっきのは。書物には天界って書いてあったけど。」");
-                                        Console.ReadLine();//次のコメントを表示
+                                        Console.ReadLine();
                                         Console.WriteLine("先ほどの記憶は確かにあるが、現実的にそんなことがありうるとは思えなかった。");
-                                        Console.ReadLine();//次のコメントを表示
+                                        Console.ReadLine();
                                         Console.WriteLine("論理的に証明できない不安感を忘れるため、先ほどの現実は忘れることにした。");
-                                        Console.ReadLine();//次のコメントを表示
+                                        Console.ReadLine();
                                         Console.WriteLine("秋月は、更なる森の探検へと足を動かした。");
-                                        Console.ReadLine();//次のコメントを表示
+                                        Console.ReadLine();
                                         which = true;
                                     }
                                     break;
 
                                 case "2":
                                     Console.WriteLine("白い塗装が施されている机だ。");
-                                    Console.ReadLine();//次のコメントを表示
+                                    Console.ReadLine();
                                     Console.WriteLine("机上にはメモ帳と、ペンが1本ある。");
-                                    Console.ReadLine();//次のコメントを表示
+                                    Console.ReadLine();
                                     Console.WriteLine("メモ帳には次の文字が殴り書きされていた。");
-                                    Console.ReadLine();//次のコメントを表示
-                                    Console.WriteLine("「天界のレートピシ」");//レートピシ=歴史書
-                                    Console.ReadLine();//次のコメントを表示
+                                    Console.ReadLine();
+                                    Console.WriteLine("「天界のレートピシ」"); // レートピシ=歴史書
+                                    Console.ReadLine();
                                     note = true;
                                     break;
 
                                 case "3":
                                     Console.WriteLine("何一つ変哲のない木製の椅子だ。");
-                                    Console.ReadLine();//次のコメントを表示
+                                    Console.ReadLine();
                                     Console.WriteLine("座る部分は水色の布に白い糸で刺繍がされている。");
-                                    Console.ReadLine();//次のコメントを表示
+                                    Console.ReadLine();
                                     break;
 
                                 default:
@@ -780,80 +733,79 @@ while (playing == true)
                         Console.WriteLine("END:小屋の本(通常ルート2)");
                         Console.WriteLine("[真実を記す手記]");
                         Console.WriteLine("");
-                        Console.ReadLine();//次のコメントを表示
+                        Console.ReadLine();
                         break;
 
                     case "3":
                         where = true;
                         Console.WriteLine("彼女は、階段の逆の方向を向いた。");
-                        Console.ReadLine();//次のコメントを表示
+                        Console.ReadLine();
                         Console.WriteLine("「もう、疲れたよ…」");
-                        Console.ReadLine();//次のコメントを表示
+                        Console.ReadLine();
                         Console.WriteLine("すると、走って窓に向かって飛び蹴りを炸裂し、見事にその窓を割って地上へ落ちていった。");
-                        Console.ReadLine();//次のコメントを表示
+                        Console.ReadLine();
                         Console.WriteLine("今までの記憶をたどる。");
-                        Console.ReadLine();//次のコメントを表示
+                        Console.ReadLine();
                         Console.WriteLine("家族の事、国の事、かつて見た未来の夢。");
-                        Console.ReadLine();//次のコメントを表示
+                        Console.ReadLine();
                         Console.WriteLine("昔の戦争で再び会うことを誓った3人の同士、同じ部隊の黒服の少女…");
-                        //昔の戦争(対チャクム戦/北大陸南西部防衛)での3人の仲間(「世界の終焉の前に。」)、
-                        //同じ部隊(第6師団/旧黒軍師)の黒服の少女(椿と航空隊の2人)
-                        Console.ReadLine();//次のコメントを表示
+                        // 昔の戦争 (対チャクム戦/北大陸南西部防衛) での3人の仲間 (「世界の終焉の前に。」)、
+                        // 同じ部隊 (第9師団/旧黒軍師) の黒服の少女 (椿と航空隊の2人)
+                        Console.ReadLine();
                         Console.WriteLine("様々なことを思い出した。");
-                        Console.ReadLine();//次のコメントを表示
+                        Console.ReadLine();
                         Console.WriteLine("死ぬ前に会いたかった人がいた。でも、もう戻れない。");
-                        Console.ReadLine();//次のコメントを表示
+                        Console.ReadLine();
                         Console.WriteLine("「ここからもとに戻れる気がしないんだ…」");
-                        Console.ReadLine();//次のコメントを表示
+                        Console.ReadLine();
                         Console.WriteLine("「でも、もう一度でいいから見たかった…」");
-                        //家族と、旧黒軍師メンバー、かつての仲間(「世界の終焉の前に。」メンバー)、第6師団の上司と。
-                        Console.ReadLine();//次のコメントを表示
+                        // 家族と、旧黒軍師メンバー、かつての仲間 (「世界の終焉の前に。」メンバー)、第9師団の上司と。
+                        Console.ReadLine();
                         Console.WriteLine("その瞳に映るのは真っ青な空と、白い雲だけだった。");
-                        Console.ReadLine();//次のコメントを表示
+                        Console.ReadLine();
                         Console.WriteLine("「あなた…こっちの世界に迷い込んでしまったのかしら…」");//神
-                        Console.ReadLine();//次のコメントを表示
+                        Console.ReadLine();
                         Console.WriteLine("見知らぬ声が聞こえる。");
-                        Console.ReadLine();//次のコメントを表示
+                        Console.ReadLine();
                         Console.WriteLine("「ええと、」");//神
-                        Console.ReadLine();//次のコメントを表示
+                        Console.ReadLine();
                         Console.WriteLine("その声の後、体がふわっと浮いたような感じがした。");
-                        Console.ReadLine();//次のコメントを表示
+                        Console.ReadLine();
                         Console.WriteLine("視界は真っ白になり、ちょうど地下からこちらに来た時と同じように暖かさのある光だった。");
-                        Console.ReadLine();//次のコメントを表示
+                        Console.ReadLine();
                         Console.WriteLine("瞬きをした次の瞬間、私の視界は緑色に支配されていた。");
-                        Console.ReadLine();//次のコメントを表示
+                        Console.ReadLine();
                         Console.WriteLine("鬱蒼と茂る白樺並木、背丈の低い雑草と、まばらに生える秘色と紅の花。");
-                        Console.ReadLine();//次のコメントを表示
+                        Console.ReadLine();
                         Console.WriteLine("間違いなく始めの森に戻ったようだ。");
-                        Console.ReadLine();//次のコメントを表示
+                        Console.ReadLine();
                         Console.WriteLine("「あなたはこちらの人間のようね…」");//神
-                        Console.ReadLine();//次のコメントを表示
+                        Console.ReadLine();
                         Console.WriteLine("声の聞こえる後ろを振り返ると、そこには長髪で神々しさをまとう人の姿があった。");
-                        Console.ReadLine();//次のコメントを表示
+                        Console.ReadLine();
                         Console.WriteLine("「ええと、あなたは…」");//秋月
-                        Console.ReadLine();//次のコメントを表示
+                        Console.ReadLine();
                         Console.WriteLine("そう聞くと、その言葉を遮るように彼女は次の言葉を続けた。");
-                        Console.ReadLine();//次のコメントを表示
+                        Console.ReadLine();
                         Console.WriteLine("「こちらはあなたが来ていい世界ではないわ。」");//神
-                        Console.ReadLine();//次のコメントを表示
+                        Console.ReadLine();
                         Console.WriteLine("「こちらのミスで来てしまったみたいだけれど。申し訳ないわ…」");//神
-                        Console.ReadLine();//次のコメントを表示
+                        Console.ReadLine();
                         Console.WriteLine("意味が分からず、質問をしようとした瞬間、彼女の姿はなくなっていた。");
-                        Console.ReadLine();//次のコメントを表示
+                        Console.ReadLine();
                         Console.WriteLine("私の視界にはただ森の風景と彼女が先ほどいた場所にある透明な泉のみが残った。");
-                        Console.ReadLine();//次のコメントを表示
+                        Console.ReadLine();
                         Console.WriteLine("ただ、地上に戻れたという安堵の気持ちが湧き出て、近くにあった木に倒れこんだ。");
-                        Console.ReadLine();//次のコメントを表示
+                        Console.ReadLine();
                         Console.WriteLine("");
                         Console.WriteLine("END:森の泉(隠しルート)");
                         Console.WriteLine("[秋月の過去と見えない事実]");
-                        //見えない事実(現実)…泉にいる神の言っていることが意味不明&説明不足過ぎる
+                        // 見えない事実(現実)…泉にいる神の言っていることが意味不明&説明不足過ぎる
                         Console.WriteLine("");
-                        Console.ReadLine();//次のコメントを表示
+                        Console.ReadLine();
                         break;
 
                     case "4":
-                        //セーブ処理
                         Save();
                         break;
 
@@ -863,39 +815,39 @@ while (playing == true)
                 }
             }
 
-            //運が若干高い場合は秋月と椿の会話について解放。
-            //この文章はぶっちゃけこのゲーム内でも、尾花と桜系を知っている人でもわからないと思う。
-            //(親友=椿とわかる人はすごい。親友→×親、上司、△世界の終焉の前に。(長い間合っていないので一緒に喋る機会がない)、〇旧黒軍師
-            //→旧黒軍師では3人いるが、航空隊2人の名前や詳細がまだ決まっていないため、椿という推測は一応可能だが。
-            //(未来になって航空隊2人の名前が決まっても、決まっていなかった時代のストーリーということで未来になっても上記と同じ考察が可能。))
-            if (lack >= 8)
+            // 運が若干高い場合は秋月と椿の会話について解放
+            // この文章はぶっちゃけこのゲーム内でも、Ivy Cafeteria のシナリオを知っている人でもわからないと思う。
+            // (親友=椿とわかる人はすごい。親友→×親、上司、△世界の終焉の前に。(長い間合っていないので一緒に喋る機会がない)、〇旧黒軍師
+            // →旧黒軍師では3人いるが、航空隊2人の名前や詳細がまだ決まっていないため、椿という推測は一応可能だが。
+            // (未来になって航空隊2人の名前が決まっても、決まっていなかった時代のストーリーということで未来になっても上記と同じ考察が可能。))
+            if (komariLack >= 8)
             {
                 Console.WriteLine(" - - - - - ");
                 Console.WriteLine("「っていうことがあったのよね」");//秋月
-                Console.ReadLine();//次のコメントを表示
+                Console.ReadLine();
                 Console.WriteLine("後日、次の目的地までの移動中に親友と話をしていた。");
-                Console.ReadLine();//次のコメントを表示
+                Console.ReadLine();
                 Console.WriteLine("「へえ…珍しいこともあるんだね。」");//椿
-                Console.ReadLine();//次のコメントを表示
+                Console.ReadLine();
                 Console.WriteLine("「あ、言っておくけど、作り話じゃなくて本当だからね!」");//秋月
-                Console.ReadLine();//次のコメントを表示
+                Console.ReadLine();
                 Console.WriteLine("「わかってるよ。それより…」");//椿
-                Console.ReadLine();//次のコメントを表示
+                Console.ReadLine();
                 Console.WriteLine("「今日の計画でしょ。」");//秋月
-                Console.ReadLine();//次のコメントを表示
+                Console.ReadLine();
                 Console.WriteLine("持っている小銃を傾けた。");//秋月
-                Console.ReadLine();//次のコメントを表示
+                Console.ReadLine();
                 Console.WriteLine("「そうね。」");//椿
-                Console.ReadLine();//次のコメントを表示
+                Console.ReadLine();
                 Console.WriteLine("「今回は、未探索地域の調査だってね。」");//秋月
-                Console.ReadLine();//次のコメントを表示
+                Console.ReadLine();
                 Console.WriteLine("「ふうん…楽しみね。」");//椿
-                Console.ReadLine();//次のコメントを表示
+                Console.ReadLine();
                 Console.WriteLine("「そうだね。」");//秋月
-                //一応A-RPGの布石。A-RPGの中でも電車が居なくなって、暇だからトンネルに入るみたいな話のやつ。
-                //内容とか導入が被っているからあのシナリオは使わないかもしれないけど…
-                //あと、あれは3Dでやる予定だったから1人用(秋月のみの)シナリオだし…
-                //ここの会話内容は後で変えたほうがいいかも…(フラグを残せる重要な場所なので。)
+                // 一応A-RPGの布石。A-RPGの中でも電車が居なくなって、暇だからトンネルに入るみたいな話のやつ。
+                // 内容とか導入が被っているからあのシナリオは使わないかもしれないけど…
+                // あと、あれは3Dでやる予定だったから1人用(秋月のみの)シナリオだし…
+                // ここの会話内容は後で変えたほうがいいかも…(フラグを残せる重要な場所なので。)
                 Console.WriteLine(" - - - - - ");
                 Console.WriteLine("");
             }
@@ -907,67 +859,31 @@ while (playing == true)
             Console.WriteLine("ベース: .NET 8.0 (Console) (Microsoft)");
             Console.WriteLine("");
             Console.WriteLine("終了です。お疲れさまでした。");
-            Console.ReadLine();//次のコメントを表示
-            //裏話…手榴弾を実装したのは、実はトンネル内にふさがっているところがあって、そこを爆破して進んでいくためだったんだけど、
-            //トンネルの話が長くなりすぎてつまらなかったから辞めた。だから、攻撃と逃げるときの両方で使えるくらいしかメリットはない
-            //っていうか、手榴弾はともかく、銃の弾丸は普通に余るな…
-            //医療品なんかそもそも使わなくても魔法回復できるし…(戦闘前のMP回復のおかげでほぼMP切れにならないし)
-            //難易度調整はミスった(簡単すぎた)かも(だからといって今から調整するのも面倒)
+            Console.ReadLine();
+            // 裏話…手榴弾を実装したのは、実はトンネル内にふさがっているところがあって、そこを爆破して進んでいくためだったんだけど、
+            // トンネルの話が長くなりすぎてつまらなかったから辞めた。だから、攻撃と逃げるときの両方で使えるくらいしかメリットはない
+            // っていうか、手榴弾はともかく、銃の弾丸は普通に余るな…
+            // 医療品なんかそもそも使わなくても魔法回復できるし…(戦闘前のMP回復のおかげでほぼMP切れにならないし)
+            // 難易度調整はミスった(簡単すぎた)かも(だからといって今から調整するのも面倒)
             break;
 
-        //ロード
         case "2":
-            playing = false;
-
             try
             {
-                //ファイル読み込み
-                XDocument file_read = XDocument.Load(@"./Data.xml");
-
-                IEnumerable<XElement> datas = file_read.Elements("Data");
-                foreach (XElement data_read in datas)
+                Load();
+                switch (section)
                 {
-                    if (int.TryParse(data_read.Element("Section")?.Value, out int temp2))
-                        section = temp2;
-                    if (int.TryParse(data_read.Element("HP")?.Value, out int temp4))
-                        hp = temp4;
-                    if (int.TryParse(data_read.Element("MP")?.Value, out int temp5))
-                        mp = temp5;
-                    if (int.TryParse(data_read.Element("Luck")?.Value, out int temp3))
-                        lack = temp3;
-                    if (int.TryParse(data_read.Element("item")?.Value, out int temp_item1))
-                        item = temp_item1;
-                    if (int.TryParse(data_read.Element("item_bom")?.Value, out int temp_item2))
-                        item_bom = temp_item2;
-                    if (int.TryParse(data_read.Element("item_bullet")?.Value, out int temp_item3))
-                        item_bullet = temp_item3;
-                    if (int.TryParse(data_read.Element("item_cure")?.Value, out int temp_item4))
-                        item_cure = temp_item4;
-
-                    Console.WriteLine("ロードが成功しました。");
-                    Console.ReadLine();//次のコメントを表示
-                    switch (section)
-                    {
-                        case 1:
-                            goto label1;
-
-                        case 2:
-                            goto label2;
-
-                        case 3:
-                            goto label3;
-
-                        case 6:
-                            goto label4c;
-
-                        default:
-                            break;
-                    }
+                    case 1: goto label1;
+                    case 2: goto label2;
+                    case 3: goto label3;
+                    case 6: goto label4c;
                 }
+                playing = false;
+                Console.WriteLine("ロードが成功しました。");
+                Console.ReadLine();
             }
             catch
             {
-                playing = true;
                 Console.WriteLine("セーブデータが見つかりません。");
                 Console.WriteLine("");
             }
@@ -992,7 +908,16 @@ void InvalidInput()
     Console.ResetColor();
 }
 
-//セーブ処理
+// 警告文字
+void WarningConsole(string message)
+{
+    Console.ForegroundColor = ConsoleColor.Yellow;
+    Console.WriteLine(message);
+    Console.ReadLine();
+    Console.ResetColor();
+}
+
+// セーブ処理
 void Save()
 {
     //データ保存(xml)
@@ -1000,52 +925,71 @@ void Save()
         (
             "Data",
             new XElement("Section", section),
-            new XElement("HP", hp),
-            new XElement("MP", mp),
-            new XElement("Luck", lack),
-            new XElement("item", item),
-            new XElement("item_bom", item_bom),
-            new XElement("item_bullet", item_bullet),
-            new XElement("item_cure", item_cure)
+            new XElement("KomariHP", komariHP),
+            new XElement("KomariMP", komariMP),
+            new XElement("KomariLuck", komariLack),
+            new XElement("Item", item),
+            new XElement("ItemBom", itemBom),
+            new XElement("ItemBullet", itemBullet),
+            new XElement("ItemMedicine", itemMedicine)
         );
     element.Save("Data.xml");
     Console.WriteLine("セーブが完了しました。");
     Console.WriteLine("終了する際は、Ctrl+Cを押してください。");
 }
 
+// ロード処理
+void Load()
+{
+    //ファイル読み込み
+    XDocument dataLoading = XDocument.Load(@"./Data.xml");
+
+    IEnumerable<XElement> datas = dataLoading.Elements("Data");
+    foreach (XElement data in datas)
+    {
+        section         = int.TryParse(data.Element("Section")?.Value, out var tempSection) ? tempSection : 0;
+        komariHP        = int.TryParse(data.Element("KomariHP")?.Value, out int tempKomariHP) ? tempKomariHP : 200;
+        komariMP        = int.TryParse(data.Element("KomariMP")?.Value, out int tempKomariMP) ? tempKomariMP : 20;
+        komariLack      = int.TryParse(data.Element("KomariLuck")?.Value, out int tempKomariLack) ? tempKomariLack : 10;
+        item            = int.TryParse(data.Element("Item")?.Value, out int tempItem) ? tempItem : 0;
+        itemBom         = int.TryParse(data.Element("ItemBom")?.Value, out int tempItemBom) ? tempItemBom : 2;
+        itemBullet      = int.TryParse(data.Element("ItemBullet")?.Value, out int tempItemBullet) ? tempItemBullet : 4;
+        itemMedicine    = int.TryParse(data.Element("ItemMedicine")?.Value, out int tempItemMedicine) ? tempItemMedicine : 4;
+    }
+}
+
 //戦闘処理
 void Buttle()
 {
     Console.WriteLine(" -+-+- 戦闘開始 -+-+- ");
-    Console.ReadLine();//次のコメントを表示
+    Console.ReadLine();
 
-    //ランダムな数値用
     Random rand = new();
 
-    //もしhpが指定されていないなら
-    if (enemy_hp <= 0)
-        enemy_hp = 100 + rand.Next(0, 15) * 10; // 敵の体力(初期値):100~240(10刻み)
+    int enemyDefaultHP = 100 + rand.Next(0, 15) * 10; // 100-240 (10刻み)
+    const string enemyDefaultName = "異形の存在";
 
-    //もし名前が指定されていないなら
-    if (enemy_name == "")
-        enemy_name = "異形の存在"; // 初期値
+    // HP が設定されていないときはランダム値に設定
+    enemyHP = (enemyHP > 0) ? enemyHP : enemyDefaultHP;
+    // 名前が設定されていないときは初期値に設定
+    enemyName = (enemyName == "") ? enemyName : enemyDefaultName;
 
-    //難易度調節のために戦闘開始時自動回復
-    hp += 20 + rand.Next(0, 3) * 10;//20~40(10刻み)
-    mp += rand.Next(2, 6);//2~5
+    // 戦闘開始時自動回復 (難易度調節)
+    komariHP += 20 + rand.Next(0, 3) * 10; // 20-40 (10刻み)
+    komariMP += rand.Next(2, 6); // 2-5
 
-    while (enemy_hp > 0)
+    while (enemyHP > 0)
     {
         Console.WriteLine(" - あなたのターン - ");
-        Console.ReadLine();//次のコメントを表示
+        Console.ReadLine();
 
         //キャラクターステータス表示
         Console.WriteLine("");
         Console.WriteLine("味方ステータス");
-        Console.WriteLine("|秋月小鞠|HP:{0}|MP:{1}|", hp, mp);
+        Console.WriteLine("|秋月小鞠|HP:{0}|MP:{1}|", komariHP, komariMP);
         Console.WriteLine("");
         Console.WriteLine("敵ステータス");
-        Console.WriteLine("|{0}|HP:{1}|", enemy_name, enemy_hp);
+        Console.WriteLine("|{0}|HP:{1}|", enemyName, enemyHP);
 
         //作成途中
         bool where = false;
@@ -1055,12 +999,12 @@ void Buttle()
             Console.WriteLine("");
             Console.WriteLine("どのような行動をしますか");
             Console.WriteLine("1:ナイフ攻撃");
-            Console.WriteLine("2:手榴弾攻撃(残り{0}個)", item_bom);
-            Console.WriteLine("3:拳銃射撃(残り{0}発)", item_bullet);
+            Console.WriteLine("2:手榴弾攻撃(残り{0}個)", itemBom);
+            Console.WriteLine("3:拳銃射撃(残り{0}発)", itemBullet);
             Console.WriteLine("4:治療魔法");//MPを使って回復
-            Console.WriteLine("5:回復薬治療(残り{0}個)", item_cure);
+            Console.WriteLine("5:回復薬治療(残り{0}個)", itemMedicine);
             Console.WriteLine("6:戦略的撤退");//逃げる
-            Console.WriteLine("7:手榴弾退散(残り{0}個)", item_bom);//手榴弾の爆破と同時に逃げることで「戦略的撤退」よりも高確率で逃げ切れる
+            Console.WriteLine("7:手榴弾退散(残り{0}個)", itemBom);//手榴弾の爆破と同時に逃げることで「戦略的撤退」よりも高確率で逃げ切れる
             Console.WriteLine("8:敵味方のステータスを再確認");
 
             command = Console.ReadLine();
@@ -1071,98 +1015,89 @@ void Buttle()
                     //近接戦闘
                     Console.WriteLine("敵に接近して、ナイフを振り上げて…");
                     Console.WriteLine("その腕を素早く振り降ろした。");
-                    Console.ReadLine();//次のコメントを表示
+                    Console.ReadLine();
                     Console.WriteLine("敵はダメージを受けたようだ。");
-                    Console.ReadLine();//次のコメントを表示
-                    enemy_hp -= 50;//固定ダメージ
+                    Console.ReadLine();
+                    enemyHP -= 50;//固定ダメージ
                     break;
 
                 case "2":
                     //爆破攻撃
-                    if (item_bom > 0)
+                    if (itemBom > 0)
                     {
                         where = true;
-                        item_bom -= 1;
+                        itemBom -= 1;
                         Console.WriteLine("秋月は後ろずさりで少しずつ後退しながら、手榴弾のピンを抜いて、");
                         Console.WriteLine("敵のほうに向かって投げつけた。");
-                        Console.ReadLine();//次のコメントを表示
+                        Console.ReadLine();
                         Console.WriteLine("しばらくすると、大きな爆発音を上げ、付近は白い煙に包まれた。");
-                        Console.ReadLine();//次のコメントを表示
-                        enemy_hp -= 150 + rand.Next(0, 4) * 10;//150~180(10刻み)
+                        Console.ReadLine();
+                        enemyHP -= 150 + rand.Next(0, 4) * 10;//150~180(10刻み)
                     }
                     else
-                    {
-                        Console.WriteLine("爆弾がないようだ。");
-                        Console.ReadLine();//次のコメントを表示
-                    }
+                        WarningConsole("爆弾がないようだ。");
                     break;
 
                 case "3":
                     //射撃攻撃処理
                     //(ナイフ/爆弾との違いのために命中率は低く、ダメージが大きい、貫通するとさらにダメージ増加とかのほうがいいかも。
                     //↑一応、弾薬数が多いため攻撃可能回数がほぼ無限というメリットもあるけど。)
-                    if (item_bullet > 0)
+                    if (itemBullet > 0)
                     {
                         where = true;
-                        item_bullet -= 1;
+                        itemBullet -= 1;
                         Console.WriteLine("拳銃に弾丸を込め、単発射撃を行った。");
-                        Console.ReadLine();//次のコメントを表示
+                        Console.ReadLine();
                         Console.WriteLine("拳銃は、爆音を上げて、強い反動を受けた。");
-                        Console.ReadLine();//次のコメントを表示
+                        Console.ReadLine();
                         Console.WriteLine("弾丸は敵を直撃して、敵の体を貫通した。");
-                        Console.ReadLine();//次のコメントを表示
-                        enemy_hp -= 40 + rand.Next(0, 27) * 10;// 40~300(10刻み)
+                        Console.ReadLine();
+                        enemyHP -= 40 + rand.Next(0, 27) * 10;// 40~300(10刻み)
                     }
                     else
-                    {
-                        Console.WriteLine("弾薬が足りないようだ。");
-                        Console.ReadLine();//次のコメントを表示
-                    }
+                        WarningConsole("弾薬が足りないようだ。");
                     break;
 
                 case "4":
                     //治療処理
                     where = true;
-                    if (mp >= 3)
+                    if (komariMP >= 3)
                     {
-                        mp -= 3;
+                        komariMP -= 3;
                         Console.WriteLine("「リヴァレド・ハート」");
                         Console.WriteLine("両手を空にかざし、回復魔法を唱えた。");
-                        Console.ReadLine();//次のコメントを表示
+                        Console.ReadLine();
                         Console.WriteLine("優しいオーラが秋月の体を包み込む。");
-                        Console.ReadLine();//次のコメントを表示
+                        Console.ReadLine();
                         Console.WriteLine("傷は見る見るうちに回復していった。");
-                        Console.ReadLine();//次のコメントを表示
-                        hp += 150;//固定
+                        Console.ReadLine();
+                        komariHP += 150;//固定
                     }
                     else
                     {
                         Console.WriteLine("魔力が足りないため、簡易的な治療のみ行うことにした。");
-                        Console.ReadLine();//次のコメントを表示
+                        Console.ReadLine();
                         Console.WriteLine("ナイフでスカートの先を切り、その布で傷ついた部分を保護した。");
-                        Console.ReadLine();//次のコメントを表示
-                        hp += 40;//固定
+                        Console.ReadLine();
+                        komariHP += 40;//固定
                     }
 
                     break;
 
                 case "5":
                     //アイテム治療処理
-                    if (item_cure > 0)
+                    if (itemMedicine > 0)
                     {
                         where = true;
-                        item_cure -= 1;
+                        itemMedicine -= 1;
                         Console.WriteLine("医療品をあさり、治療に使えそうな薬品などを取り出した。");
-                        Console.ReadLine();//次のコメントを表示
+                        Console.ReadLine();
                         Console.WriteLine("傷ついた部分に治療薬を塗り、包帯で巻いて痛みを和らげることができた。");
-                        Console.ReadLine();//次のコメントを表示
-                        hp += 220;//固定
+                        Console.ReadLine();
+                        komariHP += 220;//固定
                     }
                     else
-                    {
-                        Console.WriteLine("治療薬がないようだ。");
-                        Console.ReadLine();//次のコメントを表示
-                    }
+                        WarningConsole("治療薬がないようだ。");
                     break;
 
                 case "6":
@@ -1171,59 +1106,48 @@ void Buttle()
                     if (rand.Next(0, 101) <= 20)
                     {
                         Console.WriteLine("敵からなんとか逃げ切ることができた。");
-                        Console.ReadLine();//次のコメントを表示
-                        enemy_hp = 0;
+                        Console.ReadLine();
+                        enemyHP = 0;
                     }
                     else
-                    {
-                        Console.WriteLine("敵に回り込まれた。");
-                        Console.ReadLine();//次のコメントを表示
-                    }
-
+                        WarningConsole("敵に回り込まれた。");
                     break;
 
                 case "7":
                     //手榴弾があるかを確認
-                    if (item_bom > 0)
+                    if (itemBom > 0)
                     {
                         where = true;
-                        item_bom -= 1;
+                        itemBom -= 1;
                         Console.WriteLine("秋月は後ろずさりで少しずつ後退しながら、手榴弾のピンを抜いて、");
                         Console.WriteLine("明後日のほうに向かって投げつけた。");
-                        Console.ReadLine();//次のコメントを表示
+                        Console.ReadLine();
                         Console.WriteLine("しばらくすると、大きな爆発音を上げ、付近は白い煙に包まれた。");
-                        Console.ReadLine();//次のコメントを表示
+                        Console.ReadLine();
                         Console.WriteLine("煙に紛れて逃げようと試みる。");
-                        Console.ReadLine();//次のコメントを表示
+                        Console.ReadLine();
 
                         //確立で逃げる処理(60%の確率で逃げられる)
                         if (rand.Next(0, 101) <= 60)
                         {
                             Console.WriteLine("なんとか逃げ切ることができた。");
-                            Console.ReadLine();//次のコメントを表示
-                            enemy_hp = 0;
+                            Console.ReadLine();
+                            enemyHP = 0;
                         }
                         else
-                        {
-                            Console.WriteLine("しかし、敵に回り込まれてしまった。");
-                            Console.ReadLine();//次のコメントを表示
-                            //敵にダメージはなし
-                        }
+                            WarningConsole("しかし、敵に回り込まれてしまった。"); // 敵にダメージはなし
                     }
                     else
-                    {
-                        Console.WriteLine("爆弾がないようだ。");
-                        Console.ReadLine();//次のコメントを表示
-                    }
+                        WarningConsole("爆弾がないようだ。");
                     break;
 
                 case "8":
                     Console.WriteLine("");
                     Console.WriteLine("味方ステータス");
-                    Console.WriteLine("|秋月小鞠|HP:{0}|MP:{1}|", hp, mp);
+                    Console.WriteLine("|秋月小鞠|HP:{0}|MP:{1}|", komariHP, komariMP);
                     Console.WriteLine("");
                     Console.WriteLine("敵ステータス");
-                    Console.WriteLine("|{0}|HP:{1}|", enemy_name, enemy_hp);
+                    Console.WriteLine("|{0}|HP:{1}|", enemyName, enemyHP);
                     break;
 
                 default:
@@ -1232,7 +1156,7 @@ void Buttle()
             }
 
             //敵死亡判定
-            if (enemy_hp <= 0)
+            if (enemyHP <= 0)
             {
                 switch (command)
                 {
@@ -1243,65 +1167,68 @@ void Buttle()
                     default:
                         //逃げた場合以外表示
                         Console.WriteLine("敵はその場に倒れ、もう二度と動かなくなった。");
-                        Console.ReadLine();//次のコメントを表示
+                        Console.ReadLine();
                         break;
                 }
-                enemy_name = "";//敵の名前を未指定状態にする
+                enemyName = "";//敵の名前を未指定状態にする
                 Console.WriteLine(" -+-+- 戦闘終了 -+-+- ");
-                Console.ReadLine();//次のコメントを表示
+                Console.ReadLine();
                 Console.WriteLine("「ふう。何とかなったわね。」");
-                Console.ReadLine();//次のコメントを表示
+                Console.ReadLine();
                 Console.WriteLine("「先へ進むわ。」");
-                Console.ReadLine();//次のコメントを表示
+                Console.ReadLine();
             }
             else
             {
-                //もし攻撃or回復(逃げる+誤入力以外)なら
-                //このif文で↓のバグを回避できる。
-                //(8の「様子を見る」や誤コマンドの際に本来なら再度コマンドを選べるはずなのに、すぐに敵ターンに移行してしまうバグ。
-                //原因:whileの中に敵の処理を入れているから)
+                // もし攻撃or回復(逃げる+誤入力以外)なら
+                // このif文で↓のバグを回避できる。
+                // (8の「様子を見る」や誤コマンドの際に本来なら再度コマンドを選べるはずなのに、すぐに敵ターンに移行してしまうバグ。
+                // 原因:whileの中に敵の処理を入れているから)
                 if (where == true)
                 {
-                    //続行(敵ターン)
+                    // 続行 (敵ターン)
                     Console.WriteLine(" - 敵のターン - ");
-                    Console.ReadLine();//次のコメントを表示
+                    Console.ReadLine();
 
-                    if (rand.Next(0, 101) <= 70)//70%の確率
+                    // 70%の確率
+                    if (rand.Next(0, 101) <= 70)
                     {
                         Console.WriteLine("敵からの攻撃");
-                        Console.ReadLine();//次のコメントを表示
-                        hp -= rand.Next(5, 14) * 10;//50~130(10刻み)(最大値が出るとまあまあ強いのでHPに注意。)
+                        Console.ReadLine();
+                        komariHP -= rand.Next(5, 14) * 10;//50~130(10刻み)(最大値が出るとまあまあ強いのでHPに注意。)
                     }
-                    else if (rand.Next(0, 101) <= 50)//全体で15%の確率(残り30%のうち、更に半分の確率)
+                    // 全体で15%の確率 (残り30%のうち、更に半分の確率)
+                    else if (rand.Next(0, 101) <= 50)
                     {
                         Console.WriteLine("敵は様子を見ている。");
-                        Console.ReadLine();//次のコメントを表示
+                        Console.ReadLine();
                     }
-                    else//全体で15%
+                    // 全体で15%
+                    else
                     {
                         Console.WriteLine("敵は回復魔法を唱えた。");
-                        Console.ReadLine();//次のコメントを表示
-                        enemy_hp += 120;//固定
+                        Console.ReadLine();
+                        enemyHP += 120; // 固定
                     }
 
-                    //秋月死亡判定
-                    if (hp <= 0)
+                    // 秋月死亡判定
+                    if (komariHP <= 0)
                     {
                         Console.ForegroundColor = ConsoleColor.Red; // 文字の色を変更
                         Console.WriteLine("");
                         Console.WriteLine("「う、うそ…」");
-                        Console.ReadLine();//次のコメントを表示
+                        Console.ReadLine();
                         Console.WriteLine("体に大きな傷を負った秋月はもう、そこから動くことができなくなってしまった。");
-                        Console.ReadLine();//次のコメントを表示
+                        Console.ReadLine();
                         Console.WriteLine("視界に広がる真紅の液体。それが自分の運命を示唆しているようだった。");
-                        Console.ReadLine();//次のコメントを表示
+                        Console.ReadLine();
                         Console.WriteLine("「こ…こんなところで死ぬはずは…」");
-                        Console.ReadLine();//次のコメントを表示
+                        Console.ReadLine();
                         Console.WriteLine("言葉を言い終える前に、その人生の終わりを早々と迎えた。");
-                        Console.ReadLine();//次のコメントを表示
+                        Console.ReadLine();
                         Console.ResetColor(); // 色をリセット
-                        //終了判定
-                        enemy_hp = 0;
+                        // 終了判定
+                        enemyHP = 0;
                         section = 99;
                     }
                 }
