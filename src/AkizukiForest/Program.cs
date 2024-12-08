@@ -158,9 +158,9 @@ while (playing == true)
                         Console.WriteLine("こちらに対して敵対的な視線を向けて、今すぐにでも攻撃してきそうだ。");
                         Console.ReadLine();
                         komariLack -= 5;
-                        //戦闘処理
+                        // 戦闘処理
                         Buttle();
-                        //もし死んでいるなら終了する
+                        // もし死んでいるなら終了する
                         if (section == 99)
                             goto label99;
                         break;
@@ -215,21 +215,21 @@ while (playing == true)
                     case "2":
                         where = true;
                         Console.WriteLine("建造物の周辺を見渡すと、近くには紅の花と、鮮やかな秘色(ひそく)の花が咲き乱れていた。");
-                        /*特に意味はないが、花の紹介(後付け設定)
+                        // 特に意味はないが、花の紹介 (後付け設定)
 
-                        紅の花:ゼラニウム(天竺葵-てんじくあおい)
-                        4月~6月開花の四季咲き植物。北大陸は冬の寒さが厳しいので冬は散ってしまう。
-                        花言葉:信頼 真の友情 尊敬 決心 | (外国)愚かさ 良い育ち 上流階級 | (赤色)君ありて幸福 あなたがいて幸せ
-                        ハンガリーの国花。
+                        // 紅の花: ゼラニウム (天竺葵-てんじくあおい)
+                        // 4月~6月開花の四季咲き植物。北大陸は冬の寒さが厳しいので冬は散ってしまう。
+                        // 花言葉: 信頼 真の友情 尊敬 決心 | (外国) 愚かさ 良い育ち 上流階級 | (赤色) 君ありて幸福 あなたがいて幸せ
+                        // ハンガリーの国花。
 
-                        秘色の花:ワスレナグサ(勿忘草)
-                        3月下旬~4月に見られる。(北大陸は夏でもそれほど気温が上がらないため(もちろん地域による差はあるが)、夏設定の本作品でもつじつまは合う。)
-                        花言葉:私を忘れないで 真実の愛*/
+                        // 秘色の花: ワスレナグサ (勿忘草)
+                        // 3月下旬~4月に見られる。(北大陸は夏でもそれほど気温が上がらないため (もちろん地域による差はあるが)、夏設定の本作品でもつじつまは合う。)
+                        // 花言葉: 私を忘れないで 真実の愛
                         Console.ReadLine();
                         Console.WriteLine("微かに香る花の香りで癒された。");
                         Console.ReadLine();
                         komariLack += 3;
-                        komariHP += 20;//微妙に回復(本作ではHPの最大値はない(しいて言うならint(32bit整数(負の数を含める))が最大値。))
+                        komariHP += 20; // 微妙に回復 (本作では HP の最大値はない (しいて言うなら int 32bit が最大値))
                         Console.WriteLine("先ほどの建物ことをふと思い出した。");
                         Console.ReadLine();
                         Console.WriteLine("こんな森の奥に誰が作ったのかが気になり、気が付くとその足はそちらへと動いていた。");
@@ -312,7 +312,7 @@ while (playing == true)
                         Console.WriteLine("こちらにはまだ気づいていないようだ。");
                         Console.ReadLine();
 
-                        //戦闘or道を戻って分岐点の右側の道に行くかの選択肢
+                        // 戦闘or道を戻って分岐点の右側の道に行くかの選択肢
                         bool which = false;
                         while (which == false)
                         {
@@ -380,7 +380,7 @@ while (playing == true)
             Console.WriteLine("数秒経った後、だんだんとその光は消えていった。");
             Console.ReadLine();
             Console.WriteLine("しかし、その視界に映っていたのは、先ほど居た地下ではなく、レンガ造りの建物の中だった。");
-            //天空世界
+            // 天空世界
             Console.ReadLine();
             Console.WriteLine("建物にはアーチ状の窓が適度につけられており、先ほどの地下とは打って変わって明るい様子だった。");
             Console.ReadLine();
@@ -392,17 +392,16 @@ while (playing == true)
             Console.ReadLine();
             Console.WriteLine("急いで、近くの柱へ隠れ、そこから銃撃を開始することにした。");
             Console.ReadLine();
-            //強制戦闘
-            //強制戦闘のため、自動回復
+            // 強制戦闘のため、自動回復
             komariHP = (komariHP >= 260) ? komariHP : 260;
             komariMP = (komariMP >= 30) ? komariMP : 30;
-            //戦闘開始
+            // 戦闘開始
             Buttle();
-            //もし死んでいるなら終了する
+            // もし死んでいるなら終了する
             if (section == 99)
                 goto label99;
 
-        //ロード地点(4c)
+        // ロード地点 (4c)
         label4c:
             section = 6;
 
@@ -441,7 +440,7 @@ while (playing == true)
                 {
                     case "1":
                         where = true;
-                        //天空ルート(戦闘(ボス戦)後に神が現れて現世に戻らせてくれる)
+                        // 天空ルート(戦闘(ボス戦)後に神が現れて現世に戻らせてくれる)
                         Console.WriteLine("上の階へと進んでいくが、同じような風景が続いている。");
                         Console.ReadLine();
                         Console.WriteLine("全ての階が同じ内装で、家具や物がなく、ループしているように思える。");
@@ -454,17 +453,16 @@ while (playing == true)
                         Console.ReadLine();
                         Console.WriteLine("向こうの黒い奇妙な姿は、こちらを確認すると同時に、一気に近づいてきた。");
                         Console.ReadLine();
-                        //ボス戦
-                        //(ボス能力指定)
+                        // ボス戦
                         enemyHP = 1000;
                         enemyName = "黒色の影";
-                        //(秋月回復)
+                        // (秋月回復)
                         komariHP = (komariHP >= 300) ? komariHP : 300;
                         komariHP += 240;
                         komariMP += 10;
-                        //戦闘開始
+                        // 戦闘開始
                         Buttle();
-                        //もし死んでいるなら終了する
+                        // もし死んでいるなら終了する
                         if (section == 99)
                             goto label99;
 
@@ -492,7 +490,7 @@ while (playing == true)
                         Console.WriteLine("彼女はそうつぶやいた。");
                         Console.ReadLine();
                         Console.WriteLine("「私は秋月小鞠。あなたは？」");
-                        //人の名前を聞く前に、自分の名前を言うという理論を通している秋月。
+                        // 人の名前を聞く前に、自分の名前を言うという礼儀を通している秋月。
                         Console.ReadLine();
                         Console.WriteLine("銃は持ったままそのように質問をした。");
                         Console.ReadLine();
@@ -551,7 +549,7 @@ while (playing == true)
                         Console.WriteLine("「こちらの手違いで地上と天界がつながってしまったらしくて…」");
                         Console.ReadLine();
                         Console.WriteLine("「あの洞窟には何もなかったのね…」");
-                        //何か歴史的な遺産やお宝があると期待して洞窟に入ったが、秋月にとってはどうでもよい天界のワープゲートしかなかったということ。
+                        // 何か歴史的な遺産やお宝があると期待して洞窟に入ったが、秋月にとってはどうでもよい天界のワープゲートしかなかったということ。
                         Console.ReadLine();
                         Console.WriteLine("「本当に申し訳ないわ…」");
                         Console.ReadLine();
@@ -590,7 +588,7 @@ while (playing == true)
 
                     case "2":
                         where = true;
-                        //地上ルート(地下の場所に関する文献を読める。また、魔導書かワープ装置か何かで現世に戻る。)
+                        // 地上ルート(地下の場所に関する文献を読める。また、魔導書かワープ装置か何かで現世に戻る。)
                         Console.WriteLine("下の階へ進んでいくと、窓からだんだんと地上の様子が見えてきた。");
                         Console.ReadLine();
                         Console.WriteLine("地面から雑草が生える風景が広がっている。");
@@ -621,8 +619,8 @@ while (playing == true)
                         Console.ReadLine();
                         Console.WriteLine("中には、小さな本棚が壁側に、それと机と椅子があった。");
                         Console.ReadLine();
-                        //探索ターン
-                        //最短√…机のメモを読む→本棚からメモに書いてある題名の本を探す→斜め読み→地上世界へ戻る魔法→終了(神には遭遇しない)
+                        // 探索ターン
+                        // 最短√…机のメモを読む→本棚からメモに書いてある題名の本を探す→斜め読み→地上世界へ戻る魔法→終了(神には遭遇しない)
                         bool which = false;
                         bool note = false;
                         while (which == false)
@@ -639,16 +637,16 @@ while (playing == true)
                                 case "1":
                                     Console.WriteLine("20冊以上の本が並んでいた。");
                                     Console.ReadLine();
-                                    //机のメモ帳を見ているか見ていないか
+                                    // 机のメモ帳を見ているか見ていないか
                                     if (note == false)
                                     {
-                                        //机のメモ帳を見ていないときの処理
+                                        // 机のメモ帳を見ていないときの処理
                                         Console.WriteLine("右から1冊取り、読んでみたがいまいち意味が分からなかった。");
                                         Console.ReadLine();
                                     }
                                     else
                                     {
-                                        //机のメモ帳を見ているときの処理
+                                        // 机のメモ帳を見ているときの処理
                                         Console.WriteLine("その中には、先ほど机上のメモに書かれていた「天界のレートピシ」という題名の本があった。");
                                         Console.ReadLine();
                                         Console.WriteLine("手に取り、近年の部分を斜め読みしてみることにした。");
@@ -714,7 +712,7 @@ while (playing == true)
                                     Console.ReadLine();
                                     Console.WriteLine("メモ帳には次の文字が殴り書きされていた。");
                                     Console.ReadLine();
-                                    Console.WriteLine("「天界のレートピシ」");//レートピシ=歴史書
+                                    Console.WriteLine("「天界のレートピシ」"); // レートピシ=歴史書
                                     Console.ReadLine();
                                     note = true;
                                     break;
@@ -751,8 +749,8 @@ while (playing == true)
                         Console.WriteLine("家族の事、国の事、かつて見た未来の夢。");
                         Console.ReadLine();
                         Console.WriteLine("昔の戦争で再び会うことを誓った3人の同士、同じ部隊の黒服の少女…");
-                        //昔の戦争(対チャクム戦/北大陸南西部防衛)での3人の仲間(「世界の終焉の前に。」)、
-                        //同じ部隊(第6師団/旧黒軍師)の黒服の少女(椿と航空隊の2人)
+                        // 昔の戦争 (対チャクム戦/北大陸南西部防衛) での3人の仲間 (「世界の終焉の前に。」)、
+                        // 同じ部隊 (第9師団/旧黒軍師) の黒服の少女 (椿と航空隊の2人)
                         Console.ReadLine();
                         Console.WriteLine("様々なことを思い出した。");
                         Console.ReadLine();
@@ -761,7 +759,7 @@ while (playing == true)
                         Console.WriteLine("「ここからもとに戻れる気がしないんだ…」");
                         Console.ReadLine();
                         Console.WriteLine("「でも、もう一度でいいから見たかった…」");
-                        //家族と、旧黒軍師メンバー、かつての仲間(「世界の終焉の前に。」メンバー)、第6師団の上司と。
+                        // 家族と、旧黒軍師メンバー、かつての仲間 (「世界の終焉の前に。」メンバー)、第9師団の上司と。
                         Console.ReadLine();
                         Console.WriteLine("その瞳に映るのは真っ青な空と、白い雲だけだった。");
                         Console.ReadLine();
@@ -870,32 +868,22 @@ while (playing == true)
             break;
 
         case "2":
-            playing = false;
-
             try
             {
                 Load();
                 switch (section)
                 {
-                    case 1:
-                        goto label1;
-
-                    case 2:
-                        goto label2;
-
-                    case 3:
-                        goto label3;
-
-                    case 6:
-                        goto label4c;
-
-                    default:
-                        break;
+                    case 1: goto label1;
+                    case 2: goto label2;
+                    case 3: goto label3;
+                    case 6: goto label4c;
                 }
+                playing = false;
+                Console.WriteLine("ロードが成功しました。");
+                Console.ReadLine();
             }
             catch
             {
-                playing = true;
                 Console.WriteLine("セーブデータが見つかりません。");
                 Console.WriteLine("");
             }
@@ -968,9 +956,6 @@ void Load()
         itemBullet      = int.TryParse(data.Element("ItemBullet")?.Value, out int tempItemBullet) ? tempItemBullet : 4;
         itemMedicine    = int.TryParse(data.Element("ItemMedicine")?.Value, out int tempItemMedicine) ? tempItemMedicine : 4;
     }
-
-    Console.WriteLine("ロードが成功しました。");
-    Console.ReadLine();
 }
 
 //戦闘処理
