@@ -954,19 +954,19 @@ void Save()
 void Load()
 {
     //ファイル読み込み
-    XDocument file_read = XDocument.Load(@"./Data.xml");
+    XDocument dataLoading = XDocument.Load(@"./Data.xml");
 
-    IEnumerable<XElement> datas = file_read.Elements("Data");
-    foreach (XElement data_read in datas)
+    IEnumerable<XElement> datas = dataLoading.Elements("Data");
+    foreach (XElement data in datas)
     {
-        section         = int.TryParse(data_read.Element("Section")?.Value, out var tempSection) ? tempSection : 0;
-        komariHP        = int.TryParse(data_read.Element("KomariHP")?.Value, out int tempKomariHP) ? tempKomariHP : 200;
-        komariMP        = int.TryParse(data_read.Element("KomariMP")?.Value, out int tempKomariMP) ? tempKomariMP : 20;
-        komariLack      = int.TryParse(data_read.Element("KomariLuck")?.Value, out int tempKomariLack) ? tempKomariLack : 10;
-        item            = int.TryParse(data_read.Element("Item")?.Value, out int tempItem) ? tempItem : 0;
-        itemBom         = int.TryParse(data_read.Element("ItemBom")?.Value, out int tempItemBom) ? tempItemBom : 2;
-        itemBullet      = int.TryParse(data_read.Element("ItemBullet")?.Value, out int tempItemBullet) ? tempItemBullet : 4;
-        itemMedicine    = int.TryParse(data_read.Element("ItemMedicine")?.Value, out int tempItemMedicine) ? tempItemMedicine : 4;
+        section         = int.TryParse(data.Element("Section")?.Value, out var tempSection) ? tempSection : 0;
+        komariHP        = int.TryParse(data.Element("KomariHP")?.Value, out int tempKomariHP) ? tempKomariHP : 200;
+        komariMP        = int.TryParse(data.Element("KomariMP")?.Value, out int tempKomariMP) ? tempKomariMP : 20;
+        komariLack      = int.TryParse(data.Element("KomariLuck")?.Value, out int tempKomariLack) ? tempKomariLack : 10;
+        item            = int.TryParse(data.Element("Item")?.Value, out int tempItem) ? tempItem : 0;
+        itemBom         = int.TryParse(data.Element("ItemBom")?.Value, out int tempItemBom) ? tempItemBom : 2;
+        itemBullet      = int.TryParse(data.Element("ItemBullet")?.Value, out int tempItemBullet) ? tempItemBullet : 4;
+        itemMedicine    = int.TryParse(data.Element("ItemMedicine")?.Value, out int tempItemMedicine) ? tempItemMedicine : 4;
     }
 
     Console.WriteLine("ロードが成功しました。");
