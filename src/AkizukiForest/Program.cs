@@ -160,9 +160,6 @@ while (playing == true)
                         komariLack -= 5;
                         // 戦闘処理
                         Buttle();
-                        // もし死んでいるなら終了する
-                        if (section == 99)
-                            goto label99;
                         break;
 
                     case "4":
@@ -328,9 +325,6 @@ while (playing == true)
                                     which = true;
                                     //戦闘処理
                                     Buttle();
-                                    //もし死んでいるなら終了する
-                                    if (section == 99)
-                                        goto label99;
                                     break;
 
                                 case "2":
@@ -397,9 +391,6 @@ while (playing == true)
             komariMP = (komariMP >= 30) ? komariMP : 30;
             // 戦闘開始
             Buttle();
-            // もし死んでいるなら終了する
-            if (section == 99)
-                goto label99;
 
         // ロード地点 (4c)
         label4c:
@@ -462,9 +453,6 @@ while (playing == true)
                         komariMP += 10;
                         // 戦闘開始
                         Buttle();
-                        // もし死んでいるなら終了する
-                        if (section == 99)
-                            goto label99;
 
                         Console.WriteLine("「はぁ、はぁ…」");
                         Console.ReadLine();
@@ -890,7 +878,6 @@ while (playing == true)
             break;
 
         case "3":
-        label99:
             playing = false;
             break;
 
@@ -1190,20 +1177,20 @@ void Buttle()
                     Console.WriteLine(" - 敵のターン - ");
                     Console.ReadLine();
 
-                    // 70%の確率
-                    if (rand.Next(0, 101) <= 70)
+                    // 70%
+                    if (rand.Next(10) < 7)
                     {
                         Console.WriteLine("敵からの攻撃");
                         Console.ReadLine();
                         komariHP -= rand.Next(5, 14) * 10;//50~130(10刻み)(最大値が出るとまあまあ強いのでHPに注意。)
                     }
-                    // 全体で15%の確率 (残り30%のうち、更に半分の確率)
-                    else if (rand.Next(0, 101) <= 50)
+                    // 20%
+                    else if (rand.Next(3) != 0)
                     {
                         Console.WriteLine("敵は様子を見ている。");
                         Console.ReadLine();
                     }
-                    // 全体で15%
+                    // 10%
                     else
                     {
                         Console.WriteLine("敵は回復魔法を唱えた。");
@@ -1229,7 +1216,7 @@ void Buttle()
                         Console.ResetColor(); // 色をリセット
                         // 終了判定
                         enemyHP = 0;
-                        section = 99;
+                        Environment.Exit(0);
                     }
                 }
             }
