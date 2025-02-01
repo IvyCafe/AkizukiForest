@@ -909,8 +909,8 @@ void Save()
         (
             "Data",
             new XElement("Section", section),
-            new XElement("komari.HP", komari.HP),
-            new XElement("komari.MP", komari.MP),
+            new XElement("komariHP", komari.HP),
+            new XElement("komariMP", komari.MP),
             new XElement("KomariLuck", komari.Luck),
             new XElement("Item", item),
             new XElement("ItemBom", itemBom),
@@ -932,9 +932,9 @@ void Load()
     foreach (XElement data in datas)
     {
         section         = int.TryParse(data.Element("Section")?.Value, out var tempSection) ? tempSection : 0;
-        komari.HP        = int.TryParse(data.Element("komari.HP")?.Value, out int tempKomariHP) ? tempKomariHP : 200;
-        komari.MP        = int.TryParse(data.Element("komari.MP")?.Value, out int tempKomariMP) ? tempKomariMP : 20;
-        komari.Luck      = int.TryParse(data.Element("KomariLuck")?.Value, out int tempKomariLuck) ? tempKomariLuck : 10;
+        komari.HP       = int.TryParse(data.Element("komariHP")?.Value, out int tempKomariHP) ? tempKomariHP : 200;
+        komari.MP       = int.TryParse(data.Element("komariMP")?.Value, out int tempKomariMP) ? tempKomariMP : 20;
+        komari.Luck     = int.TryParse(data.Element("KomariLuck")?.Value, out int tempKomariLuck) ? tempKomariLuck : 10;
         item            = int.TryParse(data.Element("Item")?.Value, out int tempItem) ? tempItem : 0;
         itemBom         = int.TryParse(data.Element("ItemBom")?.Value, out int tempItemBom) ? tempItemBom : 2;
         itemBullet      = int.TryParse(data.Element("ItemBullet")?.Value, out int tempItemBullet) ? tempItemBullet : 4;
@@ -956,7 +956,7 @@ void Buttle()
     // HP が設定されていないときはランダム値に設定
     enemy.HP = (enemy.HP > 0) ? enemy.HP : enemyDefaultHP;
     // 名前が設定されていないときは初期値に設定
-    enemy.Name = (enemy.Name == "") ? enemy.Name : enemyDefaultName;
+    enemy.Name = (enemy.Name != "") ? enemy.Name : enemyDefaultName;
 
     // 戦闘開始時自動回復 (難易度調節)
     komari.HP += 20 + rand.Next(0, 3) * 10; // 20-40 (10刻み)
