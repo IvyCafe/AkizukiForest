@@ -5,19 +5,16 @@ int section = 0;        // セーブ用
 string? command;        // コマンド読み取り
 
 // ステータス
-int komariHP = 200;     // 体力
-int komariMP = 30;      // 魔力
-int komariLack = 0;     // 運
+(int HP, int MP, int Luck) komari = (200, 30, 0);
+
+// 敵のステータス
+(int HP, string Name) enemy = (0, "");
 
 // アイテム
 int item = 12;          // アイテムの総重量
 int itemBom = 0;        // 手榴弾の数 (手榴弾の重さはx2で算出)
 int itemBullet = 0;     // 弾丸の数
 int itemMedicine = 0;   // 医療品の数
-
-// 敵のステータス
-int enemyHP = 0;        // 体力
-string enemyName = "";  // 名称
 
 // 誤ったコマンドを入力しているときはループ
 while (playing == true)
@@ -140,7 +137,7 @@ while (playing == true)
                 {
                     case "1":
                         where = true;
-                        komariLack += 5;
+                        komari.Luck += 5;
                         Console.WriteLine("珍しい植物を見つけた！");
                         Console.ReadLine();
                         break;
@@ -157,12 +154,9 @@ while (playing == true)
                         Console.ReadLine();
                         Console.WriteLine("こちらに対して敵対的な視線を向けて、今すぐにでも攻撃してきそうだ。");
                         Console.ReadLine();
-                        komariLack -= 5;
+                        komari.Luck -= 5;
                         // 戦闘処理
                         Buttle();
-                        // もし死んでいるなら終了する
-                        if (section == 99)
-                            goto label99;
                         break;
 
                     case "4":
@@ -228,8 +222,8 @@ while (playing == true)
                         Console.ReadLine();
                         Console.WriteLine("微かに香る花の香りで癒された。");
                         Console.ReadLine();
-                        komariLack += 3;
-                        komariHP += 20; // 微妙に回復 (本作では HP の最大値はない (しいて言うなら int 32bit が最大値))
+                        komari.Luck += 3;
+                        komari.HP += 20; // 微妙に回復 (本作では HP の最大値はない (しいて言うなら int 32bit が最大値))
                         Console.WriteLine("先ほどの建物ことをふと思い出した。");
                         Console.ReadLine();
                         Console.WriteLine("こんな森の奥に誰が作ったのかが気になり、気が付くとその足はそちらへと動いていた。");
@@ -244,8 +238,8 @@ while (playing == true)
                         Console.ReadLine();
                         Console.WriteLine("視界、音、匂い。それらすべての要素が私の気分をとても穏やかにさせた。");
                         Console.ReadLine();
-                        komariHP += 50;
-                        komariMP += 10;
+                        komari.HP += 50;
+                        komari.MP += 10;
                         Console.WriteLine("先ほどの建物ことをふと思い出した。");
                         Console.ReadLine();
                         Console.WriteLine("こんな森の奥に誰が作ったのかが気になり、気が付くとその足はそちらへと動いていた。");
@@ -328,9 +322,6 @@ while (playing == true)
                                     which = true;
                                     //戦闘処理
                                     Buttle();
-                                    //もし死んでいるなら終了する
-                                    if (section == 99)
-                                        goto label99;
                                     break;
 
                                 case "2":
@@ -393,13 +384,10 @@ while (playing == true)
             Console.WriteLine("急いで、近くの柱へ隠れ、そこから銃撃を開始することにした。");
             Console.ReadLine();
             // 強制戦闘のため、自動回復
-            komariHP = (komariHP >= 260) ? komariHP : 260;
-            komariMP = (komariMP >= 30) ? komariMP : 30;
+            komari.HP = (komari.HP >= 260) ? komari.HP : 260;
+            komari.MP = (komari.MP >= 30) ? komari.MP : 30;
             // 戦闘開始
             Buttle();
-            // もし死んでいるなら終了する
-            if (section == 99)
-                goto label99;
 
         // ロード地点 (4c)
         label4c:
@@ -454,17 +442,14 @@ while (playing == true)
                         Console.WriteLine("向こうの黒い奇妙な姿は、こちらを確認すると同時に、一気に近づいてきた。");
                         Console.ReadLine();
                         // ボス戦
-                        enemyHP = 1000;
-                        enemyName = "黒色の影";
+                        enemy.HP = 1000;
+                        enemy.Name = "黒色の影";
                         // (秋月回復)
-                        komariHP = (komariHP >= 300) ? komariHP : 300;
-                        komariHP += 240;
-                        komariMP += 10;
+                        komari.HP = (komari.HP >= 300) ? komari.HP : 300;
+                        komari.HP += 240;
+                        komari.MP += 10;
                         // 戦闘開始
                         Buttle();
-                        // もし死んでいるなら終了する
-                        if (section == 99)
-                            goto label99;
 
                         Console.WriteLine("「はぁ、はぁ…」");
                         Console.ReadLine();
@@ -478,7 +463,7 @@ while (playing == true)
                         Console.ReadLine();
                         Console.WriteLine("雲の切れ目からは草原や色彩豊かな花畑が広がる。");
                         Console.ReadLine();
-                        komariLack += 5;
+                        komari.Luck += 5;
                         Console.WriteLine("風景に見とれていると、後ろから気配を感じるようになった。");
                         Console.ReadLine();
                         Console.WriteLine("急いで拳銃を手に取り、後ろを振り返ってみると…");
@@ -820,7 +805,7 @@ while (playing == true)
             // (親友=椿とわかる人はすごい。親友→×親、上司、△世界の終焉の前に。(長い間合っていないので一緒に喋る機会がない)、〇旧黒軍師
             // →旧黒軍師では3人いるが、航空隊2人の名前や詳細がまだ決まっていないため、椿という推測は一応可能だが。
             // (未来になって航空隊2人の名前が決まっても、決まっていなかった時代のストーリーということで未来になっても上記と同じ考察が可能。))
-            if (komariLack >= 8)
+            if (komari.Luck >= 8)
             {
                 Console.WriteLine(" - - - - - ");
                 Console.WriteLine("「っていうことがあったのよね」");//秋月
@@ -890,7 +875,6 @@ while (playing == true)
             break;
 
         case "3":
-        label99:
             playing = false;
             break;
 
@@ -925,9 +909,9 @@ void Save()
         (
             "Data",
             new XElement("Section", section),
-            new XElement("KomariHP", komariHP),
-            new XElement("KomariMP", komariMP),
-            new XElement("KomariLuck", komariLack),
+            new XElement("komari.HP", komari.HP),
+            new XElement("komari.MP", komari.MP),
+            new XElement("KomariLuck", komari.Luck),
             new XElement("Item", item),
             new XElement("ItemBom", itemBom),
             new XElement("ItemBullet", itemBullet),
@@ -948,9 +932,9 @@ void Load()
     foreach (XElement data in datas)
     {
         section         = int.TryParse(data.Element("Section")?.Value, out var tempSection) ? tempSection : 0;
-        komariHP        = int.TryParse(data.Element("KomariHP")?.Value, out int tempKomariHP) ? tempKomariHP : 200;
-        komariMP        = int.TryParse(data.Element("KomariMP")?.Value, out int tempKomariMP) ? tempKomariMP : 20;
-        komariLack      = int.TryParse(data.Element("KomariLuck")?.Value, out int tempKomariLack) ? tempKomariLack : 10;
+        komari.HP        = int.TryParse(data.Element("komari.HP")?.Value, out int tempKomariHP) ? tempKomariHP : 200;
+        komari.MP        = int.TryParse(data.Element("komari.MP")?.Value, out int tempKomariMP) ? tempKomariMP : 20;
+        komari.Luck      = int.TryParse(data.Element("KomariLuck")?.Value, out int tempKomariLuck) ? tempKomariLuck : 10;
         item            = int.TryParse(data.Element("Item")?.Value, out int tempItem) ? tempItem : 0;
         itemBom         = int.TryParse(data.Element("ItemBom")?.Value, out int tempItemBom) ? tempItemBom : 2;
         itemBullet      = int.TryParse(data.Element("ItemBullet")?.Value, out int tempItemBullet) ? tempItemBullet : 4;
@@ -970,15 +954,15 @@ void Buttle()
     const string enemyDefaultName = "異形の存在";
 
     // HP が設定されていないときはランダム値に設定
-    enemyHP = (enemyHP > 0) ? enemyHP : enemyDefaultHP;
+    enemy.HP = (enemy.HP > 0) ? enemy.HP : enemyDefaultHP;
     // 名前が設定されていないときは初期値に設定
-    enemyName = (enemyName == "") ? enemyName : enemyDefaultName;
+    enemy.Name = (enemy.Name == "") ? enemy.Name : enemyDefaultName;
 
     // 戦闘開始時自動回復 (難易度調節)
-    komariHP += 20 + rand.Next(0, 3) * 10; // 20-40 (10刻み)
-    komariMP += rand.Next(2, 6); // 2-5
+    komari.HP += 20 + rand.Next(0, 3) * 10; // 20-40 (10刻み)
+    komari.MP += rand.Next(2, 6); // 2-5
 
-    while (enemyHP > 0)
+    while (enemy.HP > 0)
     {
         Console.WriteLine(" - あなたのターン - ");
         Console.ReadLine();
@@ -986,10 +970,10 @@ void Buttle()
         //キャラクターステータス表示
         Console.WriteLine("");
         Console.WriteLine("味方ステータス");
-        Console.WriteLine("|秋月小鞠|HP:{0}|MP:{1}|", komariHP, komariMP);
+        Console.WriteLine("|秋月小鞠|HP:{0}|MP:{1}|", komari.HP, komari.MP);
         Console.WriteLine("");
         Console.WriteLine("敵ステータス");
-        Console.WriteLine("|{0}|HP:{1}|", enemyName, enemyHP);
+        Console.WriteLine("|{0}|HP:{1}|", enemy.Name, enemy.HP);
 
         //作成途中
         bool where = false;
@@ -1018,7 +1002,7 @@ void Buttle()
                     Console.ReadLine();
                     Console.WriteLine("敵はダメージを受けたようだ。");
                     Console.ReadLine();
-                    enemyHP -= 50;//固定ダメージ
+                    enemy.HP -= 50;//固定ダメージ
                     break;
 
                 case "2":
@@ -1032,7 +1016,7 @@ void Buttle()
                         Console.ReadLine();
                         Console.WriteLine("しばらくすると、大きな爆発音を上げ、付近は白い煙に包まれた。");
                         Console.ReadLine();
-                        enemyHP -= 150 + rand.Next(0, 4) * 10;//150~180(10刻み)
+                        enemy.HP -= 150 + rand.Next(0, 4) * 10;//150~180(10刻み)
                     }
                     else
                         WarningConsole("爆弾がないようだ。");
@@ -1052,7 +1036,7 @@ void Buttle()
                         Console.ReadLine();
                         Console.WriteLine("弾丸は敵を直撃して、敵の体を貫通した。");
                         Console.ReadLine();
-                        enemyHP -= 40 + rand.Next(0, 27) * 10;// 40~300(10刻み)
+                        enemy.HP -= 40 + rand.Next(0, 27) * 10;// 40~300(10刻み)
                     }
                     else
                         WarningConsole("弾薬が足りないようだ。");
@@ -1061,9 +1045,9 @@ void Buttle()
                 case "4":
                     //治療処理
                     where = true;
-                    if (komariMP >= 3)
+                    if (komari.MP >= 3)
                     {
-                        komariMP -= 3;
+                        komari.MP -= 3;
                         Console.WriteLine("「リヴァレド・ハート」");
                         Console.WriteLine("両手を空にかざし、回復魔法を唱えた。");
                         Console.ReadLine();
@@ -1071,7 +1055,7 @@ void Buttle()
                         Console.ReadLine();
                         Console.WriteLine("傷は見る見るうちに回復していった。");
                         Console.ReadLine();
-                        komariHP += 150;//固定
+                        komari.HP += 150;//固定
                     }
                     else
                     {
@@ -1079,7 +1063,7 @@ void Buttle()
                         Console.ReadLine();
                         Console.WriteLine("ナイフでスカートの先を切り、その布で傷ついた部分を保護した。");
                         Console.ReadLine();
-                        komariHP += 40;//固定
+                        komari.HP += 40;//固定
                     }
 
                     break;
@@ -1094,7 +1078,7 @@ void Buttle()
                         Console.ReadLine();
                         Console.WriteLine("傷ついた部分に治療薬を塗り、包帯で巻いて痛みを和らげることができた。");
                         Console.ReadLine();
-                        komariHP += 220;//固定
+                        komari.HP += 220;//固定
                     }
                     else
                         WarningConsole("治療薬がないようだ。");
@@ -1107,7 +1091,7 @@ void Buttle()
                     {
                         Console.WriteLine("敵からなんとか逃げ切ることができた。");
                         Console.ReadLine();
-                        enemyHP = 0;
+                        enemy.HP = 0;
                     }
                     else
                         WarningConsole("敵に回り込まれた。");
@@ -1132,7 +1116,7 @@ void Buttle()
                         {
                             Console.WriteLine("なんとか逃げ切ることができた。");
                             Console.ReadLine();
-                            enemyHP = 0;
+                            enemy.HP = 0;
                         }
                         else
                             WarningConsole("しかし、敵に回り込まれてしまった。"); // 敵にダメージはなし
@@ -1144,10 +1128,10 @@ void Buttle()
                 case "8":
                     Console.WriteLine("");
                     Console.WriteLine("味方ステータス");
-                    Console.WriteLine("|秋月小鞠|HP:{0}|MP:{1}|", komariHP, komariMP);
+                    Console.WriteLine("|秋月小鞠|HP:{0}|MP:{1}|", komari.HP, komari.MP);
                     Console.WriteLine("");
                     Console.WriteLine("敵ステータス");
-                    Console.WriteLine("|{0}|HP:{1}|", enemyName, enemyHP);
+                    Console.WriteLine("|{0}|HP:{1}|", enemy.Name, enemy.HP);
                     break;
 
                 default:
@@ -1156,7 +1140,7 @@ void Buttle()
             }
 
             //敵死亡判定
-            if (enemyHP <= 0)
+            if (enemy.HP <= 0)
             {
                 switch (command)
                 {
@@ -1170,7 +1154,7 @@ void Buttle()
                         Console.ReadLine();
                         break;
                 }
-                enemyName = "";//敵の名前を未指定状態にする
+                enemy.Name = "";//敵の名前を未指定状態にする
                 Console.WriteLine(" -+-+- 戦闘終了 -+-+- ");
                 Console.ReadLine();
                 Console.WriteLine("「ふう。何とかなったわね。」");
@@ -1190,29 +1174,29 @@ void Buttle()
                     Console.WriteLine(" - 敵のターン - ");
                     Console.ReadLine();
 
-                    // 70%の確率
-                    if (rand.Next(0, 101) <= 70)
+                    // 70%
+                    if (rand.Next(10) < 7)
                     {
                         Console.WriteLine("敵からの攻撃");
                         Console.ReadLine();
-                        komariHP -= rand.Next(5, 14) * 10;//50~130(10刻み)(最大値が出るとまあまあ強いのでHPに注意。)
+                        komari.HP -= rand.Next(5, 14) * 10;//50~130(10刻み)(最大値が出るとまあまあ強いのでHPに注意。)
                     }
-                    // 全体で15%の確率 (残り30%のうち、更に半分の確率)
-                    else if (rand.Next(0, 101) <= 50)
+                    // 20%
+                    else if (rand.Next(3) != 0)
                     {
                         Console.WriteLine("敵は様子を見ている。");
                         Console.ReadLine();
                     }
-                    // 全体で15%
+                    // 10%
                     else
                     {
                         Console.WriteLine("敵は回復魔法を唱えた。");
                         Console.ReadLine();
-                        enemyHP += 120; // 固定
+                        enemy.HP += 120; // 固定
                     }
 
                     // 秋月死亡判定
-                    if (komariHP <= 0)
+                    if (komari.HP <= 0)
                     {
                         Console.ForegroundColor = ConsoleColor.Red; // 文字の色を変更
                         Console.WriteLine("");
@@ -1228,8 +1212,8 @@ void Buttle()
                         Console.ReadLine();
                         Console.ResetColor(); // 色をリセット
                         // 終了判定
-                        enemyHP = 0;
-                        section = 99;
+                        enemy.HP = 0;
+                        Environment.Exit(0);
                     }
                 }
             }
