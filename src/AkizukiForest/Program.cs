@@ -573,7 +573,7 @@ while (playing == true)
 
                     case "2":
                         where = true;
-                        // 地上ルート(地下の場所に関する文献を読める。また、魔導書かワープ装置か何かで現世に戻る。)
+                        // 地上ルート (地下の場所に関する文献を読める。また、魔導書かワープ装置か何かで現世に戻る。)
                         Console.WriteLine("下の階へ進んでいくと、窓からだんだんと地上の様子が見えてきた。");
                         Console.ReadLine();
                         Console.WriteLine("地面から雑草が生える風景が広がっている。");
@@ -605,7 +605,7 @@ while (playing == true)
                         Console.WriteLine("中には、小さな本棚が壁側に、それと机と椅子があった。");
                         Console.ReadLine();
                         // 探索ターン
-                        // 最短√…机のメモを読む→本棚からメモに書いてある題名の本を探す→斜め読み→地上世界へ戻る魔法→終了(神には遭遇しない)
+                        // 最短√…机のメモを読む→本棚からメモに書いてある題名の本を探す→斜め読み→地上世界へ戻る魔法→終了 (神には遭遇しない)
                         bool which = false;
                         bool note = false;
                         while (which == false)
@@ -785,7 +785,7 @@ while (playing == true)
                         Console.WriteLine("");
                         Console.WriteLine("END:森の泉(隠しルート)");
                         Console.WriteLine("[秋月の過去と見えない事実]");
-                        // 見えない事実(現実)…泉にいる神の言っていることが意味不明&説明不足過ぎる
+                        // 見えない事実 (現実)…泉にいる神の言っていることが意味不明&説明不足過ぎる
                         Console.WriteLine("");
                         Console.ReadLine();
                         break;
@@ -829,10 +829,10 @@ while (playing == true)
                 Console.WriteLine("「ふうん…楽しみね。」");//椿
                 Console.ReadLine();
                 Console.WriteLine("「そうだね。」");//秋月
-                // 一応A-RPGの布石。A-RPGの中でも電車が居なくなって、暇だからトンネルに入るみたいな話のやつ。
+                // 一応 A-RPG の布石。A-RPG の中でも電車が居なくなって、暇だからトンネルに入るみたいな話のやつ。
                 // 内容とか導入が被っているからあのシナリオは使わないかもしれないけど…
-                // あと、あれは3Dでやる予定だったから1人用(秋月のみの)シナリオだし…
-                // ここの会話内容は後で変えたほうがいいかも…(フラグを残せる重要な場所なので。)
+                // あと、あれは 3D でやる予定だったから1人用 (秋月のみの) シナリオだし…
+                // ここの会話内容は後で変えたほうがいいかも… (フラグを残せる重要な場所なので。)
                 Console.WriteLine(" - - - - - ");
                 Console.WriteLine("");
             }
@@ -848,8 +848,8 @@ while (playing == true)
             // 裏話…手榴弾を実装したのは、実はトンネル内にふさがっているところがあって、そこを爆破して進んでいくためだったんだけど、
             // トンネルの話が長くなりすぎてつまらなかったから辞めた。だから、攻撃と逃げるときの両方で使えるくらいしかメリットはない
             // っていうか、手榴弾はともかく、銃の弾丸は普通に余るな…
-            // 医療品なんかそもそも使わなくても魔法回復できるし…(戦闘前のMP回復のおかげでほぼMP切れにならないし)
-            // 難易度調整はミスった(簡単すぎた)かも(だからといって今から調整するのも面倒)
+            // 医療品なんかそもそも使わなくても魔法回復できるし… (戦闘前のMP回復のおかげでほぼMP切れにならないし)
+            // 難易度調整はミスった (簡単すぎた) かも (だからといって今から調整するのも面倒)
             break;
 
         case "2":
@@ -906,17 +906,17 @@ void Save()
 {
     //データ保存(xml)
     XElement element = new
-        (
-            "Data",
-            new XElement("Section", section),
-            new XElement("komariHP", komari.HP),
-            new XElement("komariMP", komari.MP),
-            new XElement("KomariLuck", komari.Luck),
-            new XElement("Item", item),
-            new XElement("ItemBom", itemBom),
-            new XElement("ItemBullet", itemBullet),
-            new XElement("ItemMedicine", itemMedicine)
-        );
+    (
+        "Data",
+        new XElement("Section", section),
+        new XElement("komariHP", komari.HP),
+        new XElement("komariMP", komari.MP),
+        new XElement("KomariLuck", komari.Luck),
+        new XElement("Item", item),
+        new XElement("ItemBom", itemBom),
+        new XElement("ItemBullet", itemBullet),
+        new XElement("ItemMedicine", itemMedicine)
+    );
     element.Save("Data.xml");
     Console.WriteLine("セーブが完了しました。");
     Console.WriteLine("終了する際は、Ctrl+Cを押してください。");
@@ -979,7 +979,6 @@ void Buttle()
         bool where = false;
         while (where == false)
         {
-
             Console.WriteLine("");
             Console.WriteLine("どのような行動をしますか");
             Console.WriteLine("1:ナイフ攻撃");
