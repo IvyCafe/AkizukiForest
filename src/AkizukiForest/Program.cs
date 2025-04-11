@@ -68,7 +68,7 @@ while (playing == true)
                         if (int.TryParse(Console.ReadLine(), out _itemEach) && (_item - _itemEach * _itemWeight >= 0))
                         {
                             _item -= _itemEach * _itemWeight;
-                            Console.WriteLine("{0}個(重さ{1}|残り重量{2})", _itemEach, _itemEach * _itemWeight, _item);
+                            Console.WriteLine("{0}個 (重さ{1}|残り重量{2})", _itemEach, _itemEach * _itemWeight, _item);
                             selectingEachItems = false;
                         }
                         else
@@ -80,7 +80,7 @@ while (playing == true)
                 bool checkingItems = true;
                 while (checkingItems == true)
                 {
-                    Console.WriteLine("1: はい / 2: いいえ");
+                    Console.WriteLine("1: はい/2: いいえ");
                     command = Console.ReadLine();
                     if (command == "1")
                     {
