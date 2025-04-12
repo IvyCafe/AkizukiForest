@@ -19,10 +19,8 @@ int itemMedicine = 0;   // 医療品の数
 // 誤ったコマンドを入力しているときはループ
 while (playing == true)
 {
-    Console.WriteLine("1:はじめから");
-    Console.WriteLine("2:途中から");
-    Console.WriteLine("3:終了する");
-    Console.Write("数値を入力してください:");
+    MultiWriter(["1: はじめから", "2: 途中から", "3: 終了する"]);
+    Console.Write("数値を入力してください: ");
     command = Console.ReadLine();
     Console.WriteLine("");
     switch (command)
@@ -51,15 +49,15 @@ while (playing == true)
                 Console.WriteLine("");
                 Console.WriteLine("その他に冒険に持っていくものを決めてください");
                 Console.WriteLine("");
-                Console.WriteLine("持っていけるもの(最大12)");
-                Console.WriteLine("1:手榴弾(攻撃/爆破)[1つ当たりの重さ:2]");
-                Console.WriteLine("2:弾薬(攻撃)[1セット(10発)当たりの重さ:1]");
-                Console.WriteLine("3:医療品(回復)[1つ当たりの重さ:1]");
+                Console.WriteLine("持っていけるもの (最大12)");
+                Console.WriteLine("1: 手榴弾 (攻撃/爆破) [1つ当たりの重さ: 2]");
+                Console.WriteLine("2: 弾薬 (攻撃) [1セット (10発) 当たりの重さ: 1]");
+                Console.WriteLine("3: 医療品 (回復) [1つ当たりの重さ: 1]");
                 Console.WriteLine("");
 
-                ItemSelection("1:手榴弾", ref item, ref itemBom, 2);
-                ItemSelection("2:弾薬", ref item, ref itemBullet, 1);
-                ItemSelection("3:医療品", ref item, ref itemMedicine, 1);
+                ItemSelection("1: 手榴弾", ref item, ref itemBom, 2);
+                ItemSelection("2: 弾薬", ref item, ref itemBullet, 1);
+                ItemSelection("3: 医療品", ref item, ref itemMedicine, 1);
 
                 void ItemSelection(string _itemName, ref int _item, ref int _itemEach, int _itemWeight)
                 {
@@ -70,7 +68,7 @@ while (playing == true)
                         if (int.TryParse(Console.ReadLine(), out _itemEach) && (_item - _itemEach * _itemWeight >= 0))
                         {
                             _item -= _itemEach * _itemWeight;
-                            Console.WriteLine("{0}個(重さ{1}|残り重量{2})", _itemEach, _itemEach * _itemWeight, _item);
+                            Console.WriteLine("{0}個 (重さ{1}|残り重量{2})", _itemEach, _itemEach * _itemWeight, _item);
                             selectingEachItems = false;
                         }
                         else
@@ -78,11 +76,11 @@ while (playing == true)
                     }
                 }
 
-                Console.WriteLine("手榴弾{0}個、弾丸{1}個、医療品{2}個でよろしいですか?)", itemBom, itemBullet, itemMedicine);
+                Console.WriteLine($"手榴弾{itemBom}個、弾丸{itemBullet}個、医療品{itemMedicine}個でよろしいですか?)");
                 bool checkingItems = true;
                 while (checkingItems == true)
                 {
-                    Console.WriteLine("1:はい/2:いいえ");
+                    Console.WriteLine("1: はい/2: いいえ");
                     command = Console.ReadLine();
                     if (command == "1")
                     {
@@ -126,11 +124,11 @@ while (playing == true)
             {
                 Console.WriteLine("");
                 Console.WriteLine("どちらへ行きますか?");
-                Console.WriteLine("1:秘密の森");
-                Console.WriteLine("2:輝く湖畔");
-                Console.WriteLine("3:怪しい影");
+                Console.WriteLine("1: 秘密の森");
+                Console.WriteLine("2: 輝く湖畔");
+                Console.WriteLine("3: 怪しい影");
                 Console.WriteLine("----------");
-                Console.WriteLine("4:セーブ");
+                Console.WriteLine("4: セーブ");
 
                 command = Console.ReadLine();
                 switch (command)
@@ -191,11 +189,11 @@ while (playing == true)
             {
                 Console.WriteLine("");
                 Console.WriteLine("どうしますか");
-                Console.WriteLine("1:すぐに建造物に近づく");
-                Console.WriteLine("2:建造物の周りを調べる");
-                Console.WriteLine("3:一旦木陰で休憩する");
+                Console.WriteLine("1: すぐに建造物に近づく");
+                Console.WriteLine("2: 建造物の周りを調べる");
+                Console.WriteLine("3: 一旦木陰で休憩する");
                 Console.WriteLine("----------");
-                Console.WriteLine("4:セーブ");
+                Console.WriteLine("4: セーブ");
 
                 command = Console.ReadLine();
                 switch (command)
@@ -275,10 +273,10 @@ while (playing == true)
             {
                 Console.WriteLine("");
                 Console.WriteLine("どちらに行きますか");
-                Console.WriteLine("1:右の道");
-                Console.WriteLine("2:左の道");
+                Console.WriteLine("1: 右の道");
+                Console.WriteLine("2: 左の道");
                 Console.WriteLine("----------");
-                Console.WriteLine("3:セーブ");
+                Console.WriteLine("3: セーブ");
 
                 command = Console.ReadLine();
                 switch (command)
@@ -312,8 +310,8 @@ while (playing == true)
                         {
                             Console.WriteLine("");
                             Console.WriteLine("どうしますか");
-                            Console.WriteLine("1:敵と戦闘する");
-                            Console.WriteLine("2:先ほどの分岐点まで戻る");
+                            Console.WriteLine("1: 敵と戦闘する");
+                            Console.WriteLine("2: 先ほどの分岐点まで戻る");
 
                             command = Console.ReadLine();
                             switch (command)
@@ -414,14 +412,14 @@ while (playing == true)
             {
                 Console.WriteLine("");
                 Console.WriteLine("どうしますか");
-                Console.WriteLine("1:上の階へ行く");
-                Console.WriteLine("2:下の階へ行く");
-                // 3:窓から飛び降りる (隠し√)
+                Console.WriteLine("1: 上の階へ行く");
+                Console.WriteLine("2: 下の階へ行く");
+                // 3: 窓から飛び降りる (隠し√)
                 // 3番を隠すことでフラグにしている。
                 // (隠し√だけど、3番が飛ばされているというのは違和感があるし、結構見つけやすい√だと思う。)
                 // (3番を飛ばしているのはただのミスだと思われるかもしれないけど)
                 Console.WriteLine("----------");
-                Console.WriteLine("4:セーブ");
+                Console.WriteLine("4: セーブ");
 
                 command = Console.ReadLine();
                 switch (command)
@@ -565,7 +563,7 @@ while (playing == true)
                         Console.WriteLine("先ほど彼女がいた方向に背を向け、歩き始めた。");
                         Console.ReadLine();
                         Console.WriteLine("");
-                        Console.WriteLine("END:天界の青空(通常ルート1)");
+                        Console.WriteLine("END: 天界の青空 (通常ルート1)");
                         Console.WriteLine("[天界の運命]");
                         Console.WriteLine("");
                         Console.ReadLine();
@@ -612,9 +610,9 @@ while (playing == true)
                         {
                             Console.WriteLine("");
                             Console.WriteLine("どこを調べますか");
-                            Console.WriteLine("1:本棚");
-                            Console.WriteLine("2:机");
-                            Console.WriteLine("3:椅子");
+                            Console.WriteLine("1: 本棚");
+                            Console.WriteLine("2: 机");
+                            Console.WriteLine("3: 椅子");
 
                             command = Console.ReadLine();
                             switch (command)
@@ -715,7 +713,7 @@ while (playing == true)
                             }
                         }
                         Console.WriteLine("");
-                        Console.WriteLine("END:小屋の本(通常ルート2)");
+                        Console.WriteLine("END: 小屋の本 (通常ルート2)");
                         Console.WriteLine("[真実を記す手記]");
                         Console.WriteLine("");
                         Console.ReadLine();
@@ -783,7 +781,7 @@ while (playing == true)
                         Console.WriteLine("ただ、地上に戻れたという安堵の気持ちが湧き出て、近くにあった木に倒れこんだ。");
                         Console.ReadLine();
                         Console.WriteLine("");
-                        Console.WriteLine("END:森の泉(隠しルート)");
+                        Console.WriteLine("END: 森の泉 (隠しルート)");
                         Console.WriteLine("[秋月の過去と見えない事実]");
                         // 見えない事実 (現実)…泉にいる神の言っていることが意味不明&説明不足過ぎる
                         Console.WriteLine("");
@@ -884,6 +882,15 @@ while (playing == true)
     }
 }
 
+// 選択肢
+void MultiWriter(string[] input)
+{
+    foreach (string displayContent in input)
+    {
+        Console.WriteLine(displayContent);
+    }
+}
+
 // 誤った入力
 void InvalidInput()
 {
@@ -970,10 +977,10 @@ void Buttle()
         //キャラクターステータス表示
         Console.WriteLine("");
         Console.WriteLine("味方ステータス");
-        Console.WriteLine("|秋月小鞠|HP:{0}|MP:{1}|", komari.HP, komari.MP);
+        Console.WriteLine("|秋月小鞠|HP: {0}|MP: {1}|", komari.HP, komari.MP);
         Console.WriteLine("");
         Console.WriteLine("敵ステータス");
-        Console.WriteLine("|{0}|HP:{1}|", enemy.Name, enemy.HP);
+        Console.WriteLine("|{0}|HP: {1}|", enemy.Name, enemy.HP);
 
         //作成途中
         bool where = false;
@@ -981,14 +988,14 @@ void Buttle()
         {
             Console.WriteLine("");
             Console.WriteLine("どのような行動をしますか");
-            Console.WriteLine("1:ナイフ攻撃");
-            Console.WriteLine("2:手榴弾攻撃(残り{0}個)", itemBom);
-            Console.WriteLine("3:拳銃射撃(残り{0}発)", itemBullet);
-            Console.WriteLine("4:治療魔法");//MPを使って回復
-            Console.WriteLine("5:回復薬治療(残り{0}個)", itemMedicine);
-            Console.WriteLine("6:戦略的撤退");//逃げる
-            Console.WriteLine("7:手榴弾退散(残り{0}個)", itemBom);//手榴弾の爆破と同時に逃げることで「戦略的撤退」よりも高確率で逃げ切れる
-            Console.WriteLine("8:敵味方のステータスを再確認");
+            Console.WriteLine("1: ナイフ攻撃");
+            Console.WriteLine("2: 手榴弾攻撃 (残り{0}個)", itemBom);
+            Console.WriteLine("3: 拳銃射撃 (残り{0}発)", itemBullet);
+            Console.WriteLine("4: 治療魔法");//MPを使って回復
+            Console.WriteLine("5: 回復薬治療 (残り{0}個)", itemMedicine);
+            Console.WriteLine("6: 戦略的撤退");//逃げる
+            Console.WriteLine("7: 手榴弾退散 (残り{0}個)", itemBom);//手榴弾の爆破と同時に逃げることで「戦略的撤退」よりも高確率で逃げ切れる
+            Console.WriteLine("8: 敵味方のステータスを再確認");
 
             command = Console.ReadLine();
             switch (command)
@@ -1127,10 +1134,10 @@ void Buttle()
                 case "8":
                     Console.WriteLine("");
                     Console.WriteLine("味方ステータス");
-                    Console.WriteLine("|秋月小鞠|HP:{0}|MP:{1}|", komari.HP, komari.MP);
+                    Console.WriteLine("|秋月小鞠|HP: {0}|MP: {1}|", komari.HP, komari.MP);
                     Console.WriteLine("");
                     Console.WriteLine("敵ステータス");
-                    Console.WriteLine("|{0}|HP:{1}|", enemy.Name, enemy.HP);
+                    Console.WriteLine("|{0}|HP: {1}|", enemy.Name, enemy.HP);
                     break;
 
                 default:
