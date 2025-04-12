@@ -1,5 +1,14 @@
 ﻿using System.Xml.Linq;
 
+namespace AkizukiForest;
+
+static class Program
+{
+    static void Main(string[] args)
+    {
+        // タイトル設定
+        Console.Title = "Akizuki Forest";
+
 bool playing = true;    // ループ用
 int section = 0;        // セーブ用
 string? command;        // コマンド読み取り
@@ -876,3 +885,4 @@ void Buttle()
         }
     }
 }
+}}

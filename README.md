@@ -1,4 +1,4 @@
-# Akizuki in the Forest
+# Akizuki Forest
 
 First console game of Ivy Cafeteria.
 
