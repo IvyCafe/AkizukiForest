@@ -27,20 +27,8 @@ while (playing == true)
     {
         case "1":
             playing = false;
-            Console.WriteLine("「うーん…暇だなぁ」");
-            Console.ReadLine(); // 次のコメントを表示 (ReadKey でもいいけど、ReadLine のほうが改行されて読みやすい気がするのでこちらに)
-            Console.WriteLine("彼女、秋月は暇をしていた。");
-            Console.ReadLine();
-            Console.WriteLine("数年前の大規模な戦争も今は終わり、平和な世の中となった今では傭兵としての仕事はなくなっていた。");
-            Console.ReadLine();
-            Console.WriteLine("ここ、アネリアの森は都市から離れた場所にあり、秋月が住んでいる家はその森の中にあった。");
-            Console.ReadLine();
-            Console.WriteLine("「とりあえず、外で散歩でもしようかなぁ…」");
-            Console.ReadLine();
-            Console.WriteLine("秋月はそう言って椅子から立ち上がった。");
-            Console.ReadLine();
-            Console.WriteLine("近くの机に置いている拳銃と、2本の小型ナイフを持ち、近くのリュックを背負った。");
-            Console.ReadLine();
+
+            // ## "0.anov" ##
 
             // アイテム選択処理
             bool selectingItem = true;
@@ -106,18 +94,11 @@ while (playing == true)
                 }
             }
 
-        //ロード地点(1)
+        // ロード地点 (1)
         label1:
             section = 1;
 
-            Console.WriteLine("移動中…");
-            Console.ReadLine();
-            Console.WriteLine("「ん～」");
-            Console.ReadLine();
-            Console.WriteLine("「外は涼しくて気持ちいいねぇ～」");
-            Console.ReadLine();
-            Console.WriteLine("「さて、今日はどこに行こうかなぁ」");
-            Console.ReadLine();
+            // ## "1.anov" ##
 
             bool where = false;
             while (where == false)
@@ -167,22 +148,11 @@ while (playing == true)
                 }
             }
 
-        //ロード地点(2)
+        // ロード地点 (2)
         label2:
             section = 2;
 
-            Console.WriteLine("更に森の奥を進んでいく。");
-            Console.ReadLine();
-            Console.WriteLine("すると、山の斜面に石の建造物らしきものが見えた。");
-            Console.ReadLine();
-            Console.WriteLine("「あれは…何かしらね。」");
-            Console.ReadLine();
-            Console.WriteLine("ここまで遠くに来たのは今日が初めてだ。");
-            Console.ReadLine();
-            Console.WriteLine("また、こんな森の奥まで来る人はほとんどいないだろう。");
-            Console.ReadLine();
-            Console.WriteLine("「こんなところに…何の建物かしら？」");
-            Console.ReadLine();
+            // ## "2.anov" ##
 
             where = false;
             while (where == false)
@@ -254,7 +224,7 @@ while (playing == true)
                 }
             }
 
-        //ロード地点(3)
+        // ロード地点 (3)
         label3:
             section = 3;
 
@@ -346,41 +316,8 @@ while (playing == true)
                 }
             }
 
-            Console.WriteLine("広い空間に出たので、一旦周りを見渡すことにした。");
-            Console.ReadLine();
-            Console.WriteLine("右手前側には、水たまりのような場所がある。");
-            Console.ReadLine();
-            Console.WriteLine("正面側には何もなく、左側に道が続いているようだった。");
-            Console.ReadLine();
-            Console.WriteLine("左側の道は一本道となっていて、特に迷うこともなく進んでいく。");
-            Console.ReadLine();
-            Console.WriteLine("しばらく進んでいると、見慣れないものがあった。");
-            Console.ReadLine();
-            Console.WriteLine("「なに？これ…魔法陣かしら？」");
-            Console.ReadLine();
-            Console.WriteLine("床には星形の模様がつき、天井に向けて水色の半透明なオーラが浮かび上がっていた。");
-            Console.ReadLine();
-            Console.WriteLine("そのオーラを左手で触れようとする。");
-            Console.ReadLine();
-            Console.WriteLine("一瞬の間をおいて、視界は真っ白になった。");
-            Console.ReadLine();
-            Console.WriteLine("白い光はただ眩しいではなく、温かさが感じられた。");
-            Console.ReadLine();
-            Console.WriteLine("数秒経った後、だんだんとその光は消えていった。");
-            Console.ReadLine();
-            Console.WriteLine("しかし、その視界に映っていたのは、先ほど居た地下ではなく、レンガ造りの建物の中だった。");
-            // 天空世界
-            Console.ReadLine();
-            Console.WriteLine("建物にはアーチ状の窓が適度につけられており、先ほどの地下とは打って変わって明るい様子だった。");
-            Console.ReadLine();
-            Console.WriteLine("窓を覗いてみると、下の様子は霧で見えず、今いる場所はかなり高い階なのだろうと思った。");
-            Console.ReadLine();
-            Console.WriteLine("窓の外に気を取られていると、ふと後ろのほうに気配を感じた。");
-            Console.ReadLine();
-            Console.WriteLine("急いで振り返ると、そこには身長の高い怪物がいた。");
-            Console.ReadLine();
-            Console.WriteLine("急いで、近くの柱へ隠れ、そこから銃撃を開始することにした。");
-            Console.ReadLine();
+            // ## "3.anov" ##
+
             // 強制戦闘のため、自動回復
             komari.HP = (komari.HP >= 260) ? komari.HP : 260;
             komari.MP = (komari.MP >= 30) ? komari.MP : 30;
@@ -391,18 +328,8 @@ while (playing == true)
         label4c:
             section = 6;
 
-            Console.WriteLine("「はぁ、はぁ。」");
-            Console.ReadLine();
-            Console.WriteLine("「急に現れて、本当にびっくりしたわ。」");
-            Console.ReadLine();
-            Console.WriteLine("敵が現れた方向を見てみると、そこには階段が続いていた。");
-            Console.ReadLine();
-            Console.WriteLine("また新たな敵が来ないか、注意深く近づいていくと、階段は上下に続いているようだった。");
-            Console.ReadLine();
-            Console.WriteLine("「ここ、本当に何の場所なのかしらね…」");
-            Console.ReadLine();
-            Console.WriteLine("「さて、上か下か。」");
-            Console.ReadLine();
+            // ## "4.anov" ##
+
             // 下の階に行くか、上の階に行くかで大きく√分岐
             // 天空世界の頂上到達√…天空世界の結末(たまたま地下洞窟と天空世界でつながってしまったことなど)を明かす
             // 天空世界の地上到達√…地下空洞の過去を明かす
@@ -427,18 +354,9 @@ while (playing == true)
                     case "1":
                         where = true;
                         // 天空ルート(戦闘(ボス戦)後に神が現れて現世に戻らせてくれる)
-                        Console.WriteLine("上の階へと進んでいくが、同じような風景が続いている。");
-                        Console.ReadLine();
-                        Console.WriteLine("全ての階が同じ内装で、家具や物がなく、ループしているように思える。");
-                        Console.ReadLine();
-                        Console.WriteLine("20階以上は上がっただろうか。");
-                        Console.ReadLine();
-                        Console.WriteLine("ここが最上階のようで、部屋は今までの階よりもかなり小さく、扉があるようだった。");
-                        Console.ReadLine();
-                        Console.WriteLine("扉を開けるとそこは屋上になっており、広い場所と1体の黒い奇妙な姿が、上には明るい空と白い雲が広がっていた。");
-                        Console.ReadLine();
-                        Console.WriteLine("向こうの黒い奇妙な姿は、こちらを確認すると同時に、一気に近づいてきた。");
-                        Console.ReadLine();
+
+                        // ## "4.1.1.anov" ##
+
                         // ボス戦
                         enemy.HP = 1000;
                         enemy.Name = "黒色の影";
@@ -449,119 +367,12 @@ while (playing == true)
                         // 戦闘開始
                         Buttle();
 
-                        Console.WriteLine("「はぁ、はぁ…」");
-                        Console.ReadLine();
-                        Console.WriteLine("「なんなのよ…こいつ。結構強いじゃない…」");
-                        Console.ReadLine();
-                        Console.WriteLine("何とか倒せたもののかなりけがをしてしまった。");
-                        Console.ReadLine();
-                        Console.WriteLine("屋上のフェンスへと近づき、周辺を見回してみると、そこには絶景が広がっていた。");
-                        Console.ReadLine();
-                        Console.WriteLine("雲海が広がり、ところどころ青色の山が顔をのぞかせている。");
-                        Console.ReadLine();
-                        Console.WriteLine("雲の切れ目からは草原や色彩豊かな花畑が広がる。");
-                        Console.ReadLine();
+                        // ## "4.1.2.anov" ##
+
                         komari.Luck += 5;
-                        Console.WriteLine("風景に見とれていると、後ろから気配を感じるようになった。");
-                        Console.ReadLine();
-                        Console.WriteLine("急いで拳銃を手に取り、後ろを振り返ってみると…");
-                        Console.ReadLine();
-                        Console.WriteLine("そこには長髪の神々しい人の姿があった。");
-                        Console.ReadLine();
-                        Console.WriteLine("「あの、敵ではないわ…」");
-                        Console.ReadLine();
-                        Console.WriteLine("彼女はそうつぶやいた。");
-                        Console.ReadLine();
-                        Console.WriteLine("「私は秋月小鞠。あなたは？」");
-                        // 人の名前を聞く前に、自分の名前を言うという礼儀を通している秋月。
-                        Console.ReadLine();
-                        Console.WriteLine("銃は持ったままそのように質問をした。");
-                        Console.ReadLine();
-                        Console.WriteLine("すると、");
-                        Console.ReadLine();
-                        Console.WriteLine("「ええと…名前はないかしらね。」");
-                        Console.ReadLine();
-                        Console.WriteLine("といった。続けて、");
-                        Console.ReadLine();
-                        Console.WriteLine("「出身はどこかしら？」");
-                        Console.ReadLine();
-                        Console.WriteLine("彼女は私に対してそう投げかける。");
-                        Console.ReadLine();
-                        Console.WriteLine("「どこ出身に見える？」");
-                        Console.ReadLine();
-                        Console.WriteLine("わざとそういうように訊ねてみた");
-                        Console.ReadLine();
-                        Console.WriteLine("「ええと、地上のほうよね…」");
-                        Console.ReadLine();
-                        Console.WriteLine("その回答に疑問を覚えた。");
-                        Console.ReadLine();
-                        Console.WriteLine("「あの、ここはどこの国なのかしら…？」");
-                        Console.ReadLine();
-                        Console.WriteLine("そう聞いてみた。すると、すぐにこのように返された。");
-                        Console.ReadLine();
-                        Console.WriteLine("「ここは、天界。あなたの知っている場所ではないわ。」");
-                        Console.ReadLine();
-                        Console.WriteLine("天界…昔聞いたことがあるような気がした。とても平和で、景色の綺麗な場所があると…");
-                        Console.ReadLine();
-                        Console.WriteLine("「あの…元の世界には戻れるの…？」");
-                        Console.ReadLine();
-                        Console.WriteLine("不安になって聞いてみる。");
-                        Console.ReadLine();
-                        Console.WriteLine("彼女は困ったような顔をした。");
-                        Console.ReadLine();
-                        Console.WriteLine("「え…戻れないの？」");
-                        Console.ReadLine();
-                        Console.WriteLine("と聞くと、すぐに彼女は笑顔になり、口を開いた。");
-                        Console.ReadLine();
-                        Console.WriteLine("「冗談よ。すぐに戻れる。」");
-                        Console.ReadLine();
-                        Console.WriteLine("「だ、だよね…」");
-                        Console.ReadLine();
-                        Console.WriteLine("「少し待っててね。」");
-                        Console.ReadLine();
-                        Console.WriteLine("その言葉の次には、視界が暖かな白い光で覆われた。");
-                        Console.ReadLine();
-                        Console.WriteLine("ほんの僅かの時間の後、視界を支配する白い光はだんだんと薄くなっていき、やがて緑色が見えた。");
-                        Console.ReadLine();
-                        Console.WriteLine("鬱蒼と茂る白樺の森林、この季節ならではの涼しさをまとったこの空間はまぎれもなく私の知る森だった。");
-                        Console.ReadLine();
-                        Console.WriteLine("「本当にごめんなさいね。」");
-                        Console.ReadLine();
-                        Console.WriteLine("声の聞こえる後ろを見てみると、彼女の姿があった。");
-                        Console.ReadLine();
-                        Console.WriteLine("「こちらの手違いで地上と天界がつながってしまったらしくて…」");
-                        Console.ReadLine();
-                        Console.WriteLine("「あの洞窟には何もなかったのね…」");
-                        // 何か歴史的な遺産やお宝があると期待して洞窟に入ったが、秋月にとってはどうでもよい天界のワープゲートしかなかったということ。
-                        Console.ReadLine();
-                        Console.WriteLine("「本当に申し訳ないわ…」");
-                        Console.ReadLine();
-                        Console.WriteLine("「別にいいわ…暇つぶしになったし。」");
-                        Console.ReadLine();
-                        Console.WriteLine("そういうと、彼女は少し上を向いて次の言葉を言った。");
-                        Console.ReadLine();
-                        Console.WriteLine("「天界のほうで、黒い化け物がいたでしょう…」");
-                        Console.ReadLine();
-                        Console.WriteLine("「そうね。」");
-                        Console.ReadLine();
-                        Console.WriteLine("「天界の平和が脅かされるような事態になっていて…」");
-                        Console.ReadLine();
-                        Console.WriteLine("「大変そうね。」");
-                        Console.ReadLine();
-                        Console.WriteLine("「まあ、あなたには関係ないことよね…そろそろ別れましょうかね…」");
-                        Console.ReadLine();
-                        Console.WriteLine("「それでは。じゃあね。」");
-                        Console.ReadLine();
-                        Console.WriteLine("「ええ。さようなら。」");
-                        Console.ReadLine();
-                        Console.WriteLine("そういうと、彼女はだんだんと透明になり、消えていった。");
-                        Console.ReadLine();
-                        Console.WriteLine("非現実的な世界に思えたが、先ほどあったことを説明するには現実だと受け入れざるを得ない。");
-                        Console.ReadLine();
-                        Console.WriteLine("「奇妙なこともあるもんだね…」");
-                        Console.ReadLine();
-                        Console.WriteLine("先ほど彼女がいた方向に背を向け、歩き始めた。");
-                        Console.ReadLine();
+
+                        // ## "4.1.3.anov" ##
+
                         Console.WriteLine("");
                         Console.WriteLine("END: 天界の青空 (通常ルート1)");
                         Console.WriteLine("[天界の運命]");
@@ -572,36 +383,9 @@ while (playing == true)
                     case "2":
                         where = true;
                         // 地上ルート (地下の場所に関する文献を読める。また、魔導書かワープ装置か何かで現世に戻る。)
-                        Console.WriteLine("下の階へ進んでいくと、窓からだんだんと地上の様子が見えてきた。");
-                        Console.ReadLine();
-                        Console.WriteLine("地面から雑草が生える風景が広がっている。");
-                        Console.ReadLine();
-                        Console.WriteLine("階段は地上までで、建物に地下は存在しないようだ。");
-                        Console.ReadLine();
-                        Console.WriteLine("地上についたことで、この建物の外の様子がよくわかるようになったが、ほとんど他の建物はなかった。");
-                        Console.ReadLine();
-                        Console.WriteLine("広がっていたのは、建物の残骸。それだけだった。");
-                        Console.ReadLine();
-                        Console.WriteLine("しかし、やや離れた場所に1つだけぽつんと建物があるように見えた。");
-                        Console.ReadLine();
-                        Console.WriteLine("建物に近づいてみることにした。");
-                        Console.ReadLine();
-                        Console.WriteLine("その建物は、周りの建物の残骸に比べるとかなりましだが、それでもかなり損傷があり、今にも崩れそうだ。");
-                        Console.ReadLine();
-                        Console.WriteLine("また、白い壁と蒼い屋根を基調とし、窓がいくつかついていた。");
-                        Console.ReadLine();
-                        Console.WriteLine("窓…といっても窓自体はほとんど割れていて、その残骸と窓枠だけが残っているのだが。");
-                        Console.ReadLine();
-                        Console.WriteLine("家というには外から見てもあまりに狭く、一部屋分くらいの広さしかないように見えた。");
-                        Console.ReadLine();
-                        Console.WriteLine("窓から中の様子を覗いてみても、中に人影や生物の姿は見えなかった。");
-                        Console.ReadLine();
-                        Console.WriteLine("「誰もいないのか…」");
-                        Console.ReadLine();
-                        Console.WriteLine("安全なことを確認できたため、中に実際に入ることにした。");
-                        Console.ReadLine();
-                        Console.WriteLine("中には、小さな本棚が壁側に、それと机と椅子があった。");
-                        Console.ReadLine();
+
+                        // ## "4.2.anov" ##
+
                         // 探索ターン
                         // 最短√…机のメモを読む→本棚からメモに書いてある題名の本を探す→斜め読み→地上世界へ戻る魔法→終了 (神には遭遇しない)
                         bool which = false;
@@ -630,60 +414,9 @@ while (playing == true)
                                     else
                                     {
                                         // 机のメモ帳を見ているときの処理
-                                        Console.WriteLine("その中には、先ほど机上のメモに書かれていた「天界のレートピシ」という題名の本があった。");
-                                        Console.ReadLine();
-                                        Console.WriteLine("手に取り、近年の部分を斜め読みしてみることにした。");
-                                        Console.ReadLine();
-                                        Console.WriteLine("");
-                                        Console.WriteLine(" - 天界のレートピシ - ");
-                                        Console.ReadLine();
-                                        Console.WriteLine("xx32年、天界に黒い魔物が現れた。");
-                                        Console.WriteLine("至急、防衛隊が駆けつけ対処できたものの、原因の究明が課題となっている。");
-                                        Console.ReadLine();
-                                        Console.WriteLine("xx35年、天界にて黒い魔物は増え続けた。");
-                                        Console.WriteLine("原因は、地上との通信の際に誤って移送空間ができたことだといわれている。");
-                                        Console.ReadLine();
-                                        Console.WriteLine("xx36年、天界西地域を中心として調査が進み、移送空間の場所の特定ができた。");
-                                        Console.WriteLine("しかし、まだ数か所は発見できておらず、そこから侵入した魔物が新しい移送空間を設立し続けている。");
-                                        Console.ReadLine();
-                                        Console.WriteLine("xx40年、天界全域にてほとんどの移送空間の破壊が完了した。");
-                                        Console.WriteLine("ただし、天界の主要な地域はほとんど魔物によって建築物が破壊されている。");
-                                        Console.ReadLine();
-                                        Console.WriteLine("xx42年、主要地域にて都市の修復を開始。");
-                                        Console.WriteLine("また、地上の主要国家との連携もあり、天界中心都市付近の移送空間が完全に破壊されたことを報告する。");
-                                        Console.ReadLine();
-                                        Console.WriteLine("xxxx年、地上国家の戦争によって支援を受けられなくなった。");
-                                        Console.WriteLine("わずかに残る移送空間からいまだに魔物の進行が進んでいる。");
-                                        Console.WriteLine("");
-                                        Console.WriteLine(" - - - - - ");
-                                        Console.WriteLine("");
-                                        Console.ReadLine();
-                                        Console.WriteLine("読み終わると、メモが落ちてきた。");
-                                        Console.ReadLine();
-                                        Console.WriteLine("メモは丁寧な文字で、次のように書かれていた。");
-                                        Console.ReadLine();
-                                        Console.WriteLine("「地上世界へ逃げる方法…ここで天井を見て右に1回転、下を向いて左に1回転する」");
-                                        Console.ReadLine();
-                                        Console.WriteLine("書かれているようにする。");
-                                        Console.ReadLine();
-                                        Console.WriteLine("すると、視界は暖かい白の光に覆われた。");
-                                        Console.ReadLine();
-                                        Console.WriteLine("そのような状態で何秒か経つと、だんだんとその白い光は薄くなっていった。");
-                                        Console.ReadLine();
-                                        Console.WriteLine("気が付くと、目の前には白樺の樹林、雑草の中に見覚えのある秘色と紅の花々が咲き乱れていた。");
-                                        Console.ReadLine();
-                                        Console.WriteLine("「戻れたのね…」");
-                                        Console.ReadLine();
-                                        Console.WriteLine("少し左を向いて先ほどのことを思い出す。");
-                                        Console.ReadLine();
-                                        Console.WriteLine("「何だったのから…さっきのは。書物には天界って書いてあったけど。」");
-                                        Console.ReadLine();
-                                        Console.WriteLine("先ほどの記憶は確かにあるが、現実的にそんなことがありうるとは思えなかった。");
-                                        Console.ReadLine();
-                                        Console.WriteLine("論理的に証明できない不安感を忘れるため、先ほどの現実は忘れることにした。");
-                                        Console.ReadLine();
-                                        Console.WriteLine("秋月は、更なる森の探検へと足を動かした。");
-                                        Console.ReadLine();
+
+                                        // ## "4.2.1.anov" ##
+
                                         which = true;
                                     }
                                     break;
@@ -721,65 +454,9 @@ while (playing == true)
 
                     case "3":
                         where = true;
-                        Console.WriteLine("彼女は、階段の逆の方向を向いた。");
-                        Console.ReadLine();
-                        Console.WriteLine("「もう、疲れたよ…」");
-                        Console.ReadLine();
-                        Console.WriteLine("すると、走って窓に向かって飛び蹴りを炸裂し、見事にその窓を割って地上へ落ちていった。");
-                        Console.ReadLine();
-                        Console.WriteLine("今までの記憶をたどる。");
-                        Console.ReadLine();
-                        Console.WriteLine("家族の事、国の事、かつて見た未来の夢。");
-                        Console.ReadLine();
-                        Console.WriteLine("昔の戦争で再び会うことを誓った3人の同士、同じ部隊の黒服の少女…");
-                        // 昔の戦争 (対チャクム戦/北大陸南西部防衛) での3人の仲間 (「世界の終焉の前に。」)、
-                        // 同じ部隊 (第9師団/旧黒軍師) の黒服の少女 (椿と航空隊の2人)
-                        Console.ReadLine();
-                        Console.WriteLine("様々なことを思い出した。");
-                        Console.ReadLine();
-                        Console.WriteLine("死ぬ前に会いたかった人がいた。でも、もう戻れない。");
-                        Console.ReadLine();
-                        Console.WriteLine("「ここからもとに戻れる気がしないんだ…」");
-                        Console.ReadLine();
-                        Console.WriteLine("「でも、もう一度でいいから見たかった…」");
-                        // 家族と、旧黒軍師メンバー、かつての仲間 (「世界の終焉の前に。」メンバー)、第9師団の上司と。
-                        Console.ReadLine();
-                        Console.WriteLine("その瞳に映るのは真っ青な空と、白い雲だけだった。");
-                        Console.ReadLine();
-                        Console.WriteLine("「あなた…こっちの世界に迷い込んでしまったのかしら…」");//神
-                        Console.ReadLine();
-                        Console.WriteLine("見知らぬ声が聞こえる。");
-                        Console.ReadLine();
-                        Console.WriteLine("「ええと、」");//神
-                        Console.ReadLine();
-                        Console.WriteLine("その声の後、体がふわっと浮いたような感じがした。");
-                        Console.ReadLine();
-                        Console.WriteLine("視界は真っ白になり、ちょうど地下からこちらに来た時と同じように暖かさのある光だった。");
-                        Console.ReadLine();
-                        Console.WriteLine("瞬きをした次の瞬間、私の視界は緑色に支配されていた。");
-                        Console.ReadLine();
-                        Console.WriteLine("鬱蒼と茂る白樺並木、背丈の低い雑草と、まばらに生える秘色と紅の花。");
-                        Console.ReadLine();
-                        Console.WriteLine("間違いなく始めの森に戻ったようだ。");
-                        Console.ReadLine();
-                        Console.WriteLine("「あなたはこちらの人間のようね…」");//神
-                        Console.ReadLine();
-                        Console.WriteLine("声の聞こえる後ろを振り返ると、そこには長髪で神々しさをまとう人の姿があった。");
-                        Console.ReadLine();
-                        Console.WriteLine("「ええと、あなたは…」");//秋月
-                        Console.ReadLine();
-                        Console.WriteLine("そう聞くと、その言葉を遮るように彼女は次の言葉を続けた。");
-                        Console.ReadLine();
-                        Console.WriteLine("「こちらはあなたが来ていい世界ではないわ。」");//神
-                        Console.ReadLine();
-                        Console.WriteLine("「こちらのミスで来てしまったみたいだけれど。申し訳ないわ…」");//神
-                        Console.ReadLine();
-                        Console.WriteLine("意味が分からず、質問をしようとした瞬間、彼女の姿はなくなっていた。");
-                        Console.ReadLine();
-                        Console.WriteLine("私の視界にはただ森の風景と彼女が先ほどいた場所にある透明な泉のみが残った。");
-                        Console.ReadLine();
-                        Console.WriteLine("ただ、地上に戻れたという安堵の気持ちが湧き出て、近くにあった木に倒れこんだ。");
-                        Console.ReadLine();
+
+                        // ## "3.3.anov" ##
+
                         Console.WriteLine("");
                         Console.WriteLine("END: 森の泉 (隠しルート)");
                         Console.WriteLine("[秋月の過去と見えない事実]");
@@ -805,34 +482,7 @@ while (playing == true)
             // (未来になって航空隊2人の名前が決まっても、決まっていなかった時代のストーリーということで未来になっても上記と同じ考察が可能。))
             if (komari.Luck >= 8)
             {
-                Console.WriteLine(" - - - - - ");
-                Console.WriteLine("「っていうことがあったのよね」");//秋月
-                Console.ReadLine();
-                Console.WriteLine("後日、次の目的地までの移動中に親友と話をしていた。");
-                Console.ReadLine();
-                Console.WriteLine("「へえ…珍しいこともあるんだね。」");//椿
-                Console.ReadLine();
-                Console.WriteLine("「あ、言っておくけど、作り話じゃなくて本当だからね!」");//秋月
-                Console.ReadLine();
-                Console.WriteLine("「わかってるよ。それより…」");//椿
-                Console.ReadLine();
-                Console.WriteLine("「今日の計画でしょ。」");//秋月
-                Console.ReadLine();
-                Console.WriteLine("持っている小銃を傾けた。");//秋月
-                Console.ReadLine();
-                Console.WriteLine("「そうね。」");//椿
-                Console.ReadLine();
-                Console.WriteLine("「今回は、未探索地域の調査だってね。」");//秋月
-                Console.ReadLine();
-                Console.WriteLine("「ふうん…楽しみね。」");//椿
-                Console.ReadLine();
-                Console.WriteLine("「そうだね。」");//秋月
-                // 一応 A-RPG の布石。A-RPG の中でも電車が居なくなって、暇だからトンネルに入るみたいな話のやつ。
-                // 内容とか導入が被っているからあのシナリオは使わないかもしれないけど…
-                // あと、あれは 3D でやる予定だったから1人用 (秋月のみの) シナリオだし…
-                // ここの会話内容は後で変えたほうがいいかも… (フラグを残せる重要な場所なので。)
-                Console.WriteLine(" - - - - - ");
-                Console.WriteLine("");
+                // ## "5.0.anov" ##
             }
 
             Console.WriteLine("開発");
