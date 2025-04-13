@@ -39,9 +39,9 @@ static class Program
 
             Console.Write("セーブデータを読み込みますか? (N/y): ");
 
-            string? input = Console.ReadLine();
+            command = Console.ReadLine();
             Console.WriteLine("");
-            if (input?.ToLower() == "y" || input?.ToLower() == "yes")
+            if (command?.ToLower() == "y" || command?.ToLower() == "yes")
             {
                 Console.WriteLine("セーブデータを読み込みます。");
                 Console.WriteLine("");
@@ -130,34 +130,27 @@ static class Program
                     }
                 }
 
-                Console.WriteLine($"手榴弾{itemBom}個、弾丸{itemBullet}個、医療品{itemMedicine}個でよろしいですか?");
-                bool checkingItems = true;
-                while (checkingItems == true)
+                Console.WriteLine($"手榴弾{itemBom}個、弾丸{itemBullet}個、医療品{itemMedicine}個でよろしいですか? (N/y): ");
+                
+                command = Console.ReadLine();
+                Console.WriteLine("");
+                if (command?.ToLower() == "y" || command?.ToLower() == "yes")
                 {
-                    Console.WriteLine("1: はい/2: いいえ");
-                    command = Console.ReadLine();
-                    if (command == "1")
-                    {
-                        checkingItems = false;
-                        selectingItem = false;
-                        // 現時点では、弾丸のセット数を記録しているため、弾数表記に変更
-                        itemBullet *= 10;
-                        Console.WriteLine("");
-                    }
-                    else if (command == "2")
-                    {
-                        checkingItems = false;
-                        Console.WriteLine("もう一度再設定します。");
-                        // アイテム数の初期化
-                        item = 12;
-                        itemBom = 0;
-                        itemBullet = 0;
-                        itemMedicine = 0;
-                    }
-                    else
-                        InvalidInput();
+                    selectingItem = false;
+                    // 現時点では、弾丸のセット数を記録しているため、弾数表記に変更
+                    itemBullet *= 10;
                     Console.WriteLine("");
                 }
+                else
+                {
+                    WarningConsole("もう一度設定します。");
+                    // アイテム数の初期化
+                    item = 12;
+                    itemBom = 0;
+                    itemBullet = 0;
+                    itemMedicine = 0;
+                }
+                Console.WriteLine("");
             }
 
             Section1();
@@ -613,7 +606,7 @@ void Save()
     );
     element.Save("Data.xml");
     Console.WriteLine("セーブが完了しました。");
-    Console.WriteLine("終了する際は、Ctrl+Cを押してください。");
+    Console.WriteLine("終了する際は、Ctrl+C を押してください。");
 }
 
 // ロード処理
