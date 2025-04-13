@@ -9,34 +9,91 @@ static class Program
         // タイトル設定
         Console.Title = "Akizuki Forest";
 
-bool playing = true;    // ループ用
-int section = 0;        // セーブ用
-string? command;        // コマンド読み取り
+        Console.WriteLine("# Akizuki Forest #");
+        Console.WriteLine("");
+        Console.WriteLine("Hint: Ctrl+Cでいつでも終了できます。");
+        Console.WriteLine("");
 
-// ステータス
-(int HP, int MP, int Luck) komari = (200, 30, 0);
+        // 初期化
+        bool where;             // ループ用
+        int section = 0;        // セーブ用
+        string? command;        // コマンド読み取り
 
-// 敵のステータス
-(int HP, string Name) enemy = (0, "");
+        // ステータス
+        (int HP, int MP, int Luck) komari = (200, 30, 0);
 
-// アイテム
-int item = 12;          // アイテムの総重量
-int itemBom = 0;        // 手榴弾の数 (手榴弾の重さはx2で算出)
-int itemBullet = 0;     // 弾丸の数
-int itemMedicine = 0;   // 医療品の数
+        // 敵のステータス
+        (int HP, string Name) enemy = (0, "");
 
-// 誤ったコマンドを入力しているときはループ
-while (playing == true)
-{
-    MultiWriter(["1: はじめから", "2: 途中から", "3: 終了する"]);
-    Console.Write("数値を入力してください: ");
-    command = Console.ReadLine();
-    Console.WriteLine("");
-    switch (command)
-    {
-        case "1":
-            playing = false;
+        // アイテム
+        int item = 12;          // アイテムの総重量
+        int itemBom = 0;        // 手榴弾の数 (手榴弾の重さはx2で算出)
+        int itemBullet = 0;     // 弾丸の数
+        int itemMedicine = 0;   // 医療品の数
 
+        if (File.Exists("Data.xml"))
+        {
+            Console.ForegroundColor = ConsoleColor.Green;
+            Console.WriteLine("セーブデータが見つかりました。");
+            Console.ResetColor();
+
+            Console.Write("セーブデータを読み込みますか? (N/y): ");
+
+            string? input = Console.ReadLine();
+            Console.WriteLine("");
+            if (input?.ToLower() == "y" || input?.ToLower() == "yes")
+            {
+                Console.WriteLine("セーブデータを読み込みます。");
+                Console.WriteLine("");
+
+                try
+                {
+                    Load();
+                    Console.ForegroundColor = ConsoleColor.Green;
+                    Console.WriteLine("ロードが成功しました。");
+                    Console.ResetColor();
+                }
+                catch
+                {
+                    Console.WriteLine("ロードが失敗しました。");
+                }
+            }
+            else
+            {
+                Console.WriteLine("セーブデータを読み込まず、開始します。");
+            }
+            Console.ReadLine();
+        }
+
+        switch (section)
+        {
+            case 0:
+                Section0();
+                break;
+    
+            case 1:
+                Section1();
+                break;
+    
+            case 2:
+                Section2();
+                break;
+    
+            case 3:
+                Section3();
+                break;
+    
+            case 6:
+                Section6();
+                break;
+
+            default:
+                WarningConsole("セーブデータが破損しています。");
+                break;
+        }
+
+        void Section0()
+        {
             // ## "0.anov" ##
 
             // アイテム選択処理
@@ -73,7 +130,7 @@ while (playing == true)
                     }
                 }
 
-                Console.WriteLine($"手榴弾{itemBom}個、弾丸{itemBullet}個、医療品{itemMedicine}個でよろしいですか?)");
+                Console.WriteLine($"手榴弾{itemBom}個、弾丸{itemBullet}個、医療品{itemMedicine}個でよろしいですか?");
                 bool checkingItems = true;
                 while (checkingItems == true)
                 {
@@ -103,13 +160,16 @@ while (playing == true)
                 }
             }
 
-        // ロード地点 (1)
-        label1:
+            Section1();
+        }
+
+        void Section1()
+        {
             section = 1;
 
             // ## "1.anov" ##
 
-            bool where = false;
+            where = false;
             while (where == false)
             {
                 Console.WriteLine("");
@@ -157,8 +217,11 @@ while (playing == true)
                 }
             }
 
-        // ロード地点 (2)
-        label2:
+            Section2();
+        }
+
+        void Section2()
+        {
             section = 2;
 
             // ## "2.anov" ##
@@ -233,8 +296,11 @@ while (playing == true)
                 }
             }
 
-        // ロード地点 (3)
-        label3:
+            Section3();
+        }
+
+        void Section3()
+        {
             section = 3;
 
             Console.WriteLine("石で建造されたトンネルのようなその建造物は、山の内部へ続いている。");
@@ -333,8 +399,11 @@ while (playing == true)
             // 戦闘開始
             Buttle();
 
-        // ロード地点 (4c)
-        label4c:
+            Section6();
+        }
+
+        void Section6()
+        {
             section = 6;
 
             // ## "4.anov" ##
@@ -507,48 +576,7 @@ while (playing == true)
             // っていうか、手榴弾はともかく、銃の弾丸は普通に余るな…
             // 医療品なんかそもそも使わなくても魔法回復できるし… (戦闘前のMP回復のおかげでほぼMP切れにならないし)
             // 難易度調整はミスった (簡単すぎた) かも (だからといって今から調整するのも面倒)
-            break;
-
-        case "2":
-            try
-            {
-                Load();
-                switch (section)
-                {
-                    case 1: goto label1;
-                    case 2: goto label2;
-                    case 3: goto label3;
-                    case 6: goto label4c;
-                }
-                playing = false;
-                Console.WriteLine("ロードが成功しました。");
-                Console.ReadLine();
-            }
-            catch
-            {
-                Console.WriteLine("セーブデータが見つかりません。");
-                Console.WriteLine("");
-            }
-            break;
-
-        case "3":
-            playing = false;
-            break;
-
-        default:
-            InvalidInput();
-            break;
-    }
-}
-
-// 選択肢
-void MultiWriter(string[] input)
-{
-    foreach (string displayContent in input)
-    {
-        Console.WriteLine(displayContent);
-    }
-}
+        }
 
 // 誤った入力
 void InvalidInput()
@@ -563,8 +591,8 @@ void WarningConsole(string message)
 {
     Console.ForegroundColor = ConsoleColor.Yellow;
     Console.WriteLine(message);
-    Console.ReadLine();
     Console.ResetColor();
+    Console.ReadLine();
 }
 
 // セーブ処理
