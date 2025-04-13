@@ -1,4 +1,5 @@
-﻿using System.Xml.Linq;
+﻿using AnovSyntax;
+using System.Xml.Linq;
 
 namespace AkizukiForest;
 
@@ -11,7 +12,9 @@ static class Program
 
         Console.WriteLine("# Akizuki Forest #");
         Console.WriteLine("");
-        Console.WriteLine("Hint: Ctrl+Cでいつでも終了できます。");
+        Console.ForegroundColor = ConsoleColor.Green;
+        Console.WriteLine("Hint: Ctrl+C でいつでも終了できます。");
+        Console.ResetColor();
         Console.WriteLine("");
 
         // 終了時に文字色をもとに戻す
@@ -43,11 +46,15 @@ static class Program
             Console.WriteLine("セーブデータが見つかりました。");
             Console.ResetColor();
 
-            Console.Write("セーブデータを読み込みますか? (N/y): ");
+            Console.Write("セーブデータを読み込みますか? (Y/n): ");
 
             command = Console.ReadLine();
             Console.WriteLine("");
-            if (command?.ToLower() == "y" || command?.ToLower() == "yes")
+            if (command?.ToLower() == "n" || command?.ToLower() == "no")
+            {
+                Console.WriteLine("セーブデータを読み込まず、開始します。");
+            }
+            else
             {
                 Console.WriteLine("セーブデータを読み込みます。");
                 Console.WriteLine("");
@@ -64,17 +71,13 @@ static class Program
                     Console.WriteLine("ロードが失敗しました。");
                 }
             }
-            else
-            {
-                Console.WriteLine("セーブデータを読み込まず、開始します。");
-            }
             Console.ReadLine();
         }
 
         switch (section)
         {
             case 0:
-                Section0();
+                InitialSettings();
                 break;
     
             case 1:
@@ -100,9 +103,9 @@ static class Program
 
         return 0;
 
-        void Section0()
+        void InitialSettings()
         {
-            // ## "0.anov" ##
+            AnovReader("0.anov");
 
             // アイテム選択処理
             bool selectingItem = true;
@@ -138,18 +141,11 @@ static class Program
                     }
                 }
 
-                Console.WriteLine($"手榴弾{itemBom}個、弾丸{itemBullet}個、医療品{itemMedicine}個でよろしいですか? (N/y): ");
-                
+                Console.WriteLine($"手榴弾{itemBom}個、弾丸{itemBullet}個、医療品{itemMedicine}個でよろしいですか? (Y/n): ");
+
                 command = Console.ReadLine();
                 Console.WriteLine("");
-                if (command?.ToLower() == "y" || command?.ToLower() == "yes")
-                {
-                    selectingItem = false;
-                    // 現時点では、弾丸のセット数を記録しているため、弾数表記に変更
-                    itemBullet *= 10;
-                    Console.WriteLine("");
-                }
-                else
+                if (command?.ToLower() == "n" || command?.ToLower() == "no")
                 {
                     WarningConsole("もう一度設定します。");
                     // アイテム数の初期化
@@ -158,7 +154,12 @@ static class Program
                     itemBullet = 0;
                     itemMedicine = 0;
                 }
-                Console.WriteLine("");
+                else
+                {
+                    selectingItem = false;
+                    // 現時点では、弾丸のセット数を記録しているため、弾数表記に変更
+                    itemBullet *= 10;
+                }
             }
 
             Section1();
@@ -168,7 +169,7 @@ static class Program
         {
             section = 1;
 
-            // ## "1.anov" ##
+            AnovReader("1.anov");
 
             where = false;
             while (where == false)
@@ -225,7 +226,7 @@ static class Program
         {
             section = 2;
 
-            // ## "2.anov" ##
+            AnovReader("2.anov");
 
             where = false;
             while (where == false)
@@ -392,7 +393,7 @@ static class Program
                 }
             }
 
-            // ## "3.anov" ##
+            AnovReader("3.anov");
 
             // 強制戦闘のため、自動回復
             komari.HP = (komari.HP >= 260) ? komari.HP : 260;
@@ -407,7 +408,7 @@ static class Program
         {
             section = 6;
 
-            // ## "4.anov" ##
+            AnovReader("4.anov");
 
             // 下の階に行くか、上の階に行くかで大きく√分岐
             // 天空世界の頂上到達√…天空世界の結末(たまたま地下洞窟と天空世界でつながってしまったことなど)を明かす
@@ -434,7 +435,7 @@ static class Program
                         where = true;
                         // 天空ルート(戦闘(ボス戦)後に神が現れて現世に戻らせてくれる)
 
-                        // ## "4.1.1.anov" ##
+                        AnovReader("4.1.1.anov");
 
                         // ボス戦
                         enemy.HP = 1000;
@@ -446,11 +447,11 @@ static class Program
                         // 戦闘開始
                         Buttle();
 
-                        // ## "4.1.2.anov" ##
+                        AnovReader("4.1.2.anov");
 
                         komari.Luck += 5;
 
-                        // ## "4.1.3.anov" ##
+                        AnovReader("4.1.3.anov");
 
                         Console.WriteLine("");
                         Console.WriteLine("END: 天界の青空 (通常ルート1)");
@@ -463,7 +464,7 @@ static class Program
                         where = true;
                         // 地上ルート (地下の場所に関する文献を読める。また、魔導書かワープ装置か何かで現世に戻る。)
 
-                        // ## "4.2.anov" ##
+                        AnovReader("4.2.anov");
 
                         // 探索ターン
                         // 最短√…机のメモを読む→本棚からメモに書いてある題名の本を探す→斜め読み→地上世界へ戻る魔法→終了 (神には遭遇しない)
@@ -494,7 +495,7 @@ static class Program
                                     {
                                         // 机のメモ帳を見ているときの処理
 
-                                        // ## "4.2.1.anov" ##
+                                        AnovReader("4.2.1.anov");
 
                                         which = true;
                                     }
@@ -534,7 +535,7 @@ static class Program
                     case "3":
                         where = true;
 
-                        // ## "3.3.anov" ##
+                        AnovReader("3.3.anov");
 
                         Console.WriteLine("");
                         Console.WriteLine("END: 森の泉 (隠しルート)");
@@ -561,22 +562,49 @@ static class Program
             // (未来になって航空隊2人の名前が決まっても、決まっていなかった時代のストーリーということで未来になっても上記と同じ考察が可能。))
             if (komari.Luck >= 8)
             {
-                // ## "5.0.anov" ##
+                AnovReader("5.0.anov");
             }
 
-            Console.WriteLine("開発");
-            Console.WriteLine("プログラム: Lemon73 (Ivy Cafeteria)");
+            Console.WriteLine("# 開発 #");
             Console.WriteLine("シナリオ: Lemon73 (Ivy Cafeteria)");
-            Console.WriteLine("");
+            Console.WriteLine("プログラム: Lemon73 (Ivy Cafeteria)");
             Console.WriteLine("ベース: .NET 8.0 (Console) (Microsoft)");
             Console.WriteLine("");
-            Console.WriteLine("終了です。お疲れさまでした。");
+            Console.WriteLine("ゲームクリアです!遊んでいただき、ありがとうございました。");
             Console.ReadLine();
             // 裏話…手榴弾を実装したのは、実はトンネル内にふさがっているところがあって、そこを爆破して進んでいくためだったんだけど、
             // トンネルの話が長くなりすぎてつまらなかったから辞めた。だから、攻撃と逃げるときの両方で使えるくらいしかメリットはない
             // っていうか、手榴弾はともかく、銃の弾丸は普通に余るな…
             // 医療品なんかそもそも使わなくても魔法回復できるし… (戦闘前のMP回復のおかげでほぼMP切れにならないし)
             // 難易度調整はミスった (簡単すぎた) かも (だからといって今から調整するのも面倒)
+        }
+
+        // Alice System
+        void AnovReader(string filePath)
+        {
+            filePath = Path.Combine(AppContext.BaseDirectory, "story", filePath);
+
+            if (!File.Exists(filePath))
+            {
+                Console.WriteLine($"ファイル\"{filePath}\"が見つかりません。");
+                Console.ReadLine();
+                return;
+            }
+
+            using (StreamReader sr = new(filePath))
+            {
+                while (!sr.EndOfStream)
+                {
+                    string? line = sr.ReadLine();
+                    if (line == "")
+                        Console.ReadLine();
+                    else if (line is not null)
+                        Console.WriteLine(Anov.Read(line));
+                }
+                Console.ReadLine();
+            }
+
+            return;
         }
 
 // 誤った入力
