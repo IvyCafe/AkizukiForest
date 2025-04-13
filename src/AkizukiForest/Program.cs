@@ -4,7 +4,7 @@ namespace AkizukiForest;
 
 static class Program
 {
-    static void Main(string[] args)
+    static int Main(string[] args)
     {
         // タイトル設定
         Console.Title = "Akizuki Forest";
@@ -13,6 +13,12 @@ static class Program
         Console.WriteLine("");
         Console.WriteLine("Hint: Ctrl+Cでいつでも終了できます。");
         Console.WriteLine("");
+
+        // 終了時に文字色をもとに戻す
+        Console.CancelKeyPress += (sender, e) =>
+        {
+            Console.ResetColor();
+        };
 
         // 初期化
         bool where;             // ループ用
@@ -89,8 +95,10 @@ static class Program
 
             default:
                 WarningConsole("セーブデータが破損しています。");
-                break;
+                return 1;
         }
+
+        return 0;
 
         void Section0()
         {
