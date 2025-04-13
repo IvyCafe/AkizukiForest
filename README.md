@@ -5,7 +5,7 @@ First console game of Ivy Cafeteria.
 ## Basic Usage
 
 > [!WARNING]
-> Your terminal must support Japanese output.
+> Your terminal must support Japanese Fonts.
 
 ### Windows
 
