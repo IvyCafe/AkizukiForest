@@ -17,7 +17,7 @@
       <PackagePath>\</PackagePath>
     </None>
 
-    <None Include="..\..\content\**\*">
+    <None Include="..\..\assets\**\*">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
   </ItemGroup>
