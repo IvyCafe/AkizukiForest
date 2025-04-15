@@ -599,7 +599,7 @@ static class Program
                     if (line == "")
                         Console.ReadLine();
                     else if (line is not null)
-                        Console.WriteLine(Anov.Read(line));
+                        Console.WriteLine(Anov.Read(line, QuoteType.None));
                 }
                 Console.ReadLine();
             }
