@@ -579,51 +579,6 @@ static class Program
             // 難易度調整はミスった (簡単すぎた) かも (だからといって今から調整するのも面倒)
         }
 
-        // Alice System
-        void AnovReader(string filePath)
-        {
-            filePath = Path.Combine(AppContext.BaseDirectory, "story", filePath);
-
-            if (!File.Exists(filePath))
-            {
-                Console.WriteLine($"ファイル\"{filePath}\"が見つかりません。");
-                Console.ReadLine();
-                return;
-            }
-
-            using (StreamReader sr = new(filePath))
-            {
-                while (!sr.EndOfStream)
-                {
-                    string? line = sr.ReadLine();
-                    if (line == "")
-                        Console.ReadLine();
-                    else if (line is not null)
-                        Console.WriteLine(Anov.Read(line, QuoteType.None));
-                }
-                Console.ReadLine();
-            }
-
-            return;
-        }
-
-// 誤った入力
-void InvalidInput()
-{
-    Console.ForegroundColor = ConsoleColor.Yellow;
-    Console.Error.WriteLine("誤ったコマンドを入力しています。");
-    Console.ResetColor();
-}
-
-// 警告文字
-void WarningConsole(string message)
-{
-    Console.ForegroundColor = ConsoleColor.Yellow;
-    Console.WriteLine(message);
-    Console.ResetColor();
-    Console.ReadLine();
-}
-
 // セーブ処理
 void Save()
 {
@@ -942,4 +897,57 @@ void Buttle()
         }
     }
 }
-}}
+}
+    /// <summary>
+    /// Reads the .anov file and outputs the text to the console.
+    /// </summary>
+    /// <param name="filePath">The path of .anov file</param>
+    static void AnovReader(string filePath)
+    {
+        filePath = Path.Combine(AppContext.BaseDirectory, "story", filePath);
+
+        if (!File.Exists(filePath))
+        {
+            Console.WriteLine($"ファイル\"{filePath}\"が見つかりません。");
+            Console.ReadLine();
+            return;
+        }
+
+        using (StreamReader sr = new(filePath))
+        {
+            while (!sr.EndOfStream)
+            {
+                string? line = sr.ReadLine();
+                if (line == "")
+                    Console.ReadLine();
+                else if (line is not null)
+                    Console.WriteLine(Anov.Read(line, QuoteType.None));
+            }
+            Console.ReadLine();
+        }
+
+        return;
+    }
+
+    /// <summary>
+    /// Writes an error message to the standard error stream in yellow color.
+    /// </summary>
+    static void InvalidInput()
+    {
+        Console.ForegroundColor = ConsoleColor.Yellow;
+        Console.Error.WriteLine("誤ったコマンドを入力しています。");
+        Console.ResetColor();
+    }
+
+    /// <summary>
+    /// Writes the specified string value, followed by the current line terminator, to the standard output stream in yellow color.
+    /// </summary>
+    /// <param name="message">Input string value</param>
+    static void WarningConsole(string message)
+    {
+        Console.ForegroundColor = ConsoleColor.Yellow;
+        Console.WriteLine(message);
+        Console.ResetColor();
+        Console.ReadLine();
+    }
+}
