@@ -658,9 +658,9 @@ void Buttle(Character chara, int enemyHP = 0, string enemyName = "異形の存�
             command = Console.ReadLine();
             switch (command)
             {
+                // 近接戦闘
                 case "1":
                     where = true;
-                    // 近接戦闘
                     Console.WriteLine("敵に接近して、ナイフを振り上げて…");
                     Console.WriteLine("その腕を素早く振り降ろした。");
                     Console.ReadLine();
@@ -669,45 +669,47 @@ void Buttle(Character chara, int enemyHP = 0, string enemyName = "異形の存�
                     enemyHP -= 50; // 固定ダメージ
                     break;
 
+                // 爆破攻撃
                 case "2":
-                    // 爆破攻撃
-                    if (itemBom > 0)
+                    if (itemBom <= 0)
                     {
-                        where = true;
-                        itemBom -= 1;
-                        Console.WriteLine("秋月は後ろずさりで少しずつ後退しながら、手榴弾のピンを抜いて、");
-                        Console.WriteLine("敵のほうに向かって投げつけた。");
-                        Console.ReadLine();
-                        Console.WriteLine("しばらくすると、大きな爆発音を上げ、付近は白い煙に包まれた。");
-                        Console.ReadLine();
-                        enemyHP -= 150 + rand.Next(0, 4) * 10; // 150~180 (10刻み)
-                    }
-                    else
                         WarningConsole("爆弾がないようだ。");
+                        break;
+                    }
+
+                    where = true;
+                    itemBom -= 1;
+                    Console.WriteLine("秋月は後ろずさりで少しずつ後退しながら、手榴弾のピンを抜いて、");
+                    Console.WriteLine("敵のほうに向かって投げつけた。");
+                    Console.ReadLine();
+                    Console.WriteLine("しばらくすると、大きな爆発音を上げ、付近は白い煙に包まれた。");
+                    Console.ReadLine();
+                    enemyHP -= 150 + rand.Next(0, 4) * 10; // 150~180 (10刻み)
                     break;
 
+                // 射撃攻撃処理
                 case "3":
-                    // 射撃攻撃処理
                     // (ナイフ/爆弾との違いのために命中率は低く、ダメージが大きい、貫通するとさらにダメージ増加とかのほうがいいかも。
                     // ↑一応、弾薬数が多いため攻撃可能回数がほぼ無限というメリットもあるけど。)
-                    if (itemBullet > 0)
+                    if (itemBullet <= 0)
                     {
-                        where = true;
-                        itemBullet -= 1;
-                        Console.WriteLine("拳銃に弾丸を込め、単発射撃を行った。");
-                        Console.ReadLine();
-                        Console.WriteLine("拳銃は、爆音を上げて、強い反動を受けた。");
-                        Console.ReadLine();
-                        Console.WriteLine("弾丸は敵を直撃して、敵の体を貫通した。");
-                        Console.ReadLine();
-                        enemyHP -= 40 + rand.Next(0, 27) * 10;// 40~300(10刻み)
-                    }
-                    else
                         WarningConsole("弾薬が足りないようだ。");
+                        break;
+                    }
+
+                    where = true;
+                    itemBullet -= 1;
+                    Console.WriteLine("拳銃に弾丸を込め、単発射撃を行った。");
+                    Console.ReadLine();
+                    Console.WriteLine("拳銃は、爆音を上げて、強い反動を受けた。");
+                    Console.ReadLine();
+                    Console.WriteLine("弾丸は敵を直撃して、敵の体を貫通した。");
+                    Console.ReadLine();
+                    enemyHP -= 40 + rand.Next(0, 27) * 10; // 40~300 (10刻み)
                     break;
 
+                // 治療処理
                 case "4":
-                    // 治療処理
                     where = true;
                     if (chara.MP >= 3)
                     {
@@ -729,23 +731,23 @@ void Buttle(Character chara, int enemyHP = 0, string enemyName = "異形の存�
                         Console.ReadLine();
                         chara.HP += 40; // 固定
                     }
-
                     break;
 
+                // アイテム治療処理
                 case "5":
-                    // アイテム治療処理
-                    if (itemMedicine > 0)
+                    if (itemMedicine <= 0)
                     {
-                        where = true;
-                        itemMedicine -= 1;
-                        Console.WriteLine("医療品をあさり、治療に使えそうな薬品などを取り出した。");
-                        Console.ReadLine();
-                        Console.WriteLine("傷ついた部分に治療薬を塗り、包帯で巻いて痛みを和らげることができた。");
-                        Console.ReadLine();
-                        chara.HP += 220; // 固定
-                    }
-                    else
                         WarningConsole("治療薬がないようだ。");
+                        break;
+                    }
+
+                    where = true;
+                    itemMedicine -= 1;
+                    Console.WriteLine("医療品をあさり、治療に使えそうな薬品などを取り出した。");
+                    Console.ReadLine();
+                    Console.WriteLine("傷ついた部分に治療薬を塗り、包帯で巻いて痛みを和らげることができた。");
+                    Console.ReadLine();
+                    chara.HP += 220; // 固定
                     break;
 
                 case "6":
@@ -763,30 +765,31 @@ void Buttle(Character chara, int enemyHP = 0, string enemyName = "異形の存�
 
                 case "7":
                     // 手榴弾があるかを確認
-                    if (itemBom > 0)
+                    if (itemBom <= 0)
                     {
-                        where = true;
-                        itemBom -= 1;
-                        Console.WriteLine("秋月は後ろずさりで少しずつ後退しながら、手榴弾のピンを抜いて、");
-                        Console.WriteLine("明後日のほうに向かって投げつけた。");
-                        Console.ReadLine();
-                        Console.WriteLine("しばらくすると、大きな爆発音を上げ、付近は白い煙に包まれた。");
-                        Console.ReadLine();
-                        Console.WriteLine("煙に紛れて逃げようと試みる。");
-                        Console.ReadLine();
+                        WarningConsole("爆弾がないようだ。");
+                        break;
+                    }
 
-                        // 確立で逃げる処理 (60%の確率で逃げられる)
-                        if (rand.Next(0, 101) <= 60)
-                        {
-                            Console.WriteLine("なんとか逃げ切ることができた。");
-                            Console.ReadLine();
-                            enemyHP = 0;
-                        }
-                        else
-                            WarningConsole("しかし、敵に回り込まれてしまった。"); // 敵にダメージはなし
+                    where = true;
+                    itemBom -= 1;
+                    Console.WriteLine("秋月は後ろずさりで少しずつ後退しながら、手榴弾のピンを抜いて、");
+                    Console.WriteLine("明後日のほうに向かって投げつけた。");
+                    Console.ReadLine();
+                    Console.WriteLine("しばらくすると、大きな爆発音を上げ、付近は白い煙に包まれた。");
+                    Console.ReadLine();
+                    Console.WriteLine("煙に紛れて逃げようと試みる。");
+                    Console.ReadLine();
+
+                    // 確立で逃げる処理 (60%の確率で逃げられる)
+                    if (rand.Next(0, 101) <= 60)
+                    {
+                        Console.WriteLine("なんとか逃げ切ることができた。");
+                        Console.ReadLine();
+                        enemyHP = 0;
                     }
                     else
-                        WarningConsole("爆弾がないようだ。");
+                        WarningConsole("しかし、敵に回り込まれてしまった。"); // 敵にダメージはなし
                     break;
 
                 case "8":
@@ -801,24 +804,19 @@ void Buttle(Character chara, int enemyHP = 0, string enemyName = "異形の存�
             // 敵死亡判定
             if (enemyHP <= 0)
             {
-                switch (command)
+                if (command != "6" && command != "7")
                 {
-                    case "6":
-                    case "7":
-                        break;
-
-                    default:
-                        // 逃げた場合以外表示
-                        Console.WriteLine("敵はその場に倒れ、もう二度と動かなくなった。");
-                        Console.ReadLine();
-                        break;
+                    // 逃げた場合以外表示
+                    Console.WriteLine("敵はその場に倒れ、もう二度と動かなくなった。");
+                    Console.ReadLine();
                 }
+
                 Console.WriteLine(" -+-+- 戦闘終了 -+-+- ");
                 Console.ReadLine();
                 Console.WriteLine("「ふう。何とかなったわね。」");
                 Console.ReadLine();
-                Console.WriteLine("「先へ進むわ。」");
-                Console.ReadLine();
+                // Console.WriteLine("「先へ進むわ。」");
+                // Console.ReadLine();
             }
             else
             {
