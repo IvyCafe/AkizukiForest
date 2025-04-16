@@ -29,7 +29,13 @@ static class Program
         string? command;        // コマンド読み取り
 
         // ステータス
-        (int HP, int MP, int Luck) komari = (200, 30, 0);
+        Character komari = new()
+        {
+            Name = "秋月小鞠",
+            HP = 200,
+            MP = 30,
+            Luck = 10
+        };
 
         // アイテム
         int item = 12;          // アイテムの総重量
@@ -203,7 +209,7 @@ static class Program
                         Console.ReadLine();
                         komari.Luck -= 5;
                         // 戦闘処理
-                        Buttle();
+                        Buttle(komari);
                         break;
 
                     case "4":
@@ -363,7 +369,7 @@ static class Program
                                 case "1":
                                     which = true;
                                     //戦闘処理
-                                    Buttle();
+                                    Buttle(komari);
                                     break;
 
                                 case "2":
@@ -396,7 +402,7 @@ static class Program
             komari.HP = (komari.HP >= 260) ? komari.HP : 260;
             komari.MP = (komari.MP >= 30) ? komari.MP : 30;
             // 戦闘開始
-            Buttle();
+            Buttle(komari);
 
             Section6();
         }
@@ -439,7 +445,7 @@ static class Program
                         komari.HP += 240;
                         komari.MP += 10;
                         // 戦闘開始 (ボス戦)
-                        Buttle(1000, "黒色の影");
+                        Buttle(komari, 1000, "黒色の影");
 
                         AnovReader("4.1.2.anov");
 
@@ -615,7 +621,7 @@ void Load()
 }
 
 //戦闘処理
-void Buttle(int enemyHP = 0, string enemyName = "異形の存在")
+void Buttle(Character chara, int enemyHP = 0, string enemyName = "異形の存在")
 {
     Random rand = new();
     // HP が設定されていないときはランダム値に設定
@@ -623,8 +629,8 @@ void Buttle(int enemyHP = 0, string enemyName = "異形の存在")
         enemyHP = 100 + rand.Next(0, 15) * 10; // 100-240 (10刻み)
 
     // 戦闘開始時自動回復 (難易度調節)
-    komari.HP += 20 + rand.Next(0, 3) * 10; // 20-40 (10刻み)
-    komari.MP += rand.Next(2, 6); // 2-5
+    chara.HP += 20 + rand.Next(0, 3) * 10; // 20-40 (10刻み)
+    chara.MP += rand.Next(2, 6); // 2-5
 
     Console.WriteLine(" -+-+- 戦闘開始 -+-+- ");
     Console.ReadLine();
@@ -633,16 +639,8 @@ void Buttle(int enemyHP = 0, string enemyName = "異形の存在")
     {
         Console.WriteLine(" - あなたのターン - ");
         Console.ReadLine();
+        StatusConsole();
 
-        // キャラクターステータス表示
-        Console.WriteLine("");
-        Console.WriteLine("味方ステータス");
-        Console.WriteLine("|秋月小鞠|HP: {0}|MP: {1}|", komari.HP, komari.MP);
-        Console.WriteLine("");
-        Console.WriteLine("敵ステータス");
-        Console.WriteLine("|{0}|HP: {1}|", enemyName, enemyHP);
-
-        // 作成途中
         bool where = false;
         while (where == false)
         {
@@ -711,9 +709,9 @@ void Buttle(int enemyHP = 0, string enemyName = "異形の存在")
                 case "4":
                     // 治療処理
                     where = true;
-                    if (komari.MP >= 3)
+                    if (chara.MP >= 3)
                     {
-                        komari.MP -= 3;
+                        chara.MP -= 3;
                         Console.WriteLine("「リヴァレド・ハート」");
                         Console.WriteLine("両手を空にかざし、回復魔法を唱えた。");
                         Console.ReadLine();
@@ -721,7 +719,7 @@ void Buttle(int enemyHP = 0, string enemyName = "異形の存在")
                         Console.ReadLine();
                         Console.WriteLine("傷は見る見るうちに回復していった。");
                         Console.ReadLine();
-                        komari.HP += 150; // 固定
+                        chara.HP += 150; // 固定
                     }
                     else
                     {
@@ -729,7 +727,7 @@ void Buttle(int enemyHP = 0, string enemyName = "異形の存在")
                         Console.ReadLine();
                         Console.WriteLine("ナイフでスカートの先を切り、その布で傷ついた部分を保護した。");
                         Console.ReadLine();
-                        komari.HP += 40; // 固定
+                        chara.HP += 40; // 固定
                     }
 
                     break;
@@ -744,7 +742,7 @@ void Buttle(int enemyHP = 0, string enemyName = "異形の存在")
                         Console.ReadLine();
                         Console.WriteLine("傷ついた部分に治療薬を塗り、包帯で巻いて痛みを和らげることができた。");
                         Console.ReadLine();
-                        komari.HP += 220; // 固定
+                        chara.HP += 220; // 固定
                     }
                     else
                         WarningConsole("治療薬がないようだ。");
@@ -792,12 +790,7 @@ void Buttle(int enemyHP = 0, string enemyName = "異形の存在")
                     break;
 
                 case "8":
-                    Console.WriteLine("");
-                    Console.WriteLine("味方ステータス");
-                    Console.WriteLine("|秋月小鞠|HP: {0}|MP: {1}|", komari.HP, komari.MP);
-                    Console.WriteLine("");
-                    Console.WriteLine("敵ステータス");
-                    Console.WriteLine("|{0}|HP: {1}|", enemyName, enemyHP);
+                    StatusConsole();
                     break;
 
                 default:
@@ -820,7 +813,6 @@ void Buttle(int enemyHP = 0, string enemyName = "異形の存在")
                         Console.ReadLine();
                         break;
                 }
-                enemyName = ""; // 敵の名前を未指定状態にする
                 Console.WriteLine(" -+-+- 戦闘終了 -+-+- ");
                 Console.ReadLine();
                 Console.WriteLine("「ふう。何とかなったわね。」");
@@ -845,7 +837,7 @@ void Buttle(int enemyHP = 0, string enemyName = "異形の存在")
                     {
                         Console.WriteLine("敵からの攻撃");
                         Console.ReadLine();
-                        komari.HP -= rand.Next(5, 14) * 10; // 50~130 (10刻み) (最大値が出るとまあまあ強いので HP に注意)
+                        chara.HP -= rand.Next(5, 14) * 10; // 50~130 (10刻み) (最大値が出るとまあまあ強いので HP に注意)
                     }
                     // 20%
                     else if (rand.Next(3) != 0)
@@ -862,7 +854,7 @@ void Buttle(int enemyHP = 0, string enemyName = "異形の存在")
                     }
 
                     // 秋月死亡判定
-                    if (komari.HP <= 0)
+                    if (chara.HP <= 0)
                     {
                         Console.ForegroundColor = ConsoleColor.Red; // 文字の色を変更
                         Console.WriteLine("");
@@ -870,7 +862,7 @@ void Buttle(int enemyHP = 0, string enemyName = "異形の存在")
                         Console.ReadLine();
                         Console.WriteLine("体に大きな傷を負った秋月はもう、そこから動くことができなくなってしまった。");
                         Console.ReadLine();
-                        Console.WriteLine("視界に広がる真紅の液体。それが自分の運命を示唆しているようだった。");
+                        Console.WriteLine("視界に広がる真紅の液体。それが自分の運命を示唆していた。");
                         Console.ReadLine();
                         Console.WriteLine("「こ…こんなところで死ぬはずは…」");
                         Console.ReadLine();
@@ -884,6 +876,16 @@ void Buttle(int enemyHP = 0, string enemyName = "異形の存在")
                 }
             }
         }
+    }
+
+    // キャラクターステータス表示
+    void StatusConsole(){
+        Console.WriteLine("");
+        Console.WriteLine("味方ステータス");
+        Console.WriteLine($"|{chara.Name}|HP: {chara.HP}|MP: {chara.MP}|");
+        Console.WriteLine("");
+        Console.WriteLine("敵ステータス");
+        Console.WriteLine($"|{enemyName}|HP: {enemyHP}|");
     }
 }
 }
@@ -939,4 +941,27 @@ void Buttle(int enemyHP = 0, string enemyName = "異形の存在")
         Console.ResetColor();
         Console.ReadLine();
     }
+}
+
+/// <summary>
+/// Represents a character in the game.
+/// </summary>
+public class Character
+{
+    /// <summary>
+    /// Name of the character.
+    /// </summary>
+    public required string Name { get; set; }
+    /// <summary>
+    /// Hit Points (HP) of the character.
+    /// </summary>
+    public int HP { get; set; }
+    /// <summary>
+    /// Magic Points (MP) of the character.
+    /// </summary>
+    public int MP { get; set; }
+    /// <summary>
+    /// Luck of the character.
+    /// </summary>
+    public int Luck { get; set; }
 }
