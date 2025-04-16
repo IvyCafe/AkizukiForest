@@ -8,9 +8,9 @@ static class Program
     static int Main(string[] args)
     {
         // タイトル設定
-        Console.Title = "Akizuki Forest";
+        Console.Title = "Akizuki in the Forest";
 
-        Console.WriteLine("# Akizuki Forest #");
+        Console.WriteLine("# Akizuki in the Forest #");
         Console.WriteLine("");
         Console.ForegroundColor = ConsoleColor.Green;
         Console.WriteLine("Hint: Ctrl+C でいつでも終了できます。");
@@ -565,10 +565,10 @@ static class Program
                 AnovReader("5.0.anov");
             }
 
-            Console.WriteLine("# 開発 #");
+            Console.WriteLine("# クレジット #");
             Console.WriteLine("シナリオ: Lemon73 (Ivy Cafeteria)");
             Console.WriteLine("プログラム: Lemon73 (Ivy Cafeteria)");
-            Console.WriteLine("ベース: .NET 8.0 (Console) (Microsoft)");
+            Console.WriteLine("ベース: Console App (C#, .NET8.0) - Microsoft");
             Console.WriteLine("");
             Console.WriteLine("ゲームクリアです!遊んでいただき、ありがとうございました。");
             Console.ReadLine();
