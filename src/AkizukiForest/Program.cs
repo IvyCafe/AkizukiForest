@@ -639,7 +639,7 @@ void Buttle(Character chara, int enemyHP = 0, string enemyName = "異形の存�
     {
         Console.WriteLine(" - あなたのターン - ");
         Console.ReadLine();
-        StatusConsole();
+        StatusConsole(komari, enemyHP, enemyName);
 
         bool where = false;
         while (where == false)
@@ -750,10 +750,10 @@ void Buttle(Character chara, int enemyHP = 0, string enemyName = "異形の存�
                     chara.HP += 220; // 固定
                     break;
 
+                // 確立で逃げる処理
                 case "6":
                     where = true;
-                    // 確立で逃げる処理 (20%の確率で逃げられる)
-                    if (rand.Next(0, 101) <= 20)
+                    if (rand.Next(0, 101) <= 20) // (20%の確率で逃げられる)
                     {
                         Console.WriteLine("敵からなんとか逃げ切ることができた。");
                         Console.ReadLine();
@@ -763,6 +763,7 @@ void Buttle(Character chara, int enemyHP = 0, string enemyName = "異形の存�
                         WarningConsole("敵に回り込まれた。");
                     break;
 
+                // 確立で逃げる処理
                 case "7":
                     // 手榴弾があるかを確認
                     if (itemBom <= 0)
@@ -781,8 +782,7 @@ void Buttle(Character chara, int enemyHP = 0, string enemyName = "異形の存�
                     Console.WriteLine("煙に紛れて逃げようと試みる。");
                     Console.ReadLine();
 
-                    // 確立で逃げる処理 (60%の確率で逃げられる)
-                    if (rand.Next(0, 101) <= 60)
+                    if (rand.Next(0, 101) <= 60) // (60%の確率で逃げられる)
                     {
                         Console.WriteLine("なんとか逃げ切ることができた。");
                         Console.ReadLine();
@@ -793,7 +793,7 @@ void Buttle(Character chara, int enemyHP = 0, string enemyName = "異形の存�
                     break;
 
                 case "8":
-                    StatusConsole();
+                    StatusConsole(komari, enemyHP, enemyName);
                     break;
 
                 default:
@@ -830,21 +830,18 @@ void Buttle(Character chara, int enemyHP = 0, string enemyName = "異形の存�
                     Console.WriteLine(" - 敵のターン - ");
                     Console.ReadLine();
 
-                    // 70%
-                    if (rand.Next(10) < 7)
+                    if (rand.Next(10) < 7) // 70%
                     {
                         Console.WriteLine("敵からの攻撃");
                         Console.ReadLine();
                         chara.HP -= rand.Next(5, 14) * 10; // 50~130 (10刻み) (最大値が出るとまあまあ強いので HP に注意)
                     }
-                    // 20%
-                    else if (rand.Next(3) != 0)
+                    else if (rand.Next(3) != 0) // 20%
                     {
                         Console.WriteLine("敵は様子を見ている。");
                         Console.ReadLine();
                     }
-                    // 10%
-                    else
+                    else // 10%
                     {
                         Console.WriteLine("敵は回復魔法を唱えた。");
                         Console.ReadLine();
@@ -865,8 +862,8 @@ void Buttle(Character chara, int enemyHP = 0, string enemyName = "異形の存�
                         Console.WriteLine("「こ…こんなところで死ぬはずは…」");
                         Console.ReadLine();
                         Console.WriteLine("言葉を言い終える前に、その人生の終わりを早々と迎えた。");
-                        Console.ReadLine();
                         Console.ResetColor(); // 色をリセット
+                        Console.ReadLine();
                         // 終了判定
                         enemyHP = 0;
                         Environment.Exit(0);
@@ -874,16 +871,6 @@ void Buttle(Character chara, int enemyHP = 0, string enemyName = "異形の存�
                 }
             }
         }
-    }
-
-    // キャラクターステータス表示
-    void StatusConsole(){
-        Console.WriteLine("");
-        Console.WriteLine("味方ステータス");
-        Console.WriteLine($"|{chara.Name}|HP: {chara.HP}|MP: {chara.MP}|");
-        Console.WriteLine("");
-        Console.WriteLine("敵ステータス");
-        Console.WriteLine($"|{enemyName}|HP: {enemyHP}|");
     }
 }
 }
@@ -938,6 +925,22 @@ void Buttle(Character chara, int enemyHP = 0, string enemyName = "異形の存�
         Console.WriteLine(message);
         Console.ResetColor();
         Console.ReadLine();
+    }
+
+    /// <summary>
+    /// Displays the status of the character and the enemy in the console.
+    /// </summary>
+    static void StatusConsole(Character chara, int? enemyHP, string? enemyName){
+        Console.WriteLine("");
+        Console.WriteLine("味方ステータス");
+        Console.WriteLine($"|{chara.Name}|HP: {chara.HP}|MP: {chara.MP}|");
+
+        if (enemyHP is not null && enemyName is not null)
+        {
+            Console.WriteLine("");
+            Console.WriteLine("敵ステータス");
+            Console.WriteLine($"|{enemyName}|HP: {enemyHP}|");
+        }
     }
 }
 
