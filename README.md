@@ -29,3 +29,9 @@ Build command for linux:
 dotnet publish -r linux-x64 -c Release --self-contained true /p:PublishTrimmde=true /p:Publish
 ```
 -->
+
+## License
+
+Sources: [MIT License](./LICENSE)
+
+Assets: [CC-BY-SA 4.0](./LICENSE-Assets)
