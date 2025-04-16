@@ -16,6 +16,14 @@
       <Pack>True</Pack>
       <PackagePath>\</PackagePath>
     </None>
+
+    <None Include="..\..\assets\**\*">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="AliceProject.AnovSyntax" Version="0.3.0" />
   </ItemGroup>
 
 </Project>

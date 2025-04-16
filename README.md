@@ -1,6 +1,8 @@
 # Akizuki in the Forest
 
-First console game of Ivy Cafeteria.
+Play as 'Komari Akizuki', a national army special forces, and you can enjoy with the events displayed on the console.
+
+This is the first console game in Ivy Cafeteria.
 
 ## Basic Usage
 
