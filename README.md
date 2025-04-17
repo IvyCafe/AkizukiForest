@@ -4,6 +4,10 @@ Play as 'Komari Akizuki', a national army special forces, and you can enjoy with
 
 This is the first console game in Ivy Cafeteria.
 
+## Installation
+
+You can install the game in [latest release](https://github.com/IvyCafe/AkizukiForest/releases/latest).
+
 ## Basic Usage
 
 > [!WARNING]
