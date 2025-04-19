@@ -24,7 +24,7 @@ static class Program
         };
 
         // 初期化
-        bool where;             // ループ用
+        bool loopFlag;          // ループ用
         int section = 0;        // セーブ用
         string? command;        // コマンド読み取り
 
@@ -108,8 +108,7 @@ static class Program
             AnovReader("0.anov");
 
             // アイテム選択処理
-            bool selectingItem = true;
-            while (selectingItem == true)
+            while (true)
             {
                 Console.WriteLine("");
                 Console.WriteLine("その他に冒険に持っていくものを決めてください");
@@ -132,15 +131,14 @@ static class Program
 
                 void ItemSelection(string _itemName, ref int _item, ref int _itemEach, int _itemWeight)
                 {
-                    bool selectingEachItems = true;
-                    while (selectingEachItems == true)
+                    while (true)
                     {
                         Console.WriteLine(_itemName + " を何個持っていきますか?");
                         if (int.TryParse(Console.ReadLine(), out _itemEach) && (_item - _itemEach * _itemWeight >= 0))
                         {
                             _item -= _itemEach * _itemWeight;
                             Console.WriteLine("{0}個 (重さ{1}|残り重量{2})", _itemEach, _itemEach * _itemWeight, _item);
-                            selectingEachItems = false;
+                            break;
                         }
                         else
                             InvalidInput();
@@ -155,10 +153,10 @@ static class Program
                     WarningConsole("もう一度設定します。");
                 else
                 {
-                    selectingItem = false;
                     komari.ItemBom = tempItemBom;
                     komari.ItemBullet = tempItemBullet * 10; // 1セット=10発
                     komari.ItemMedicine = tempItemMedicine;
+                    break;
                 }
             }
 
@@ -171,8 +169,8 @@ static class Program
 
             AnovReader("1.anov");
 
-            where = false;
-            while (where == false)
+            loopFlag = true;
+            while (loopFlag)
             {
                 Console.WriteLine("");
                 Console.WriteLine("どちらへ行きますか?");
@@ -186,20 +184,20 @@ static class Program
                 switch (command)
                 {
                     case "1":
-                        where = true;
+                        loopFlag = false;
                         komari.Luck += 5;
                         Console.WriteLine("珍しい植物を見つけた！");
                         Console.ReadLine();
                         break;
 
                     case "2":
-                        where = true;
+                        loopFlag = false;
                         Console.WriteLine("特にめぼしい物は見当たらなかった。");
                         Console.ReadLine();
                         break;
 
                     case "3":
-                        where = true;
+                        loopFlag = false;
                         Console.WriteLine("怪しい影に近づいてみると、何かはわからないが、中型の生物のように見える。");
                         Console.ReadLine();
                         Console.WriteLine("こちらに対して敵対的な視線を向けて、今すぐにでも攻撃してきそうだ。");
@@ -228,8 +226,8 @@ static class Program
 
             AnovReader("2.anov");
 
-            where = false;
-            while (where == false)
+            loopFlag = true;
+            while (loopFlag)
             {
                 Console.WriteLine("");
                 Console.WriteLine("どうしますか");
@@ -243,13 +241,13 @@ static class Program
                 switch (command)
                 {
                     case "1":
-                        where = true;
+                        loopFlag = false;
                         Console.WriteLine("見たことがない建物を見た秋月は、すぐにそこへ近づいた。");
                         Console.ReadLine();
                         break;
 
                     case "2":
-                        where = true;
+                        loopFlag = false;
                         Console.WriteLine("建造物の周辺を見渡すと、近くには紅の花と、鮮やかな秘色(ひそく)の花が咲き乱れていた。");
                         // 特に意味はないが、花の紹介 (後付け設定)
 
@@ -273,7 +271,7 @@ static class Program
                         break;
 
                     case "3":
-                        where = true;
+                        loopFlag = false;
                         Console.WriteLine("一旦木陰で休憩することにした。");
                         Console.ReadLine();
                         Console.WriteLine("森林ならではの爽やかな風が頬に当たり心地が良い。");
@@ -315,8 +313,8 @@ static class Program
             Console.WriteLine("「うーん…どっちに行こうかなぁ」");
             Console.ReadLine();
 
-            where = false;
-            while (where == false)
+            loopFlag = true;
+            while (loopFlag)
             {
                 Console.WriteLine("");
                 Console.WriteLine("どちらに行きますか");
@@ -329,7 +327,7 @@ static class Program
                 switch (command)
                 {
                     case "1":
-                        where = true;
+                        loopFlag = false;
                         Console.WriteLine("右の道へ進んでいくと、その道はだんだんと細くなってきた。");
                         Console.ReadLine();
                         Console.WriteLine("だんだんと地下へと進んでいった。");
@@ -341,7 +339,6 @@ static class Program
                         break;
 
                     case "2":
-                        where = true;
                         Console.WriteLine("道なりに進んでいくと、何かの影のようなものが見えた。");
                         Console.ReadLine();
                         Console.WriteLine("「なにかしら？」");
@@ -351,9 +348,9 @@ static class Program
                         Console.WriteLine("こちらにはまだ気づいていないようだ。");
                         Console.ReadLine();
 
-                        // 戦闘or道を戻って分岐点の右側の道に行くかの選択肢
-                        bool which = false;
-                        while (which == false)
+                        // 戦闘 or 道を戻って分岐点の右側の道に行くかの選択肢
+                        bool which = true;
+                        while (which)
                         {
                             Console.WriteLine("");
                             Console.WriteLine("どうしますか");
@@ -364,14 +361,14 @@ static class Program
                             switch (command)
                             {
                                 case "1":
-                                    which = true;
+                                    which = false;
+                                    loopFlag = false;
                                     //戦闘処理
                                     Buttle(komari);
                                     break;
 
                                 case "2":
-                                    which = true;
-                                    where = false;
+                                    which = false;
                                     Console.WriteLine("先ほどの分岐点まで戻った。");
                                     Console.ReadLine();
                                     break;
@@ -414,8 +411,8 @@ static class Program
             // 天空世界の頂上到達√…天空世界の結末(たまたま地下洞窟と天空世界でつながってしまったことなど)を明かす
             // 天空世界の地上到達√…地下空洞の過去を明かす
             // 秘密コマンドにて窓から飛び降りる→森の泉(隠し)√…次回作や尾花と桜(北大陸)の世界観についてのフラグ・ヒント/秋月の過去について
-            where = false;
-            while (where == false)
+            loopFlag = true;
+            while (loopFlag)
             {
                 Console.WriteLine("");
                 Console.WriteLine("どうしますか");
@@ -432,7 +429,7 @@ static class Program
                 switch (command)
                 {
                     case "1":
-                        where = true;
+                        loopFlag = false;
                         // 天空ルート(戦闘(ボス戦)後に神が現れて現世に戻らせてくれる)
 
                         AnovReader("4.1.1.anov");
@@ -458,16 +455,16 @@ static class Program
                         break;
 
                     case "2":
-                        where = true;
+                        loopFlag = false;
                         // 地上ルート (地下の場所に関する文献を読める。また、魔導書かワープ装置か何かで現世に戻る。)
 
                         AnovReader("4.2.anov");
 
                         // 探索ターン
                         // 最短√…机のメモを読む→本棚からメモに書いてある題名の本を探す→斜め読み→地上世界へ戻る魔法→終了 (神には遭遇しない)
-                        bool which = false;
-                        bool note = false;
-                        while (which == false)
+                        bool which = true;
+                        bool checkedNote = false; // 机のメモ帳を見ているか見ていないか
+                        while (which)
                         {
                             Console.WriteLine("");
                             Console.WriteLine("どこを調べますか");
@@ -481,20 +478,17 @@ static class Program
                                 case "1":
                                     Console.WriteLine("20冊以上の本が並んでいた。");
                                     Console.ReadLine();
-                                    // 机のメモ帳を見ているか見ていないか
-                                    if (note == false)
+                                    if (checkedNote)
+                                    {
+                                        // 机のメモ帳を見ているときの処理
+                                        which = false;
+                                        AnovReader("4.2.1.anov");
+                                    }
+                                    else
                                     {
                                         // 机のメモ帳を見ていないときの処理
                                         Console.WriteLine("右から1冊取り、読んでみたがいまいち意味が分からなかった。");
                                         Console.ReadLine();
-                                    }
-                                    else
-                                    {
-                                        // 机のメモ帳を見ているときの処理
-
-                                        AnovReader("4.2.1.anov");
-
-                                        which = true;
                                     }
                                     break;
 
@@ -507,7 +501,7 @@ static class Program
                                     Console.ReadLine();
                                     Console.WriteLine("「天界のレートピシ」"); // レートピシ=歴史書
                                     Console.ReadLine();
-                                    note = true;
+                                    checkedNote = true;
                                     break;
 
                                 case "3":
@@ -530,7 +524,7 @@ static class Program
                         break;
 
                     case "3":
-                        where = true;
+                        loopFlag = false;
 
                         AnovReader("3.3.anov");
 
@@ -558,9 +552,7 @@ static class Program
             // →旧黒軍師では3人いるが、航空隊2人の名前や詳細がまだ決まっていないため、椿という推測は一応可能だが。
             // (未来になって航空隊2人の名前が決まっても、決まっていなかった時代のストーリーということで未来になっても上記と同じ考察が可能。))
             if (komari.Luck >= 8)
-            {
                 AnovReader("5.0.anov");
-            }
 
             Console.WriteLine("# クレジット #");
             Console.WriteLine("シナリオ: Lemon73 (Ivy Cafeteria)");
@@ -648,8 +640,8 @@ static class Program
             Console.ReadLine();
             StatusConsole(chara, enemyHP, enemyName);
 
-            bool where = false;
-            while (where == false)
+            bool loopFlag = true;
+            while (loopFlag)
             {
                 Console.WriteLine("");
                 Console.WriteLine("どのような行動をしますか");
@@ -667,7 +659,7 @@ static class Program
                 {
                     // 近接戦闘
                     case "1":
-                        where = true;
+                        loopFlag = false;
                         Console.WriteLine("敵に接近して、ナイフを振り上げて…");
                         Console.WriteLine("その腕を素早く振り降ろした。");
                         Console.ReadLine();
@@ -684,7 +676,7 @@ static class Program
                             break;
                         }
 
-                        where = true;
+                        loopFlag = false;
                         chara.ItemBom -= 1;
                         Console.WriteLine("秋月は後ろずさりで少しずつ後退しながら、手榴弾のピンを抜いて、");
                         Console.WriteLine("敵のほうに向かって投げつけた。");
@@ -704,7 +696,7 @@ static class Program
                             break;
                         }
 
-                        where = true;
+                        loopFlag = false;
                         chara.ItemBullet -= 1;
                         Console.WriteLine("拳銃に弾丸を込め、単発射撃を行った。");
                         Console.ReadLine();
@@ -717,7 +709,7 @@ static class Program
 
                     // 治療処理
                     case "4":
-                        where = true;
+                        loopFlag = false;
                         if (chara.MP >= 3)
                         {
                             chara.MP -= 3;
@@ -748,7 +740,7 @@ static class Program
                             break;
                         }
 
-                        where = true;
+                        loopFlag = false;
                         chara.ItemMedicine -= 1;
                         Console.WriteLine("医療品をあさり、治療に使えそうな薬品などを取り出した。");
                         Console.ReadLine();
@@ -759,7 +751,7 @@ static class Program
 
                     // 確立で逃げる処理
                     case "6":
-                        where = true;
+                        loopFlag = false;
                         if (rand.Next(0, 101) <= 20) // (20%の確率で逃げられる)
                         {
                             Console.WriteLine("敵からなんとか逃げ切ることができた。");
@@ -779,7 +771,7 @@ static class Program
                             break;
                         }
 
-                        where = true;
+                        loopFlag = false;
                         chara.ItemBom -= 1;
                         Console.WriteLine("秋月は後ろずさりで少しずつ後退しながら、手榴弾のピンを抜いて、");
                         Console.WriteLine("明後日のほうに向かって投げつけた。");
@@ -831,7 +823,7 @@ static class Program
                     // この if 文で↓のバグを回避できる。
                     // (8の「様子を見る」や誤コマンドの際に本来なら再度コマンドを選べるはずなのに、すぐに敵ターンに移行してしまうバグ。
                     // 原因: while の中に敵の処理を入れているから)
-                    if (where == true)
+                    if (!loopFlag)
                     {
                         // 続行 (敵ターン)
                         Console.WriteLine(" - 敵のターン - ");
