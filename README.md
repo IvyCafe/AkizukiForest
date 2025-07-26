@@ -1,8 +1,8 @@
 # Akizuki in the Forest
 
-Play as 'Komari Akizuki', a national army special forces, and you can enjoy with the events displayed on the console.
+You can play the game as 'Komari Akizuki'; a national army special forces, and enjoy with the events displayed on the console.
 
-This is the first console game in Ivy Cafeteria.
+*This is the first console game in Ivy Cafeteria.*
 
 ## Installation
 
